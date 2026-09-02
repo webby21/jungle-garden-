@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Massbar — The Jungle Garden</title>
+<meta name="description" content="Massbar — Chapter One: The Garden. A scroll-driven story about different strengths building one vision.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- =========================================================
+     GLOBAL STYLES
+     ========================================================= -->
+<style>
+:root{
+    /* ---- MASSBAR PALETTE (do not replace) ---- */
+    --ink:#0a0626;
+    --ink-soft:#110a31;
+
+    --purple:#631d99;
+    --purple-light:#7d2bc1;
+    --violet:#3f2690;
+
+    --pink:#e24386;
+    --orange:#fe7344;
+    --gold:#feb14a;
+
+    --teal:#7db2bb;
+    --blue:#3f4f9a;
+
+    --white:#f9fafb;
+    --muted:#a9a6b8;
+
+    --line:rgba(249,250,251,.12);
+
+    --font-display:"Space Grotesk",sans-serif;
+    --font-body:"DM Sans",sans-serif;
+
+    /* ---- GLASS SYSTEM ---- */
+    --glass-bg:rgba(249,250,251,.06);
+    --glass-border:1px solid rgba(249,250,251,.14);
+    --glass-blur:blur(18px);
+
+    /* =====================================================
+       OWL EYE CALIBRATION
+       These values MUST be adjusted to match the supplied
+       owl artwork (assets/owl.png). They describe where the
+       centre of each eye sits inside the owl image box.
+       Tweak until the pupils sit exactly inside the eyes.
+       ===================================================== */
+    --owl-left-eye-x:41.5%;
+    --owl-left-eye-y:33%;
+    --owl-right-eye-x:58.5%;
+    --owl-right-eye-y:33%;
+    --owl-eye-size:clamp(14px,2.1vw,26px);   /* eye socket size  */
+    --owl-pupil-size:.5;                      /* pupil / socket ratio */
+    --owl-pupil-travel:26%;                   /* max pupil offset     */
+
+    /* =====================================================
+       ANIMAL POSITIONING
+       Composition tuning knobs. Percentages are relative to
+       the cinematic stage, so the layout scales with the
+       viewport instead of being hard-coded in pixels.
+       ===================================================== */
+    --elephant-x:27%;   --elephant-y:66%;   --elephant-w:clamp(300px,36vw,620px);
+    --monkey-x:74%;     --monkey-y:30%;     --monkey-w:clamp(180px,20vw,340px);
+    --deer-x:30%;       --deer-y:64%;       --deer-w:clamp(200px,24vw,400px);
+    --parrot-x:50%;     --parrot-y:40%;     --parrot-w:clamp(90px,11vw,190px);
+    --owl-x:50%;        --owl-y:27%;        --owl-w:clamp(150px,16vw,270px);
+
+    --nav-h:74px;
+}
+
+/* ---- RESET ---- */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+    background:var(--ink);
+    color:var(--white);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+::selection{background:var(--orange);color:var(--ink)}
+
+/* ---- TYPE PRIMITIVES ---- */
+.display{
+    font-family:var(--font-display);
+    font-weight:600;
+    line-height:.94;
+    letter-spacing:-.03em;
+    margin:0;
+}
+.eyebrow{
+    font-family:var(--font-display);
+    font-size:clamp(10px,1vw,12px);
+    font-weight:600;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0;
+}
+.lede{
+    font-family:var(--font-body);
+    color:var(--muted);
+    font-size:clamp(15px,1.35vw,19px);
+    line-height:1.65;
+    margin:0;
+    max-width:46ch;
+}
+.serif-note{
+    font-family:Georgia,"Times New Roman",serif;
+    font-style:italic;
+    color:var(--teal);
+}
+.u-hide{display:none !important}
+
+/* ---- GLASS UTILITY ---- */
+.glass{
+    background:var(--glass-bg);
+    border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);
+    -webkit-backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.16),0 18px 40px rgba(5,2,18,.4);
+}
+
+/* =========================
+     HEADER
+   ========================= */
+.site-header{
+    position:fixed;inset:0 0 auto 0;z-index:120;
+    height:var(--nav-h);
+    display:flex;align-items:center;
+    padding:0 clamp(16px,3.4vw,46px);
+    gap:24px;
+    background:rgba(10,6,38,.42);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(20px) saturate(140%);
+    -webkit-backdrop-filter:blur(20px) saturate(140%);
+    transition:background .5s ease,border-color .5s ease;
+}
+.site-header.is-lifted{background:rgba(10,6,38,.72)}
+.brand{display:flex;align-items:center;gap:12px;flex:0 0 auto}
+.brand__mark{height:30px;width:auto;object-fit:contain}
+.brand__word{
+    font-family:var(--font-display);font-weight:700;
+    letter-spacing:.24em;font-size:14px;text-transform:uppercase;
+}
+.nav{margin-left:auto;display:flex;align-items:center;gap:clamp(18px,2.2vw,34px)}
+.nav a{
+    font-size:13.5px;color:var(--muted);letter-spacing:.02em;
+    position:relative;padding:6px 0;transition:color .35s ease;
+}
+.nav a::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
+    background:linear-gradient(90deg,var(--gold),var(--orange));
+    transition:width .45s cubic-bezier(.22,1,.36,1);
+}
+.nav a:hover,.nav a[aria-current="true"]{color:var(--white)}
+.nav a:hover::after,.nav a[aria-current="true"]::after{width:100%}
+
+/* --- Get Quote : refined Massbar glass button --- */
+.btn-quote{
+    position:relative;overflow:hidden;isolation:isolate;
+    display:inline-flex;align-items:center;gap:9px;
+    padding:11px 20px;border-radius:100px;
+    font-family:var(--font-display);font-weight:500;font-size:13.5px;letter-spacing:.01em;
+    color:var(--white);
+    background:linear-gradient(135deg,rgba(125,43,193,.34),rgba(249,250,251,.07) 55%,rgba(99,29,153,.24));
+    border:1px solid rgba(249,250,251,.18);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.28),inset 0 -10px 18px rgba(63,38,144,.24),0 12px 26px rgba(5,2,18,.42);
+    transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s ease,border-color .5s ease;
+}
+.btn-quote__dot{
+    width:5px;height:5px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 10px var(--orange);
+    transition:transform .5s ease;
+}
+.btn-quote__sweep{
+    position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(105deg,transparent 32%,rgba(249,250,251,.22) 48%,transparent 64%);
+    transform:translate3d(-120%,0,0);
+}
+.btn-quote:hover{
+    transform:translate3d(0,-2px,0);
+    border-color:rgba(254,177,74,.4);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.34),0 18px 34px rgba(5,2,18,.5),0 0 0 1px rgba(254,115,68,.12);
+}
+.btn-quote:hover .btn-quote__sweep{transform:translate3d(120%,0,0);transition:transform .9s cubic-bezier(.22,1,.36,1)}
+.btn-quote:hover .btn-quote__dot{transform:scale(1.5)}
+.btn-quote--lg{padding:15px 28px;font-size:15px}
+
+/* --- mobile glass menu control --- */
+.menu-toggle{
+    display:none;flex:0 0 auto;margin-left:auto;
+    width:44px;height:44px;border-radius:50%;
+    align-items:center;justify-content:center;
+    background:var(--glass-bg);border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.2);
+}
+.menu-toggle span{display:block;width:16px;height:1.5px;background:var(--white);position:relative;transition:transform .4s ease,background .3s}
+.menu-toggle span::before,.menu-toggle span::after{
+    content:"";position:absolute;left:0;width:16px;height:1.5px;background:var(--white);
+    transition:transform .4s cubic-bezier(.22,1,.36,1);
+}
+.menu-toggle span::before{transform:translateY(-5px)}
+.menu-toggle span::after{transform:translateY(5px)}
+.menu-toggle[aria-expanded="true"] span{background:transparent}
+.menu-toggle[aria-expanded="true"] span::before{transform:rotate(45deg)}
+.menu-toggle[aria-expanded="true"] span::after{transform:rotate(-45deg)}
+
+.mobile-panel{
+    position:fixed;z-index:115;inset:var(--nav-h) 0 auto 0;
+    padding:26px clamp(16px,5vw,32px) 34px;
+    background:rgba(10,6,38,.86);
+    backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);
+    border-bottom:1px solid var(--line);
+    display:grid;gap:6px;
+    transform:translate3d(0,-14px,0);opacity:0;pointer-events:none;visibility:hidden;
+    transition:opacity .4s ease,transform .5s cubic-bezier(.22,1,.36,1),visibility .4s;
+}
+.mobile-panel.is-open{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.mobile-panel a{
+    font-family:var(--font-display);font-size:22px;font-weight:500;
+    padding:12px 0;border-bottom:1px solid var(--line);
+}
+.mobile-panel .btn-quote{margin-top:18px;justify-content:center}
+
+/* =========================
+     AMBIENT / ATMOSPHERE
+   ========================= */
+#ambient{
+    position:fixed;inset:0;z-index:3;pointer-events:none;
+    mix-blend-mode:screen;opacity:.9;
+}
+.vignette{
+    position:fixed;inset:0;z-index:4;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 45%,transparent 40%,rgba(10,6,38,.62) 100%);
+}
+.grain{
+    position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.16;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.5'/></svg>");
+}
+
+/* =========================
+     SCROLL PROGRESS + CHAPTER MARKER
+   ========================= */
+.chapter-marker{
+    position:fixed;z-index:100;left:clamp(14px,2.4vw,34px);top:50%;
+    transform:translateY(-50%);
+    display:flex;align-items:center;gap:14px;
+    opacity:0;transition:opacity .8s ease;pointer-events:none;
+}
+.chapter-marker.is-visible{opacity:1}
+.chapter-marker__rail{
+    width:1px;height:min(30vh,240px);
+    background:var(--line);position:relative;border-radius:2px;
+}
+.chapter-marker__fill{
+    position:absolute;top:0;left:-.5px;width:2px;height:0%;
+    background:linear-gradient(180deg,var(--gold),var(--orange));
+    box-shadow:0 0 12px rgba(254,115,68,.5);border-radius:2px;
+}
+.chapter-marker__meta{writing-mode:vertical-rl;display:flex;align-items:center;gap:14px}
+.chapter-marker__num{font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:.1em;color:var(--white)}
+.chapter-marker__label{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted)}
+
+/* =========================
+     HERO
+   ========================= */
+.hero{
+    position:relative;min-height:100svh;overflow:hidden;
+    display:flex;align-items:flex-end;
+    padding:calc(var(--nav-h) + 40px) clamp(18px,5vw,80px) clamp(46px,8vh,90px);
+    isolation:isolate;
+}
+.hero__bg,.hero__mid,.hero__fg{position:absolute;inset:-6%;z-index:0;will-change:transform}
+.hero__bg{
+    /* =========================================================
+       USER ASSET: HERO ARTWORK
+       Replace this with the user's supplied hero artwork.
+       Path: assets/hero.jpg  (a gradient stands in until then)
+       ========================================================= */
+    background-color:var(--ink);
+    background-image:
+        radial-gradient(90% 70% at 22% 18%,rgba(99,29,153,.55),transparent 62%),
+        radial-gradient(70% 60% at 82% 26%,rgba(63,79,154,.42),transparent 60%),
+        radial-gradient(120% 80% at 50% 108%,rgba(254,115,68,.22),transparent 58%),
+        linear-gradient(180deg,var(--ink-soft),var(--ink) 72%);
+    background-size:cover;background-position:center;
+    filter:saturate(112%);
+}
+.hero__bg.has-art{
+    background-image:
+        linear-gradient(180deg,rgba(10,6,38,.42),rgba(10,6,38,.78)),
+        url("assets/hero.jpg");
+}
+.hero__mid{
+    background:
+        radial-gradient(46% 34% at 12% 78%,rgba(125,178,187,.16),transparent 70%),
+        radial-gradient(40% 30% at 88% 70%,rgba(226,67,134,.14),transparent 70%);
+    filter:blur(2px);
+}
+.hero__glow{
+    position:absolute;left:50%;top:34%;width:min(70vw,900px);aspect-ratio:1;
+    transform:translate3d(-50%,-50%,0);z-index:0;pointer-events:none;
+    background:radial-gradient(circle,rgba(125,43,193,.4),transparent 62%);
+    filter:blur(30px);
+}
+.hero__leaves{position:absolute;inset:0;z-index:4;pointer-events:none}
+.leaf{
+    position:absolute;will-change:transform;
+    opacity:.72;filter:drop-shadow(0 18px 26px rgba(5,2,18,.5));
+}
+.hero__copy{position:relative;z-index:6;max-width:min(100%,1120px)}
+.hero__brandline{
+    display:flex;align-items:center;gap:14px;margin-bottom:clamp(18px,3vh,30px);
+}
+.hero__brandline .rule{height:1px;width:clamp(40px,8vw,110px);background:linear-gradient(90deg,var(--gold),transparent)}
+.hero__title{
+    font-size:clamp(38px,6.6vw,96px);
+    text-transform:uppercase;
+}
+.hero__title .line{display:block;overflow:hidden}
+.hero__title .line i{display:block;font-style:normal;will-change:transform}
+.hero__title .accent{
+    background:linear-gradient(96deg,var(--gold),var(--orange) 46%,var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero__sub{margin-top:clamp(18px,3vh,30px);display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(18px,4vw,60px)}
+.hero__scroll{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);
+}
+.hero__scroll .track{
+    width:34px;height:1px;background:var(--line);position:relative;overflow:hidden;
+}
+.hero__scroll .track::after{
+    content:"";position:absolute;inset:0;width:40%;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    animation:scrollHint 2.4s cubic-bezier(.6,0,.4,1) infinite;
+}
+@keyframes scrollHint{0%{transform:translateX(-110%)}60%,100%{transform:translateX(280%)}}
+
+/* =========================
+     OWL (shared component)
+   ========================= */
+.owl{position:relative;width:100%;line-height:0;will-change:transform;transform-style:preserve-3d}
+.owl__img{width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 25px 45px rgba(0,0,0,.35))}
+.owl__eye{
+    position:absolute;z-index:2;
+    width:var(--owl-eye-size);height:var(--owl-eye-size);
+    margin-left:calc(var(--owl-eye-size) / -2);
+    margin-top:calc(var(--owl-eye-size) / -2);
+    border-radius:50%;
+    display:grid;place-items:center;
+    pointer-events:none;
+}
+.owl__eye--l{left:var(--owl-left-eye-x);top:var(--owl-left-eye-y)}
+.owl__eye--r{left:var(--owl-right-eye-x);top:var(--owl-right-eye-y)}
+.owl__pupil{
+    width:calc(var(--owl-eye-size) * var(--owl-pupil-size));
+    height:calc(var(--owl-eye-size) * var(--owl-pupil-size));
+    border-radius:50%;
+    background:radial-gradient(circle at 34% 30%,#2a1550,#080418 70%);
+    box-shadow:0 0 10px rgba(10,6,38,.9),inset 0 0 4px rgba(254,177,74,.5);
+    will-change:transform;
+}
+/* the socket is only drawn for the SVG stand-in owl */
+.owl.is-missing .owl__eye{
+    background:radial-gradient(circle at 50% 45%,#fff6e2,#f3d9a6 62%,#c99a4f);
+    box-shadow:inset 0 2px 6px rgba(10,6,38,.45);
+}
+.hero .hero__owl{
+    position:absolute;z-index:5;
+    right:clamp(2%,6vw,10%);top:clamp(14%,20vh,26%);
+    width:clamp(150px,20vw,340px);
+}
+
+/* =========================
+     CHARACTER FIGURES + ASSET FALLBACK
+     If a supplied PNG is missing, a tasteful SVG stand-in is
+     shown instead so the composition never breaks.
+   ========================= */
+.figure{position:relative;will-change:transform,opacity}
+.figure img{width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 25px 45px rgba(0,0,0,.35))}
+.figure .ph{display:none;width:100%;height:auto;filter:drop-shadow(0 25px 45px rgba(0,0,0,.35))}
+.figure.is-missing img{display:none}
+.figure.is-missing .ph{display:block}
+
+/* =========================
+     CHAPTER INTRO
+   ========================= */
+.chapter-intro{
+    position:relative;min-height:110svh;display:grid;place-items:center;
+    padding:14vh clamp(18px,5vw,60px);text-align:center;overflow:hidden;
+    background:
+        radial-gradient(80% 60% at 50% 0%,rgba(63,38,144,.5),transparent 62%),
+        linear-gradient(180deg,var(--ink) 0%,var(--ink-soft) 46%,var(--ink) 100%);
+}
+.chapter-intro__inner{position:relative;z-index:3;display:grid;gap:clamp(16px,2.6vh,28px);justify-items:center}
+.chapter-intro__num{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(64px,15vw,190px);line-height:.8;letter-spacing:-.04em;
+    color:transparent;-webkit-text-stroke:1px rgba(249,250,251,.22);
+    position:absolute;top:6%;left:50%;transform:translateX(-50%);z-index:1;
+    pointer-events:none;user-select:none;
+}
+.chapter-intro__title{font-size:clamp(44px,10vw,150px);text-transform:uppercase}
+.chapter-intro .lede{text-align:center;max-width:34ch;margin-inline:auto}
+.chapter-intro__owl{
+    position:relative;width:clamp(140px,18vw,290px);margin-bottom:clamp(6px,2vh,20px);
+    will-change:transform,opacity;
+}
+.reveal-word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.reveal-word i{display:inline-block;font-style:normal;will-change:transform}
+
+/* =========================
+     CINEMATIC STAGE (pinned chapter)
+   ========================= */
+.chapter{position:relative;background:var(--ink)}
+.stage{
+    position:relative;height:100svh;overflow:hidden;
+    background:linear-gradient(180deg,var(--ink) 0%,#150c3a 46%,#0d0730 100%);
+}
+.cam{position:absolute;inset:0;will-change:transform;transform-origin:50% 56%}
+.layer{position:absolute;inset:0;pointer-events:none;will-change:transform}
+.layer--back{z-index:1;filter:blur(3px)}
+.layer--mid{z-index:2;filter:blur(1px)}
+.layer--ground{z-index:3}
+.layer--char{z-index:5}
+.layer--copy{z-index:6}
+.layer--fore{z-index:8}
+
+.sky-haze{
+    position:absolute;inset:0;
+    background:
+        radial-gradient(70% 46% at 24% 16%,rgba(99,29,153,.55),transparent 66%),
+        radial-gradient(60% 40% at 78% 12%,rgba(63,79,154,.4),transparent 68%),
+        radial-gradient(90% 50% at 50% 96%,rgba(254,115,68,.14),transparent 62%);
+}
+.sun-shaft{
+    position:absolute;top:-20%;left:var(--x,50%);width:clamp(60px,9vw,150px);height:150%;
+    transform:translateX(-50%) rotate(9deg);
+    background:linear-gradient(180deg,rgba(254,177,74,.14),transparent 72%);
+    filter:blur(10px);opacity:.65;
+}
+.canopy{position:absolute;inset:0;width:100%;height:100%}
+.branch{position:absolute;pointer-events:none}
+.vine{position:absolute;top:0;pointer-events:none;transform-origin:50% 0}
+.ridge{position:absolute;left:0;right:0;bottom:0;width:100%}
+
+.soil{
+    position:absolute;left:-6%;right:-6%;bottom:-4%;height:36%;
+    background:
+        radial-gradient(70% 100% at 50% 0%,rgba(99,29,153,.42),transparent 72%),
+        linear-gradient(180deg,#241553 0%,#0b0628 78%);
+    border-radius:50% 50% 0 0/20% 20% 0 0;
+    box-shadow:inset 0 2px 0 rgba(249,250,251,.1),0 -30px 60px rgba(10,6,38,.6);
+}
+.soil::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 60% at 50% 10%,rgba(125,178,187,var(--wet,0)),transparent 70%);
+    transition:none;border-radius:inherit;
+}
+
+/* --- water --- */
+.water{position:absolute;left:0;right:0;bottom:6%;height:30%;z-index:2;overflow:visible}
+.water svg{width:100%;height:100%;overflow:visible}
+.water__path{fill:none;stroke-linecap:round}
+.droplet{
+    position:absolute;width:7px;height:9px;border-radius:50% 50% 55% 55%;
+    background:linear-gradient(180deg,rgba(125,178,187,.95),rgba(63,79,154,.7));
+    box-shadow:0 0 12px rgba(125,178,187,.6);
+    will-change:transform,opacity;opacity:0;pointer-events:none;
+}
+
+/* --- growing plants / flowers (persist once grown) --- */
+.plant{position:absolute;bottom:0;transform-origin:50% 100%;will-change:transform,opacity;pointer-events:none}
+.plant svg{overflow:visible;display:block}
+.plant .stem{stroke:var(--teal);stroke-width:3.2;fill:none;stroke-linecap:round;opacity:.85}
+.plant .leaf-a,.plant .leaf-b{transform-origin:50% 100%}
+.seed{
+    position:absolute;width:9px;height:12px;border-radius:52% 52% 60% 60%;
+    background:linear-gradient(160deg,var(--gold),var(--orange));
+    box-shadow:0 0 14px rgba(254,177,74,.45);
+    opacity:0;will-change:transform,opacity;pointer-events:none;
+}
+.sprout-glow{
+    position:absolute;width:52px;height:52px;border-radius:50%;
+    background:radial-gradient(circle,rgba(254,177,74,.55),transparent 66%);
+    transform:translate3d(-50%,50%,0) scale(0);opacity:0;
+    will-change:transform,opacity;pointer-events:none;
+}
+.flower{position:absolute;transform-origin:50% 100%;will-change:transform,opacity;pointer-events:none;opacity:0}
+.flower svg{overflow:visible;display:block}
+
+/* --- characters on stage --- */
+.stage-figure{position:absolute;opacity:0}
+#fig-elephant{left:var(--elephant-x);top:var(--elephant-y);width:var(--elephant-w);transform:translate3d(-50%,-50%,0)}
+#fig-monkey{left:var(--monkey-x);top:var(--monkey-y);width:var(--monkey-w);transform:translate3d(-50%,-50%,0)}
+#fig-deer{left:var(--deer-x);top:var(--deer-y);width:var(--deer-w);transform:translate3d(-50%,-50%,0)}
+#fig-owl-stage{left:var(--owl-x);top:var(--owl-y);width:var(--owl-w);transform:translate3d(-50%,-50%,0);z-index:2}
+.parrot{
+    position:absolute;left:var(--parrot-x);top:var(--parrot-y);
+    width:var(--parrot-w);opacity:0;will-change:transform,opacity;
+}
+/* a light, continuous wingbeat on the inner art so it never
+   collides with the GSAP transform on the wrapper */
+@keyframes flap{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.88) translateY(-2%)}}
+.parrot img,.parrot .ph{animation:flap .36s ease-in-out infinite;transform-origin:50% 40%}
+.parrot--fore{z-index:9}
+.parrot--back{z-index:4;filter:blur(1.5px) brightness(.8)}
+
+/* --- scene copy --- */
+.scene-copy{
+    position:absolute;z-index:6;max-width:min(86vw,560px);
+    display:grid;gap:14px;opacity:0;will-change:transform,opacity;
+}
+.scene-copy--left{left:clamp(18px,7vw,110px);bottom:clamp(60px,16vh,150px)}
+.scene-copy--right{right:clamp(18px,7vw,110px);top:clamp(120px,22vh,220px);text-align:right;justify-items:end}
+.scene-copy--midleft{left:clamp(18px,7vw,110px);top:clamp(110px,26vh,260px)}
+.scene-copy--center{left:50%;top:50%;transform:translate3d(-50%,-50%,0);text-align:center;justify-items:center;max-width:min(92vw,900px)}
+.scene-copy__title{
+    font-size:clamp(32px,5.4vw,72px);text-transform:uppercase;
+    text-shadow:0 8px 30px rgba(10,6,38,.72);
+}
+.scene-copy__line{font-size:clamp(17px,2vw,26px);color:var(--white);font-weight:500;margin:0}
+.scene-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:7px 14px;border-radius:100px;
+    font-family:var(--font-display);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+    background:var(--glass-bg);border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.16);
+}
+.scene-tag .pip{width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--orange)}
+
+/* --- parrot word fragments --- */
+.word-frag{
+    position:absolute;z-index:7;opacity:0;
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(20px,3.4vw,52px);letter-spacing:.06em;text-transform:uppercase;
+    color:transparent;-webkit-text-stroke:1px rgba(249,250,251,.5);
+    will-change:transform,opacity;pointer-events:none;
+}
+.word-frag.is-solid{color:var(--gold);-webkit-text-stroke:0}
+
+/* --- reveal payoff --- */
+.reveal-copy::before{
+    content:"";position:absolute;inset:-14% -8%;z-index:-1;pointer-events:none;
+    background:radial-gradient(58% 62% at 50% 50%,rgba(10,6,38,.78),transparent 74%);
+}
+.reveal-copy{
+    position:absolute;left:50%;bottom:16%;z-index:10;
+    transform:translate3d(-50%,0,0);
+    width:min(92vw,980px);text-align:center;
+    display:grid;gap:18px;justify-items:center;opacity:0;
+    will-change:transform,opacity;
+}
+.reveal-copy__title{
+    font-size:clamp(32px,6.6vw,92px);text-transform:uppercase;line-height:.96;
+    text-shadow:0 10px 36px rgba(10,6,38,.8);
+}
+.reveal-copy .lede{text-shadow:0 4px 18px rgba(10,6,38,.9)}
+.reveal-copy__title .grad{
+    background:linear-gradient(96deg,var(--gold),var(--orange) 52%,var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.owl-label{
+    position:absolute;z-index:11;left:50%;
+    transform:translate3d(-50%,0,0);
+    top:calc(var(--owl-y) + clamp(88px,10vw,168px));
+    opacity:0;will-change:transform,opacity;
+}
+.stage-veil{
+    position:absolute;inset:0;z-index:12;pointer-events:none;
+    background:radial-gradient(60% 50% at 50% 34%,transparent 20%,rgba(10,6,38,.9) 78%);
+    opacity:0;
+}
+
+/* =========================
+     MASSBAR MESSAGE / PHILOSOPHY
+   ========================= */
+.philosophy{
+    position:relative;padding:clamp(90px,18vh,190px) clamp(18px,5vw,80px);
+    background:
+        radial-gradient(70% 50% at 76% 10%,rgba(125,43,193,.3),transparent 62%),
+        radial-gradient(60% 46% at 12% 92%,rgba(254,115,68,.13),transparent 64%),
+        linear-gradient(180deg,#0d0730,var(--ink));
+    overflow:hidden;
+}
+.philosophy__grid{
+    position:relative;z-index:2;max-width:1180px;margin-inline:auto;
+    display:grid;gap:clamp(28px,5vw,74px);
+    grid-template-columns:minmax(0,1fr) minmax(0,.85fr);align-items:center;
+}
+.philosophy__title{font-size:clamp(26px,3.5vw,48px);line-height:1.1}
+.philosophy__title em{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-weight:400}
+.strength-list{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.strength{
+    display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;
+    padding:16px 20px;border-radius:16px;
+    background:var(--glass-bg);border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.14);
+    transition:transform .55s cubic-bezier(.22,1,.36,1),border-color .45s ease;
+}
+.strength:hover{transform:translate3d(0,-3px,0);border-color:rgba(254,177,74,.34)}
+.strength__idx{font-family:var(--font-display);font-size:12px;color:var(--gold);letter-spacing:.14em}
+.strength__name{font-family:var(--font-display);font-weight:600;letter-spacing:.02em}
+.strength__role{font-size:13px;color:var(--muted);text-align:right}
+
+/* =========================
+     OWL EYE TRANSITION → CHAPTER TWO
+   ========================= */
+.bridge{position:relative;background:var(--ink)}
+.bridge__stage{
+    position:relative;height:100svh;overflow:hidden;display:grid;place-items:center;
+    background:radial-gradient(70% 60% at 50% 40%,rgba(63,38,144,.42),transparent 68%),var(--ink);
+}
+.bridge__owl{position:relative;width:clamp(190px,26vw,440px);will-change:transform;z-index:2}
+.bridge__dark{position:absolute;inset:0;z-index:3;background:var(--ink);opacity:0;pointer-events:none}
+.bridge__line{
+    position:absolute;z-index:4;left:50%;top:50%;transform:translate3d(-50%,-50%,0);
+    width:min(92vw,900px);text-align:center;opacity:0;
+    font-family:var(--font-display);font-weight:600;text-transform:uppercase;
+    font-size:clamp(24px,4.6vw,64px);letter-spacing:-.02em;line-height:1.02;
+}
+.next-chapter{
+    padding:clamp(70px,14vh,150px) clamp(18px,5vw,80px);
+    border-top:1px solid var(--line);
+    display:grid;gap:12px;justify-items:center;text-align:center;
+    background:linear-gradient(180deg,var(--ink),#0c0730);
+}
+.next-chapter__num{
+    font-family:var(--font-display);font-size:clamp(40px,8vw,110px);font-weight:700;
+    color:transparent;-webkit-text-stroke:1px rgba(249,250,251,.18);line-height:1;
+}
+
+/* =========================
+     FOOTER
+   ========================= */
+.site-footer{
+    position:relative;overflow:hidden;
+    padding:clamp(70px,14vh,150px) clamp(18px,5vw,80px) 40px;
+    background:
+        radial-gradient(60% 60% at 18% 0%,rgba(99,29,153,.34),transparent 64%),
+        radial-gradient(50% 50% at 86% 30%,rgba(254,115,68,.14),transparent 66%),
+        var(--ink);
+    border-top:1px solid var(--line);
+}
+.site-footer__inner{position:relative;z-index:2;max-width:1180px;margin-inline:auto}
+.footer-word{
+    font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;
+    font-size:clamp(52px,15vw,190px);line-height:.86;margin:0 0 clamp(24px,5vh,52px);
+    background:linear-gradient(96deg,var(--white),rgba(249,250,251,.28));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.footer-grid{
+    display:grid;gap:clamp(24px,4vw,60px);
+    grid-template-columns:minmax(0,1.1fr) minmax(0,.6fr) minmax(0,.8fr);
+    align-items:start;
+    padding-bottom:clamp(30px,6vh,60px);border-bottom:1px solid var(--line);
+}
+.footer-claim{font-family:var(--font-display);font-size:clamp(19px,2.3vw,30px);line-height:1.25;margin:0}
+.footer-claim span{color:var(--muted)}
+.footer-nav{display:grid;gap:10px}
+.footer-nav a{color:var(--muted);font-size:14.5px;transition:color .35s ease,transform .45s cubic-bezier(.22,1,.36,1)}
+.footer-nav a:hover{color:var(--white);transform:translateX(4px)}
+.footer-cta{display:grid;gap:16px;justify-items:start}
+.footer-cta p{margin:0;color:var(--muted);font-size:14.5px;max-width:26ch}
+.footer-base{
+    display:flex;flex-wrap:wrap;gap:12px 26px;align-items:center;justify-content:space-between;
+    padding-top:22px;font-size:12.5px;color:var(--muted);
+}
+
+/* =========================
+     SECONDARY REVEALS (non-story detail)
+   ========================= */
+[data-reveal]{
+    opacity:0;transform:translate3d(0,20px,0);
+    transition:opacity .95s cubic-bezier(.22,1,.36,1),transform .95s cubic-bezier(.22,1,.36,1);
+}
+[data-reveal].is-in{opacity:1;transform:none}
+
+/* =========================
+     STATIC MODE
+     Reduced motion, or GSAP unavailable. The garden is shown
+     already grown and the story is told in plain, readable
+     type — no content is lost with the motion.
+   ========================= */
+.is-static [data-reveal]{opacity:1;transform:none}
+.is-static .stage{height:70svh;min-height:420px}
+.is-static .stage-figure{transform:translate3d(-50%,-50%,0) scale(.6)}
+.is-static .parrot{transform:translate3d(-50%,-50%,0) scale(.8)}
+.is-static .scene-copy,.is-static .word-frag,.is-static .reveal-copy,
+.is-static .owl-label,.is-static .chapter-marker,.is-static .stage-veil{display:none}
+.is-static .layer--fore{opacity:.6}
+
+.story-static{
+    padding:clamp(60px,12vh,120px) clamp(18px,5vw,80px);
+    background:linear-gradient(180deg,#0d0730,var(--ink));
+}
+.story-static__grid{
+    max-width:1100px;margin-inline:auto;
+    display:grid;gap:clamp(18px,3vw,34px);
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+}
+.story-static__item{
+    display:grid;gap:8px;padding:24px;border-radius:18px;
+    background:var(--glass-bg);border:var(--glass-border);
+}
+.story-static__item h3{font-family:var(--font-display);font-size:22px;margin:0;text-transform:uppercase}
+.story-static__item p{margin:0;color:var(--muted);font-size:15px}
+.story-static__payoff{
+    max-width:1100px;margin:clamp(30px,6vh,60px) auto 0;text-align:center;
+    display:grid;gap:14px;justify-items:center;
+}
+
+/* =========================
+     RESPONSIVE
+     Tablet reduces travel + depth; mobile re-composes the
+     scenes vertically instead of shrinking the desktop art.
+   ========================= */
+@media (max-width:1100px){
+    .philosophy__grid{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:34px}
+    .footer-cta{grid-column:1 / -1}
+    :root{
+        --elephant-w:clamp(280px,46vw,520px);
+        --monkey-w:clamp(170px,26vw,320px);
+        --deer-w:clamp(200px,32vw,380px);
+        --parrot-w:clamp(84px,14vw,150px);
+        --owl-w:clamp(170px,26vw,300px);
+    }
+}
+@media (max-width:860px){
+    .nav{display:none}
+    .site-header .btn-quote{display:none}
+    .menu-toggle{display:flex}
+    .chapter-marker{display:none}
+    .hero{align-items:flex-end}
+    /* NOTE: same specificity as the base rule, otherwise `top` would
+       survive here and stretch the owl box away from its artwork. */
+    .hero .hero__owl{top:auto;bottom:42%;right:4%;width:clamp(120px,34vw,200px)}
+    /* mobile stage: vertical composition, characters stay large */
+    :root{
+        --elephant-x:50%;  --elephant-y:64%;  --elephant-w:min(84vw,460px);
+        --monkey-x:64%;    --monkey-y:34%;    --monkey-w:min(46vw,260px);
+        --deer-x:44%;      --deer-y:62%;      --deer-w:min(62vw,320px);
+        --owl-x:50%;       --owl-y:27%;       --owl-w:min(46vw,240px);
+        --parrot-w:min(28vw,130px);
+    }
+    .scene-copy--left,.scene-copy--right,.scene-copy--midleft{
+        left:5vw;right:5vw;max-width:none;transform:none;
+        text-align:center;justify-items:center;
+    }
+    .scene-copy--left{bottom:clamp(34px,9vh,80px);top:auto}
+    .scene-copy--right,.scene-copy--midleft{top:clamp(92px,14vh,150px);bottom:auto}
+    .reveal-copy{bottom:10%}
+    .scene-copy__title{font-size:clamp(30px,10vw,54px)}
+    .layer--back,.layer--mid{filter:none}
+    .footer-grid{grid-template-columns:1fr}
+    .site-footer{padding-top:70px}
+}
+@media (max-width:520px){
+    .hero__title{font-size:clamp(34px,11vw,58px)}
+    .brand__word{display:none}
+    .word-frag{font-size:clamp(16px,6vw,30px)}
+}
+@media (hover:none){
+    /* touch devices: no pointer field, no eye tracking */
+    .owl__pupil{transform:none !important}
+}
+
+/* =========================
+     ACCESSIBILITY — REDUCED MOTION
+     Everything stays visible and readable; only the motion
+     is removed.
+   ========================= */
+@media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.001ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.001ms !important;
+        scroll-behavior:auto !important;
+    }
+    #ambient{display:none}
+    .hero__scroll .track::after{animation:none;opacity:.6}
+    .stage{height:auto;min-height:auto;padding:80px 0}
+    .layer--back,.layer--mid{filter:none}
+}
+.sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+</style>
+<noscript>
+<style>
+    [data-reveal]{opacity:1 !important;transform:none !important}
+    .stage-figure,.parrot,.plant,.flower{opacity:1 !important}
+    #storyStatic{display:block !important}
+</style>
+</noscript>
+</head>
+<body>
+
+<!-- =========================================================
+     SVG SPRITE — STAND-IN ARTWORK
+     These stylised silhouettes are ONLY shown when a supplied
+     PNG is missing (see the .figure.is-missing rule). Drop the
+     real artwork into /assets and they disappear automatically.
+     ========================================================= -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <linearGradient id="g-warm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7d2bc1"/><stop offset=".55" stop-color="#631d99"/><stop offset="1" stop-color="#3f2690"/>
+    </linearGradient>
+    <linearGradient id="g-cool" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3f4f9a"/><stop offset="1" stop-color="#241553"/>
+    </linearGradient>
+    <linearGradient id="g-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#feb14a"/><stop offset="1" stop-color="#fe7344"/>
+    </linearGradient>
+    <linearGradient id="g-teal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7db2bb"/><stop offset="1" stop-color="#3f4f9a"/>
+    </linearGradient>
+
+    <symbol id="ph-owl" viewBox="0 0 200 230">
+      <ellipse cx="100" cy="150" rx="62" ry="72" fill="url(#g-warm)"/>
+      <path d="M38 150c0-30 12-58 24-58s10 34 6 62-8 46-16 44-14-26-14-48z" fill="#3f2690" opacity=".8"/>
+      <path d="M162 150c0-30-12-58-24-58s-10 34-6 62 8 46 16 44 14-26 14-48z" fill="#3f2690" opacity=".8"/>
+      <circle cx="100" cy="70" r="54" fill="url(#g-warm)"/>
+      <path d="M52 36l6-30 26 22z" fill="#3f2690"/><path d="M148 36l-6-30-26 22z" fill="#3f2690"/>
+      <path d="M100 78l10 16h-20z" fill="url(#g-gold)"/>
+      <path d="M84 214l-8 12h20l4-12zM116 214l8 12h-20l-4-12z" fill="url(#g-gold)" opacity=".85"/>
+    </symbol>
+
+    <symbol id="ph-elephant" viewBox="0 0 300 210">
+      <ellipse cx="150" cy="110" rx="98" ry="70" fill="url(#g-warm)"/>
+      <circle cx="66" cy="98" r="52" fill="url(#g-warm)"/>
+      <path d="M92 66c26-14 46-4 50 16s-8 34-26 34" fill="#3f2690" opacity=".65"/>
+      <path d="M40 118c-8 26-2 52 10 66s28 8 24-12-14-30-10-48" fill="none" stroke="url(#g-warm)" stroke-width="22" stroke-linecap="round"/>
+      <path d="M52 132c10 10 22 12 30 6" fill="none" stroke="url(#g-gold)" stroke-width="6" stroke-linecap="round" opacity=".8"/>
+      <rect x="92" y="160" width="26" height="46" rx="12" fill="#3f2690"/>
+      <rect x="140" y="164" width="26" height="42" rx="12" fill="#3f2690"/>
+      <rect x="196" y="158" width="28" height="48" rx="13" fill="url(#g-warm)"/>
+      <path d="M246 96c14 6 22 22 16 34" fill="none" stroke="#3f2690" stroke-width="8" stroke-linecap="round"/>
+    </symbol>
+
+    <symbol id="ph-monkey" viewBox="0 0 180 240">
+      <path d="M150 120c26 18 26 62-6 76s-56-8-52-30" fill="none" stroke="url(#g-warm)" stroke-width="12" stroke-linecap="round"/>
+      <ellipse cx="86" cy="146" rx="46" ry="58" fill="url(#g-warm)"/>
+      <circle cx="86" cy="70" r="44" fill="url(#g-warm)"/>
+      <circle cx="40" cy="66" r="17" fill="#3f2690"/><circle cx="132" cy="66" r="17" fill="#3f2690"/>
+      <ellipse cx="86" cy="84" rx="24" ry="19" fill="url(#g-gold)" opacity=".85"/>
+      <path d="M44 120c-18 20-22 44-12 58" fill="none" stroke="url(#g-warm)" stroke-width="18" stroke-linecap="round"/>
+      <path d="M128 120c18 20 22 44 12 58" fill="none" stroke="url(#g-warm)" stroke-width="18" stroke-linecap="round"/>
+      <rect x="62" y="192" width="22" height="42" rx="11" fill="#3f2690"/>
+      <rect x="94" y="192" width="22" height="42" rx="11" fill="#3f2690"/>
+    </symbol>
+
+    <symbol id="ph-deer" viewBox="0 0 240 240">
+      <path d="M64 76c-10-22-8-40 2-52M64 40c-14-4-22-14-24-28M64 56c12-8 16-20 14-34" fill="none" stroke="url(#g-gold)" stroke-width="6" stroke-linecap="round"/>
+      <path d="M104 76c10-22 8-40-2-52M104 40c14-4 22-14 24-28M104 56c-12-8-16-20-14-34" fill="none" stroke="url(#g-gold)" stroke-width="6" stroke-linecap="round"/>
+      <ellipse cx="150" cy="140" rx="76" ry="48" fill="url(#g-warm)"/>
+      <path d="M96 150c-6-30 0-52 12-66" fill="none" stroke="url(#g-warm)" stroke-width="30" stroke-linecap="round"/>
+      <ellipse cx="86" cy="76" rx="34" ry="24" transform="rotate(-16 86 76)" fill="url(#g-warm)"/>
+      <path d="M56 68c-12-2-18 4-16 12" fill="none" stroke="#3f2690" stroke-width="7" stroke-linecap="round"/>
+      <rect x="106" y="176" width="15" height="60" rx="7" fill="#3f2690"/>
+      <rect x="134" y="180" width="15" height="56" rx="7" fill="#3f2690"/>
+      <rect x="182" y="176" width="15" height="60" rx="7" fill="#3f2690"/>
+      <rect x="206" y="180" width="15" height="56" rx="7" fill="#3f2690"/>
+    </symbol>
+
+    <symbol id="ph-parrot" viewBox="0 0 220 130">
+      <path d="M126 62c40-14 76-6 92 8-18 12-54 20-92 10z" fill="url(#g-gold)"/>
+      <ellipse cx="92" cy="66" rx="52" ry="34" fill="url(#g-warm)"/>
+      <circle cx="46" cy="50" r="24" fill="url(#g-warm)"/>
+      <path d="M26 46l-18 8 18 10z" fill="url(#g-gold)"/>
+      <path d="M96 40c26-16 46-14 58-4-14 14-38 20-58 14z" fill="url(#g-teal)" opacity=".9"/>
+      <path d="M118 84c22 10 38 26 42 42-20-4-38-18-48-32z" fill="#e24386" opacity=".8"/>
+    </symbol>
+
+    <symbol id="ph-leaf" viewBox="0 0 120 60">
+      <path d="M2 46C22 8 74-6 118 6c-16 40-72 62-116 40z" fill="url(#g-cool)"/>
+      <path d="M6 44C34 26 76 12 116 8" fill="none" stroke="#7db2bb" stroke-width="2" opacity=".5"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- =========================
+     HEADER
+   ========================= -->
+<header class="site-header" id="header">
+    <a class="brand" href="#top" aria-label="Massbar — home">
+        <!-- =========================================================
+             USER ASSET: MASSBAR LOGO
+             Replace assets/logo.png with the actual Massbar logo.
+             The wordmark beside it is the fallback if the file is
+             missing — delete it once the real logo is in place.
+             ========================================================= -->
+        <img class="brand__mark" src="assets/logo.png" alt="Massbar" width="120" height="30"
+             onerror="this.style.display='none'">
+        <span class="brand__word">Massbar</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+        <a href="#top" aria-current="true">Home</a>
+        <a href="#story">Story</a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <a class="btn-quote" href="#contact">
+        <span class="btn-quote__sweep" aria-hidden="true"></span>
+        <span class="btn-quote__dot" aria-hidden="true"></span>
+        Get Quote <span aria-hidden="true">↗</span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
+        <span aria-hidden="true"></span>
+    </button>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+    <a href="#top">Home</a>
+    <a href="#story">Story</a>
+    <a href="#services">Services</a>
+    <a href="#work">Work</a>
+    <a href="#contact">Contact</a>
+    <a class="btn-quote" href="#contact">
+        <span class="btn-quote__sweep" aria-hidden="true"></span>
+        <span class="btn-quote__dot" aria-hidden="true"></span>
+        Get Quote <span aria-hidden="true">↗</span>
+    </a>
+</div>
+
+<!-- ambient pollen / firefly field + film atmosphere -->
+<canvas id="ambient" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- chapter marker + scroll progress through Chapter One -->
+<aside class="chapter-marker" id="chapterMarker" aria-hidden="true">
+    <div class="chapter-marker__rail"><span class="chapter-marker__fill" id="chapterFill"></span></div>
+    <div class="chapter-marker__meta">
+        <span class="chapter-marker__num">01</span>
+        <span class="chapter-marker__label">Chapter One</span>
+    </div>
+</aside>
+
+<!-- =========================
+     HERO
+   ========================= -->
+<main id="top">
+<section class="hero" id="hero">
+    <!-- Replace this with the user's supplied hero artwork -->
+    <!-- ASSET: assets/hero.jpg — applied as .hero__bg background-image -->
+    <div class="hero__bg" id="heroBg" data-depth="-.05" aria-hidden="true"></div>
+    <div class="hero__mid" data-depth=".06" aria-hidden="true"></div>
+    <div class="hero__glow" data-depth=".1" aria-hidden="true"></div>
+
+    <div class="hero__leaves" aria-hidden="true">
+        <svg class="leaf" style="left:-4%;top:-6%;width:clamp(180px,26vw,420px);transform:rotate(24deg)" data-depth=".16" viewBox="0 0 120 60"><use href="#ph-leaf"/></svg>
+        <svg class="leaf" style="right:-6%;top:8%;width:clamp(160px,22vw,360px);transform:scaleX(-1) rotate(14deg)" data-depth=".2" viewBox="0 0 120 60"><use href="#ph-leaf"/></svg>
+        <svg class="leaf" style="left:12%;bottom:-10%;width:clamp(200px,30vw,480px);transform:rotate(-16deg)" data-depth=".26" viewBox="0 0 120 60"><use href="#ph-leaf"/></svg>
+    </div>
+
+    <!-- =========================================================
+         USER ASSET: OWL
+         Replace with the supplied owl artwork (assets/owl.png).
+         The pupils are separate DOM nodes so only the eyes move —
+         calibrate them with the --owl-*-eye-* variables above.
+         ========================================================= -->
+    <div class="hero__owl figure owl" id="owlHero" data-depth=".13">
+        <img class="owl__img" src="assets/owl.png" alt="An owl watching over the jungle"
+             onerror="this.closest('.figure').classList.add('is-missing')">
+        <svg class="ph" viewBox="0 0 200 230" aria-hidden="true"><use href="#ph-owl"/></svg>
+        <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
+        <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
+    </div>
+
+    <div class="hero__copy" data-depth=".03">
+        <div class="hero__brandline">
+            <span class="rule" aria-hidden="true"></span>
+            <p class="eyebrow">Massbar</p>
+        </div>
+        <h1 class="display hero__title">
+            <span class="line"><i>We build stories</i></span>
+            <span class="line"><i class="accent">people remember.</i></span>
+        </h1>
+        <div class="hero__sub">
+            <p class="lede" id="heroLede">Every brand has a story.<br>Let's make yours impossible to ignore.</p>
+            <span class="hero__scroll">Scroll <span class="track" aria-hidden="true"></span></span>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     CHAPTER ONE — INTRODUCTION
+   ========================= -->
+<section class="chapter-intro" id="story">
+    <span class="chapter-intro__num" aria-hidden="true">01</span>
+    <div class="chapter-intro__inner">
+        <!-- USER ASSET: OWL — the narrator descends into the story -->
+        <div class="chapter-intro__owl figure owl" id="owlIntro">
+            <img class="owl__img" src="assets/owl.png" alt=""
+                 onerror="this.closest('.figure').classList.add('is-missing')">
+            <svg class="ph" viewBox="0 0 200 230" aria-hidden="true"><use href="#ph-owl"/></svg>
+            <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
+            <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
+        </div>
+
+        <p class="eyebrow" data-reveal>Chapter One</p>
+        <h2 class="display chapter-intro__title" data-reveal>
+            <span class="reveal-word"><i>The</i></span> <span class="reveal-word"><i>Garden</i></span>
+        </h2>
+        <p class="lede" data-reveal>Deep in the jungle, all the animals decided to build the most beautiful garden.</p>
+    </div>
+</section>
+
+<!-- =========================
+     CHAPTER ONE — CINEMATIC STAGE
+     One continuous world. Pinned; scroll drives the internal
+     timeline: elephant → water → monkey → seeds → deer →
+     flowers → parrots → garden reveal. Nothing is reset
+     between scenes — the garden accumulates.
+   ========================= -->
+<section class="chapter" id="chapterOne">
+  <div class="stage" id="stage">
+    <div class="cam" id="cam">
+
+        <!-- BACK — atmosphere -->
+        <div class="layer layer--back" id="layerBack">
+            <div class="sky-haze"></div>
+            <span class="sun-shaft" style="--x:22%"></span>
+            <span class="sun-shaft" style="--x:58%;opacity:.4"></span>
+            <span class="sun-shaft" style="--x:83%;opacity:.28"></span>
+            <svg class="canopy" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <path d="M0 0h1440v170c-120 40-210-30-330 0S880 250 760 210 540 120 420 160 130 250 0 190z" fill="#150c3a"/>
+                <path d="M0 0h1440v92c-150 52-260-14-392 16S796 176 664 140 430 60 300 96 120 168 0 118z" fill="#1c1148" opacity=".8"/>
+            </svg>
+        </div>
+
+        <!-- MIDDLE — distant jungle -->
+        <div class="layer layer--mid" id="layerMid">
+            <!-- the branch the monkeys work from -->
+            <svg class="branch" style="right:-6%;top:34%;width:56%" viewBox="0 0 700 160" aria-hidden="true">
+                <path d="M700 30C560 44 470 74 330 92 240 104 140 104 0 132" stroke="#241553" stroke-width="15" fill="none" stroke-linecap="round"/>
+                <path d="M560 46c-26-22-58-26-84-14 18 24 56 30 84 14z" fill="#1c1148"/>
+                <path d="M400 74c-30-20-62-20-86-6 22 22 60 24 86 6z" fill="#1c1148"/>
+                <path d="M210 98c-30-18-62-16-84 0 24 20 60 20 84 0z" fill="#241553"/>
+            </svg>
+            <svg class="vine" style="left:18%;width:90px" viewBox="0 0 90 460" aria-hidden="true">
+                <path d="M45 0c-14 90 16 150 4 240s-8 140-8 220" stroke="#1c1148" stroke-width="5" fill="none"/>
+                <ellipse cx="24" cy="140" rx="20" ry="8" transform="rotate(-18 24 140)" fill="#1c1148"/>
+                <ellipse cx="66" cy="250" rx="19" ry="7.5" transform="rotate(16 66 250)" fill="#241553"/>
+                <ellipse cx="28" cy="360" rx="17" ry="7" transform="rotate(-14 28 360)" fill="#1c1148"/>
+            </svg>
+            <svg class="vine" style="left:62%;width:70px;opacity:.8" viewBox="0 0 90 380" aria-hidden="true">
+                <path d="M45 0c12 80-14 130-2 210s6 110 6 170" stroke="#1c1148" stroke-width="4.5" fill="none"/>
+                <ellipse cx="68" cy="120" rx="18" ry="7" transform="rotate(18 68 120)" fill="#241553"/>
+                <ellipse cx="26" cy="240" rx="16" ry="6.5" transform="rotate(-16 26 240)" fill="#1c1148"/>
+            </svg>
+            <svg class="ridge" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <path d="M0 420V232c92-46 150 12 244-8s130-92 232-70 138 106 246 84 158-96 262-72 158 84 256 66v188z" fill="#180e3f"/>
+                <path d="M0 420V300c110-30 168 26 268 8s142-70 244-50 140 82 244 62 160-72 258-52 148 62 226 48v104z" fill="#120a33"/>
+            </svg>
+        </div>
+
+        <!-- GROUND — soil, water, and the garden that accumulates -->
+        <div class="layer layer--ground" id="layerGround">
+            <div class="soil" id="soil"></div>
+            <div class="water" id="water" aria-hidden="true">
+                <svg viewBox="0 0 1200 300" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0" stop-color="#7db2bb"/><stop offset=".6" stop-color="#3f4f9a"/><stop offset="1" stop-color="#7db2bb"/>
+                        </linearGradient>
+                    </defs>
+                    <path class="water__path" id="waterMain" d="M-40 118C140 96 210 168 380 162s232-72 402-60 254 78 470 44"
+                          stroke="url(#waterGrad)" stroke-width="16" opacity=".85"/>
+                    <path class="water__path" id="waterEcho" d="M-40 152C150 132 230 196 392 190s244-66 408-56 256 74 460 40"
+                          stroke="#7db2bb" stroke-width="5" opacity=".45"/>
+                </svg>
+            </div>
+            <div id="gardenPlants" aria-hidden="true"></div>
+            <div id="gardenFlowers" aria-hidden="true"></div>
+            <div id="seedField" aria-hidden="true"></div>
+            <div id="dropField" aria-hidden="true"></div>
+        </div>
+
+        <!-- CHARACTERS -->
+        <div class="layer layer--char" id="layerChar">
+            <!-- =========================================================
+                 USER ASSET: ELEPHANT — assets/elephant.png
+                 ========================================================= -->
+            <div class="figure stage-figure" id="fig-elephant">
+                <img src="assets/elephant.png" alt="Elephants carrying water to the garden"
+                     loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')">
+                <svg class="ph" viewBox="0 0 300 210" aria-hidden="true"><use href="#ph-elephant"/></svg>
+            </div>
+
+            <!-- =========================================================
+                 USER ASSET: MONKEY — assets/monkey.png
+                 ========================================================= -->
+            <div class="figure stage-figure" id="fig-monkey">
+                <img src="assets/monkey.png" alt="A monkey planting seeds"
+                     loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')">
+                <svg class="ph" viewBox="0 0 180 240" aria-hidden="true"><use href="#ph-monkey"/></svg>
+            </div>
+
+            <!-- =========================================================
+                 USER ASSET: DEER — assets/deer.png
+                 ========================================================= -->
+            <div class="figure stage-figure" id="fig-deer">
+                <img src="assets/deer.png" alt="A deer gathering flowers"
+                     loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')">
+                <svg class="ph" viewBox="0 0 240 240" aria-hidden="true"><use href="#ph-deer"/></svg>
+            </div>
+
+            <!-- =========================================================
+                 USER ASSET: OWL — the narrator, present at the reveal
+                 ========================================================= -->
+            <div class="figure stage-figure owl" id="fig-owl-stage">
+                <img class="owl__img" src="assets/owl.png" alt="The owl watching the finished garden"
+                     loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')">
+                <svg class="ph" viewBox="0 0 200 230" aria-hidden="true"><use href="#ph-owl"/></svg>
+                <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
+                <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
+            </div>
+        </div>
+
+        <!-- =========================================================
+             USER ASSET: PARROT — assets/parrot.png (reused 5×)
+             Each bird has its own depth, path, speed and scale.
+             ========================================================= -->
+        <div class="parrot figure parrot--back"  id="parrot-1"><img src="assets/parrot.png" alt="" loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')"><svg class="ph" viewBox="0 0 220 130" aria-hidden="true"><use href="#ph-parrot"/></svg></div>
+        <div class="parrot figure"               id="parrot-2"><img src="assets/parrot.png" alt="" loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')"><svg class="ph" viewBox="0 0 220 130" aria-hidden="true"><use href="#ph-parrot"/></svg></div>
+        <div class="parrot figure parrot--fore"  id="parrot-3"><img src="assets/parrot.png" alt="" loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')"><svg class="ph" viewBox="0 0 220 130" aria-hidden="true"><use href="#ph-parrot"/></svg></div>
+        <div class="parrot figure"               id="parrot-4"><img src="assets/parrot.png" alt="" loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')"><svg class="ph" viewBox="0 0 220 130" aria-hidden="true"><use href="#ph-parrot"/></svg></div>
+        <div class="parrot figure parrot--back"  id="parrot-5"><img src="assets/parrot.png" alt="" loading="lazy" onerror="this.closest('.figure').classList.add('is-missing')"><svg class="ph" viewBox="0 0 220 130" aria-hidden="true"><use href="#ph-parrot"/></svg></div>
+
+        <!-- FOREGROUND — leaves that pass in front of the characters -->
+        <div class="layer layer--fore" id="layerFore" aria-hidden="true">
+            <svg class="leaf" style="left:-7%;bottom:-8%;width:clamp(200px,30vw,520px);transform:rotate(-12deg)" viewBox="0 0 120 60"><use href="#ph-leaf"/></svg>
+            <svg class="leaf" style="right:-8%;bottom:-12%;width:clamp(220px,32vw,560px);transform:scaleX(-1) rotate(-8deg)" viewBox="0 0 120 60"><use href="#ph-leaf"/></svg>
+            <svg class="leaf" style="left:-5%;top:-8%;width:clamp(160px,24vw,400px);transform:rotate(150deg)" viewBox="0 0 120 60"><use href="#ph-leaf"/></svg>
+        </div>
+
+        <!-- COPY — one primary focus at a time -->
+        <div class="layer--copy">
+            <div class="scene-copy scene-copy--right" id="copyElephant">
+                <span class="scene-tag"><span class="pip"></span> Contribution 01</span>
+                <h3 class="display scene-copy__title">Elephants</h3>
+                <p class="scene-copy__line">Brought the water.</p>
+            </div>
+
+            <div class="scene-copy scene-copy--left" id="copyMonkey">
+                <span class="scene-tag"><span class="pip"></span> Contribution 02</span>
+                <h3 class="display scene-copy__title">Monkeys</h3>
+                <p class="scene-copy__line">Planted the seeds.</p>
+            </div>
+
+            <div class="scene-copy scene-copy--right" id="copyDeer">
+                <span class="scene-tag"><span class="pip"></span> Contribution 03</span>
+                <h3 class="display scene-copy__title">Deer</h3>
+                <p class="scene-copy__line">Collected the flowers.</p>
+            </div>
+
+            <div class="scene-copy scene-copy--midleft" id="copyParrot">
+                <span class="scene-tag"><span class="pip"></span> Contribution 04</span>
+                <h3 class="display scene-copy__title">Parrots</h3>
+                <p class="scene-copy__line">Spread the word.</p>
+            </div>
+        </div>
+
+        <!-- parrot word fragments -->
+        <span class="word-frag" id="frag-1" style="left:12%;top:30%">Look.</span>
+        <span class="word-frag is-solid" id="frag-2" style="right:14%;top:56%">Share.</span>
+        <span class="word-frag" id="frag-3" style="left:24%;bottom:24%">Discover.</span>
+        <span class="word-frag is-solid" id="frag-4" style="right:22%;top:22%">Remember.</span>
+
+        <!-- GARDEN REVEAL payoff -->
+        <div class="reveal-copy" id="revealCopy">
+            <h3 class="display reveal-copy__title">Different strengths.<br><span class="grad">One vision.</span></h3>
+            <p class="lede" style="text-align:center">That's how something beautiful gets built.</p>
+        </div>
+
+        <span class="scene-tag owl-label" id="owlLabel">The one who sees the whole picture</span>
+        <div class="stage-veil" id="stageVeil" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     STORY — STATIC FALLBACK
+     Shown only when motion is reduced or GSAP is unavailable,
+     so Chapter One is always readable.
+     ========================================================= -->
+<section class="story-static" id="storyStatic" hidden>
+    <div class="story-static__grid">
+        <article class="story-static__item"><h3>Elephants</h3><p>Brought the water.</p></article>
+        <article class="story-static__item"><h3>Monkeys</h3><p>Planted the seeds.</p></article>
+        <article class="story-static__item"><h3>Deer</h3><p>Collected the flowers.</p></article>
+        <article class="story-static__item"><h3>Parrots</h3><p>Spread the word.</p></article>
+    </div>
+    <div class="story-static__payoff">
+        <h2 class="display" style="font-size:clamp(28px,5vw,64px);text-transform:uppercase">Different strengths. One vision.</h2>
+        <p class="lede" style="text-align:center">That's how something beautiful gets built.</p>
+        <span class="scene-tag"><span class="pip"></span> The owl: the one who sees the whole picture</span>
+    </div>
+</section>
+
+<!-- =========================
+     MASSBAR MESSAGE / TRANSITION
+   ========================= -->
+<section class="philosophy" id="services">
+    <div class="philosophy__grid">
+        <div style="display:grid;gap:22px" data-reveal>
+            <p class="eyebrow">The Massbar way</p>
+            <h2 class="display philosophy__title">
+                Great brands are built the same way — <em>different strengths</em> working together around one clear vision.
+            </h2>
+            <p class="lede">
+                Strategy carries the water. Ideas plant the seeds. Design collects the beauty.
+                Communication spreads the word. Nothing here works alone — and that is exactly the point.
+            </p>
+        </div>
+
+        <ul class="strength-list" aria-label="How Massbar works">
+            <li class="strength" data-reveal><span class="strength__idx">01</span><span class="strength__name">Strategy</span><span class="strength__role">Brought the water</span></li>
+            <li class="strength" data-reveal><span class="strength__idx">02</span><span class="strength__name">Ideas</span><span class="strength__role">Planted the seeds</span></li>
+            <li class="strength" data-reveal><span class="strength__idx">03</span><span class="strength__name">Design</span><span class="strength__role">Collected the flowers</span></li>
+            <li class="strength" data-reveal><span class="strength__idx">04</span><span class="strength__name">Reach</span><span class="strength__role">Spread the word</span></li>
+            <li class="strength" data-reveal><span class="strength__idx">05</span><span class="strength__name">Perspective</span><span class="strength__role">Sees the whole picture</span></li>
+        </ul>
+    </div>
+</section>
+
+<!-- =========================
+     FINAL CHAPTER-ONE TRANSITION
+     The camera moves toward the owl's eyes, the world darkens,
+     and the next chapter is promised.
+   ========================= -->
+<section class="bridge" id="bridge">
+    <div class="bridge__stage" id="bridgeStage">
+        <!-- USER ASSET: OWL — assets/owl.png -->
+        <div class="bridge__owl figure owl" id="owlBridge">
+            <img class="owl__img" src="assets/owl.png" alt="The owl, close" loading="lazy"
+                 onerror="this.closest('.figure').classList.add('is-missing')">
+            <svg class="ph" viewBox="0 0 200 230" aria-hidden="true"><use href="#ph-owl"/></svg>
+            <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
+            <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
+        </div>
+        <div class="bridge__dark" id="bridgeDark" aria-hidden="true"></div>
+        <p class="bridge__line" id="bridgeLine">The story is only beginning.</p>
+    </div>
+</section>
+
+<!-- =========================================================
+     CHAPTER TWO WILL BEGIN HERE
+     ========================================================= -->
+<section class="next-chapter" id="work">
+    <span class="next-chapter__num" aria-hidden="true">02</span>
+    <p class="eyebrow">Chapter Two</p>
+    <h2 class="display" style="font-size:clamp(26px,4vw,54px);text-transform:uppercase">In production</h2>
+    <p class="lede" style="text-align:center">The next chapter of the Massbar story — work, craft and the brands we've helped people remember.</p>
+</section>
+</main>
+
+<!-- =========================
+     FOOTER
+   ========================= -->
+<footer class="site-footer" id="contact">
+    <div class="site-footer__inner">
+        <p class="footer-word">Massbar</p>
+        <div class="footer-grid">
+            <p class="footer-claim">Different strengths.<br><span>One vision.</span><br>Let's build something beautiful.</p>
+            <nav class="footer-nav" aria-label="Footer">
+                <a href="#story">Story</a>
+                <a href="#services">Services</a>
+                <a href="#work">Work</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="footer-cta">
+                <p>Tell us what you're building. We'll bring the rest of the garden.</p>
+                <a class="btn-quote btn-quote--lg" href="mailto:hello@massbar.studio">
+                    <span class="btn-quote__sweep" aria-hidden="true"></span>
+                    <span class="btn-quote__dot" aria-hidden="true"></span>
+                    Get Quote <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        </div>
+        <div class="footer-base">
+            <span>© <span id="year">2026</span> Massbar. All rights reserved.</span>
+            <span>Chapter One — The Garden</span>
+        </div>
+    </div>
+</footer>
+
+<!-- =========================
+     JAVASCRIPT
+   ========================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+"use strict";
+
+/* ---------------------------------------------------------
+   ENVIRONMENT
+   --------------------------------------------------------- */
+var root        = document.documentElement;
+var REDUCED     = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var TOUCH       = !window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+var HAS_GSAP    = !!(window.gsap && window.ScrollTrigger);
+var STATIC_MODE = REDUCED || !HAS_GSAP;      /* story shown, motion removed */
+
+var $  = function (s, c) { return (c || document).querySelector(s); };
+var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+var vw = function (f) { return window.innerWidth  * f; };
+var vh = function (f) { return window.innerHeight * f; };
+var rand = function (a, b) { return a + Math.random() * (b - a); };
+var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+
+/* device tier — drives particle counts and scene density */
+var TIER = window.innerWidth < 700 ? "mobile" : window.innerWidth < 1100 ? "tablet" : "desktop";
+var DENSITY = { mobile: { particles: 14, plants: 8,  flowers: 8  },
+                tablet: { particles: 26, plants: 11, flowers: 11 },
+                desktop:{ particles: 44, plants: 15, flowers: 15 } }[TIER];
+
+if (HAS_GSAP) { gsap.registerPlugin(ScrollTrigger); }
+if (STATIC_MODE) { root.classList.add("is-static"); }
+
+/* ---------------------------------------------------------
+   SHARED POINTER FIELD
+   One pointer source, one rAF loop. Everything that reacts to
+   the cursor reads from here — no competing loops.
+   --------------------------------------------------------- */
+/* `fine` flips on the first real mouse/pen move, so pointer effects
+   switch themselves on for devices that actually have a cursor
+   instead of relying on a media query alone. */
+var pointer = { x: 0, y: 0, lx: 0, ly: 0, nx: 0, ny: 0, active: false, fine: false };
+var frameTasks = [];
+var rafId = null, running = false;
+
+function addFrameTask(fn) { frameTasks.push(fn); }
+
+function loop() {
+    /* pointer easing — smooth, never snappy */
+    pointer.lx += (pointer.x - pointer.lx) * 0.075;
+    pointer.ly += (pointer.y - pointer.ly) * 0.075;
+    pointer.nx = (pointer.lx / window.innerWidth  - 0.5) * 2;
+    pointer.ny = (pointer.ly / window.innerHeight - 0.5) * 2;
+
+    for (var i = 0; i < frameTasks.length; i++) { frameTasks[i](); }
+    rafId = requestAnimationFrame(loop);
+}
+function startLoop() { if (!running && frameTasks.length) { running = true; rafId = requestAnimationFrame(loop); } }
+function stopLoop()  { if (running) { running = false; cancelAnimationFrame(rafId); } }
+
+function initPointerTracking() {
+    pointer.x = pointer.lx = window.innerWidth  / 2;
+    pointer.y = pointer.ly = window.innerHeight / 2;
+    if (REDUCED) { return; }
+    window.addEventListener("pointermove", function (e) {
+        if (e.pointerType === "touch") { return; }   /* taps never drive the scene */
+        pointer.x = e.clientX; pointer.y = e.clientY;
+        pointer.active = true; pointer.fine = true;
+    }, { passive: true });
+    window.addEventListener("pointerleave", function () { pointer.active = false; }, { passive: true });
+}
+
+/* ---------------------------------------------------------
+   OWL EYE TRACKING
+   Only the pupils move — never the whole owl. Smooth
+   interpolation, capped travel, disabled on touch.
+   --------------------------------------------------------- */
+function initOwlEyeTracking() {
+    if (REDUCED) { return; }
+    var owls = $$(".owl");
+    if (!owls.length) { return; }
+
+    var eyes = [];
+    owls.forEach(function (owl) {
+        $$(".owl__eye", owl).forEach(function (eye) {
+            eyes.push({ owl: owl, eye: eye, pupil: $(".owl__pupil", eye), x: 0, y: 0, tx: 0, ty: 0, live: false });
+        });
+    });
+
+    /* only track owls that are actually on screen */
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+            eyes.forEach(function (e) { if (e.owl === en.target) { e.live = en.isIntersecting; } });
+        });
+    }, { rootMargin: "10% 0px" });
+    owls.forEach(function (o) { io.observe(o); });
+
+    var travelPct = parseFloat(getComputedStyle(root).getPropertyValue("--owl-pupil-travel")) || 26;
+
+    addFrameTask(function () {
+        if (!pointer.fine) { return; }
+        var i, e, r, dx, dy, angle, dist, max;
+        /* pass 1 — read */
+        for (i = 0; i < eyes.length; i++) {
+            e = eyes[i];
+            if (!e.live) { continue; }
+            r = e.eye.getBoundingClientRect();
+            if (!r.width) { continue; }
+            max = r.width * travelPct / 100;
+            dx = pointer.lx - (r.left + r.width  / 2);
+            dy = pointer.ly - (r.top  + r.height / 2);
+            angle = Math.atan2(dy, dx);
+            dist  = Math.min(max, Math.sqrt(dx * dx + dy * dy) / 26);
+            e.tx = Math.cos(angle) * dist;
+            e.ty = Math.sin(angle) * dist;
+        }
+        /* pass 2 — write */
+        for (i = 0; i < eyes.length; i++) {
+            e = eyes[i];
+            if (!e.live) { continue; }
+            e.x += (e.tx - e.x) * 0.09;
+            e.y += (e.ty - e.y) * 0.09;
+            e.pupil.style.transform = "translate3d(" + e.x.toFixed(2) + "px," + e.y.toFixed(2) + "px,0)";
+        }
+    });
+}
+
+/* ---------------------------------------------------------
+   MOUSE PARALLAX  (camera moving through layered scene)
+   Foreground travels most, background travels the other way,
+   typography barely moves. Uses the `translate` property so it
+   composes with existing CSS/GSAP transforms.
+   --------------------------------------------------------- */
+function initMouseParallax() {
+    if (REDUCED) { return; }
+    var items = $$("[data-depth]").map(function (el) {
+        return { el: el, d: parseFloat(el.dataset.depth) || 0, x: 0, y: 0 };
+    });
+    /* foreground leaves get their own, stronger response */
+    $$(".hero__leaves .leaf").forEach(function (el, i) {
+        items.push({ el: el, d: 0.18 + i * 0.05, x: 0, y: 0 });
+    });
+    if (!items.length) { return; }
+
+    var heroVisible = true;
+    var hero = $("#hero");
+    if (hero && "IntersectionObserver" in window) {
+        new IntersectionObserver(function (e) { heroVisible = e[0].isIntersecting; })
+            .observe(hero);
+    }
+
+    addFrameTask(function () {
+        if (!heroVisible || !pointer.fine) { return; }
+        for (var i = 0; i < items.length; i++) {
+            var it = items[i];
+            var tx = -pointer.nx * 34 * it.d;
+            var ty = -pointer.ny * 26 * it.d;
+            it.x += (tx - it.x) * 0.08;
+            it.y += (ty - it.y) * 0.08;
+            it.el.style.translate = it.x.toFixed(2) + "px " + it.y.toFixed(2) + "px";
+        }
+    });
+}
+
+/* ---------------------------------------------------------
+   AMBIENT PARTICLES
+   Pollen, seed dust and firefly light. A few dozen, drawn to a
+   canvas from a pre-rendered glow sprite (cheap), gently pushed
+   aside by the cursor.
+   --------------------------------------------------------- */
+function initAmbientParticles() {
+    var canvas = $("#ambient");
+    if (!canvas || REDUCED) { if (canvas) { canvas.style.display = "none"; } return; }
+
+    var ctx = canvas.getContext("2d");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0;
+    var COLORS = ["#feb14a", "#fe7344", "#7db2bb", "#e24386", "#7d2bc1"];
+    var REPULSE = TIER === "mobile" ? 0 : 300;   /* px — subtle, not chaotic */
+    var sprites = {};
+
+    function makeSprite(color) {
+        var s = document.createElement("canvas");
+        var size = 48;
+        s.width = s.height = size;
+        var c = s.getContext("2d");
+        var g = c.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+        g.addColorStop(0,   color);
+        g.addColorStop(0.28, color);
+        g.addColorStop(1,   "rgba(0,0,0,0)");
+        c.globalAlpha = 1;
+        c.fillStyle = g;
+        c.beginPath(); c.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2); c.fill();
+        return s;
+    }
+    COLORS.forEach(function (c) { sprites[c] = makeSprite(c); });
+
+    var parts = [];
+    function build() {
+        parts.length = 0;
+        for (var i = 0; i < DENSITY.particles; i++) {
+            var col = COLORS[(Math.random() * COLORS.length) | 0];
+            parts.push({
+                x: Math.random() * W, y: Math.random() * H,
+                r: rand(1.4, 4.6),
+                vx: rand(-0.16, 0.16), vy: rand(-0.34, -0.06),
+                ox: 0, oy: 0,
+                a: rand(0.18, 0.62),
+                tw: rand(0.4, 1.6), tp: Math.random() * Math.PI * 2,
+                col: col
+            });
+        }
+    }
+    function resize() {
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        canvas.style.width = W + "px"; canvas.style.height = H + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        build();
+    }
+    resize();
+    window.addEventListener("resize", debounce(resize, 220), { passive: true });
+
+    addFrameTask(function () {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < parts.length; i++) {
+            var p = parts[i];
+            p.x += p.vx; p.y += p.vy;
+            p.tp += 0.02 * p.tw;
+
+            /* wrap softly */
+            if (p.y < -20) { p.y = H + 20; p.x = Math.random() * W; }
+            if (p.x < -20) { p.x = W + 20; } else if (p.x > W + 20) { p.x = -20; }
+
+            /* pointer repulsion — gentle drift away, then return */
+            var px = 0, py = 0;
+            if (REPULSE && pointer.active && pointer.fine) {
+                var dx = p.x - pointer.lx, dy = p.y - pointer.ly;
+                var d = Math.sqrt(dx * dx + dy * dy);
+                if (d < REPULSE && d > 0.001) {
+                    var force = (1 - d / REPULSE) * 26;
+                    px = (dx / d) * force; py = (dy / d) * force;
+                }
+            }
+            p.ox += (px - p.ox) * 0.06;
+            p.oy += (py - p.oy) * 0.06;
+
+            var alpha = p.a * (0.62 + 0.38 * Math.sin(p.tp));
+            var s = sprites[p.col];
+            var size = p.r * 7;
+            ctx.globalAlpha = alpha;
+            ctx.drawImage(s, p.x + p.ox - size / 2, p.y + p.oy - size / 2, size, size);
+        }
+        ctx.globalAlpha = 1;
+    });
+}
+
+function debounce(fn, ms) {
+    var t; return function () { clearTimeout(t); var a = arguments, s = this; t = setTimeout(function () { fn.apply(s, a); }, ms); };
+}
+
+/* ---------------------------------------------------------
+   GARDEN CONSTRUCTION
+   The plants, flowers, seeds and droplets are created ONCE and
+   reused by the scroll timeline — no runaway DOM particles.
+   Everything that grows stays grown.
+   --------------------------------------------------------- */
+var garden = { plants: [], flowers: [], seeds: [], glows: [], drops: [] };
+
+var FLOWER_COLORS = ["#feb14a", "#fe7344", "#e24386", "#7db2bb", "#7d2bc1"];
+
+function plantSVG(w) {
+    return '<svg viewBox="0 0 60 130" width="' + w + '" height="' + (w * 130 / 60) + '" aria-hidden="true">' +
+        '<path class="stem" d="M30 130 C24 96 36 74 30 22"/>' +
+        '<ellipse class="leaf-a" cx="10" cy="94" rx="21" ry="9"   transform="rotate(-26 10 94)" fill="#3f4f9a" opacity=".95"/>' +
+        '<ellipse class="leaf-b" cx="50" cy="74" rx="20" ry="8.5" transform="rotate(24 50 74)"  fill="#7db2bb" opacity=".8"/>' +
+        '<ellipse class="leaf-a" cx="15" cy="52" rx="16" ry="7"   transform="rotate(-32 15 52)" fill="#3f4f9a" opacity=".7"/>' +
+        '<ellipse class="leaf-b" cx="44" cy="34" rx="14" ry="6"   transform="rotate(30 44 34)"  fill="#7db2bb" opacity=".6"/>' +
+        '</svg>';
+}
+function flowerSVG(w, color) {
+    var p = '';
+    for (var i = 0; i < 6; i++) {
+        p += '<ellipse cx="30" cy="16" rx="7.5" ry="13" fill="' + color + '" opacity=".92" transform="rotate(' + (i * 60) + ' 30 30)"/>';
+    }
+    return '<svg viewBox="0 0 60 74" width="' + w + '" height="' + (w * 74 / 60) + '" aria-hidden="true">' +
+        '<path d="M30 74 C27 56 33 46 30 34" stroke="#7db2bb" stroke-width="2.2" fill="none" stroke-linecap="round"/>' +
+        p + '<circle cx="30" cy="30" r="6" fill="#feb14a"/></svg>';
+}
+
+function buildGarden() {
+    var plantsHost  = $("#gardenPlants");
+    var flowersHost = $("#gardenFlowers");
+    var seedHost    = $("#seedField");
+    var dropHost    = $("#dropField");
+    if (!plantsHost) { return; }
+
+    var n = DENSITY.plants, i;
+
+    for (i = 0; i < n; i++) {
+        var t     = i / (n - 1);
+        var xPct  = 5 + t * 90 + rand(-3.5, 3.5);
+        var depth = Math.random();                 /* 0 = near, 1 = far */
+        var bot   = 4 + depth * 20;                /* higher = further back */
+        var w     = 66 - depth * 34;
+
+        var plant = document.createElement("div");
+        plant.className = "plant";
+        plant.style.left   = xPct + "%";
+        plant.style.bottom = bot + "%";
+        plant.style.opacity = 0;
+        plant.style.zIndex = Math.round((1 - depth) * 10);
+        plant.innerHTML = plantSVG(w);
+        plantsHost.appendChild(plant);
+        garden.plants.push({ el: plant, x: xPct, bottom: bot, w: w });
+
+        /* the glow that marks the moment a seed lands */
+        var glow = document.createElement("span");
+        glow.className = "sprout-glow";
+        glow.style.left = xPct + "%";
+        glow.style.bottom = bot + "%";
+        plantsHost.appendChild(glow);
+        garden.glows.push(glow);
+
+        /* one seed per plant */
+        var seed = document.createElement("span");
+        seed.className = "seed";
+        seed.style.left = xPct + "%";
+        seed.style.bottom = bot + "%";
+        seedHost.appendChild(seed);
+        garden.seeds.push(seed);
+    }
+
+    /* flowers — clustered, not evenly spread */
+    var f = DENSITY.flowers;
+    for (i = 0; i < f; i++) {
+        var base = garden.plants[(i * 2 + 1) % garden.plants.length];
+        var fw   = rand(26, 52);
+        var flower = document.createElement("div");
+        flower.className = "flower";
+        flower.style.left   = clamp(base.x + rand(-6, 6), 2, 96) + "%";
+        flower.style.bottom = clamp(base.bottom + rand(-2, 6), 2, 28) + "%";
+        flower.style.zIndex = Math.round(rand(1, 10));
+        flower.innerHTML = flowerSVG(fw, FLOWER_COLORS[i % FLOWER_COLORS.length]);
+        flowersHost.appendChild(flower);
+        garden.flowers.push(flower);
+    }
+
+    /* droplets travelling with the water */
+    for (i = 0; i < 12; i++) {
+        var d = document.createElement("span");
+        d.className = "droplet";
+        d.style.left   = (4 + i * 8 + rand(-2, 2)) + "%";
+        d.style.bottom = (16 + rand(-6, 8)) + "%";
+        dropHost.appendChild(d);
+        garden.drops.push(d);
+    }
+}
+
+/* ---------------------------------------------------------
+   HEADER + MOBILE MENU
+   --------------------------------------------------------- */
+function initHeader() {
+    var header = $("#header");
+    var last = -1;
+    window.addEventListener("scroll", function () {
+        var y = window.scrollY > 40 ? 1 : 0;
+        if (y !== last) { last = y; header.classList.toggle("is-lifted", !!y); }
+    }, { passive: true });
+}
+
+function initMobileMenu() {
+    var btn   = $("#menuToggle");
+    var panel = $("#mobilePanel");
+    if (!btn || !panel) { return; }
+    function setOpen(open) {
+        btn.setAttribute("aria-expanded", String(open));
+        btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        panel.classList.toggle("is-open", open);
+    }
+    btn.addEventListener("click", function () {
+        setOpen(btn.getAttribute("aria-expanded") !== "true");
+    });
+    $$("a", panel).forEach(function (a) { a.addEventListener("click", function () { setOpen(false); }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { setOpen(false); } });
+}
+
+/* ---------------------------------------------------------
+   GENERIC REVEALS (secondary detail, not story choreography)
+   --------------------------------------------------------- */
+function initReveals() {
+    var els = $$("[data-reveal]");
+    if (!("IntersectionObserver" in window)) {
+        els.forEach(function (el) { el.classList.add("is-in"); }); return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+        });
+    }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+    els.forEach(function (el, i) {
+        el.style.transitionDelay = (i % 5) * 70 + "ms";
+        io.observe(el);
+    });
+}
+
+/* ---------------------------------------------------------
+   HERO ENTRANCE
+   --------------------------------------------------------- */
+function initHero() {
+    /* if the supplied hero artwork exists, use it */
+    var bg = $("#heroBg");
+    var probe = new Image();
+    probe.onload = function () { bg.classList.add("has-art"); };
+    probe.src = "assets/hero.jpg";
+
+    if (STATIC_MODE) { return; }
+
+    var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    tl.from(".hero__title .line i", { yPercent: 118, duration: 1.15, stagger: 0.09 }, 0.15)
+      .from(".hero__brandline", { opacity: 0, y: 14, duration: 0.8 }, 0.1)
+      .from("#heroLede, .hero__scroll", { opacity: 0, y: 18, duration: 0.9, stagger: 0.1 }, 0.7)
+      .from("#owlHero", { opacity: 0, y: -60, scale: 0.94, rotate: -4, duration: 1.5, ease: "power2.out" }, 0.35)
+      .from(".hero__leaves .leaf", { opacity: 0, scale: 1.14, duration: 1.4, stagger: 0.12 }, 0);
+
+    /* the owl breathes */
+    gsap.to("#owlHero", { y: "+=12", duration: 4.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.6 });
+
+    /* scroll parallax out of the hero */
+    gsap.to("#heroBg",   { yPercent: 12, ease: "none", scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true } });
+    gsap.to(".hero__copy", { yPercent: -18, opacity: 0.15, ease: "none", scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true } });
+    gsap.to("#owlHero",  { yPercent: 40, ease: "none", scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true } });
+}
+
+/* ---------------------------------------------------------
+   CHAPTER ONE INTRODUCTION — the owl descends
+   --------------------------------------------------------- */
+function initChapterIntro() {
+    if (STATIC_MODE) { return; }
+    var owl = $("#owlIntro");
+
+    gsap.set(owl, { opacity: 0 });
+
+    ScrollTrigger.create({
+        trigger: "#story",
+        start: "top 72%",
+        once: true,
+        onEnter: function () {
+            gsap.timeline()
+                .fromTo(owl,
+                    { opacity: 0, y: function () { return -vh(1); }, rotate: -5, scale: 0.92 },
+                    { opacity: 1, y: 0, rotate: 0, scale: 1, duration: 1.7, ease: "power3.out" })
+                /* …then it simply floats, watching */
+                .add(function () {
+                    gsap.to(owl, { y: "+=14", rotate: 1.2, duration: 3.8, ease: "sine.inOut", yoyo: true, repeat: -1 });
+                });
+        }
+    });
+
+    /* the chapter number drifts as you scroll through the intro */
+    gsap.to(".chapter-intro__num", {
+        yPercent: 40, opacity: 0.35, ease: "none",
+        scrollTrigger: { trigger: "#story", start: "top bottom", end: "bottom top", scrub: true }
+    });
+}
+
+/* ---------------------------------------------------------
+   WATER — path preparation (stroke drawing)
+   --------------------------------------------------------- */
+var waterPaths = [];
+function prepWater() {
+    waterPaths = [$("#waterMain"), $("#waterEcho")].filter(Boolean);
+    waterPaths.forEach(function (p) {
+        var len = p.getTotalLength ? p.getTotalLength() : 2400;
+        p.style.strokeDasharray  = len;
+        p.style.strokeDashoffset = STATIC_MODE ? 0 : len;
+        p.__len = len;
+    });
+}
+
+/* ---------------------------------------------------------
+   CHAPTER ONE — MASTER SCROLL TIMELINE
+   One pinned stage. Scroll position IS the story position, so
+   scrubbing backwards un-tells it just as smoothly.
+   --------------------------------------------------------- */
+var owlFloating = false;
+
+function initChapterScroll() {
+    var fill   = $("#chapterFill");
+    var marker = $("#chapterMarker");
+
+    var master = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+            trigger: "#chapterOne",
+            start: "top top",
+            end: "+=680%",
+            pin: "#stage",
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: function (self) { fill.style.height = (self.progress * 100).toFixed(2) + "%"; },
+            onToggle: function (self) { marker.classList.toggle("is-visible", self.isActive); }
+        }
+    });
+
+    initCamera(master);
+    initElephantScene(master);
+    initMonkeyScene(master);
+    initDeerScene(master);
+    initParrotScene(master);
+    initGardenReveal(master);
+}
+
+/* --- camera: depth, pans, and the final pull-back --- */
+function initCamera(tl) {
+    gsap.set("#cam", { transformOrigin: "50% 56%" });
+
+    /* layers travel at different speeds for the whole chapter */
+    gsap.to(".vine", { rotate: 1.6, duration: 6, ease: "sine.inOut", yoyo: true, repeat: -1, stagger: 0.8 });
+
+    tl.to("#layerBack", { yPercent: -4, scale: 1.06, duration: 82 }, 0)
+      .to("#layerMid",  { yPercent:  3, scale: 1.03, duration: 82 }, 0)
+      .to("#layerFore", { yPercent:  8, scale: 1.12, duration: 82 }, 0);
+
+    /* camera moves */
+    tl.fromTo("#cam", { scale: 1.24, yPercent: 2.5 }, { scale: 1.14, yPercent: 0, duration: 14, ease: "power2.out" }, 0)
+      .to("#cam", { xPercent:  2.2, scale: 1.16, duration: 16, ease: "sine.inOut" }, 26)
+      .to("#cam", { xPercent: -1.6, scale: 1.13, duration: 16, ease: "sine.inOut" }, 48)
+      .to("#cam", { xPercent:  0,   scale: 1.18, duration: 14, ease: "sine.inOut" }, 66)
+      /* pull back — the whole garden comes into frame. The scale
+         floor stays above 1 so the stage edges never show. */
+      .to("#cam", { scale: 1.02, yPercent: -1, duration: 16, ease: "power2.inOut" }, 82);
+
+    /* foreground rushes past the viewer during the pull-back */
+    tl.to("#layerFore", { scale: 1.6, yPercent: 30, opacity: 0.3, duration: 16, ease: "power2.in" }, 82);
+}
+
+/* =========================
+     ELEPHANT SCENE — WATER
+     PRIMARY elephant · SECONDARY water · TERTIARY type
+   ========================= */
+function initElephantScene(tl) {
+    var el = $("#fig-elephant");
+    gsap.set(el, { xPercent: -50, yPercent: -50 });
+
+    tl.fromTo(el,
+        { opacity: 0, x: function () { return -vw(0.58); }, rotate: -3, scale: 0.9 },
+        { opacity: 1, x: 0, rotate: 0, scale: 1, duration: 10, ease: "power2.out" }, 6)
+      .fromTo("#copyElephant", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 4, ease: "power2.out" }, 12);
+
+    /* the water is poured, and travels across the soil */
+    waterPaths.forEach(function (p, i) {
+        tl.to(p, { strokeDashoffset: 0, duration: 13 - i * 2, ease: "power1.inOut" }, 13 + i * 1.5);
+    });
+    tl.to("#soil", { "--wet": 0.34, duration: 10 }, 15);
+
+    /* droplets follow the flow, then soak in */
+    tl.fromTo(garden.drops,
+        { opacity: 0, y: -16, scale: 0.6 },
+        { opacity: 0.9, y: 0, scale: 1, duration: 4, stagger: 0.45, ease: "power2.in" }, 16)
+      .to(garden.drops, { opacity: 0.25, scale: 0.7, duration: 5, stagger: 0.2 }, 30);
+
+    /* the elephant settles back into the world — it never leaves */
+    tl.to("#copyElephant", { opacity: 0, y: -22, duration: 4 }, 26)
+      .to(el, { x: function () { return -vw(0.12); }, y: function () { return vh(0.05); },
+                scale: 0.6, opacity: 0.72, duration: 12, ease: "power2.inOut" }, 28);
+}
+
+/* =========================
+     MONKEY SCENE — SEEDS
+     Water reached the soil, so now the soil can be planted.
+   ========================= */
+function initMonkeyScene(tl) {
+    var mk = $("#fig-monkey");
+    gsap.set(mk, { xPercent: -50, yPercent: -50 });
+
+    tl.fromTo(mk,
+        { opacity: 0, y: function () { return -vh(0.62); }, rotate: 7, scale: 0.92 },
+        { opacity: 1, y: 0, rotate: 0, scale: 1, duration: 8, ease: "power3.out" }, 28)
+      .fromTo("#copyMonkey", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 4, ease: "power2.out" }, 33);
+
+    var n = garden.plants.length;
+    var monkeyX = parseFloat(getComputedStyle(root).getPropertyValue("--monkey-x")) || 70;
+
+    garden.plants.forEach(function (p, i) {
+        var seed  = garden.seeds[i];
+        var glow  = garden.glows[i];
+        var leaves = $$(".leaf-a, .leaf-b", p.el);
+        var t0 = 34 + i * (11 / n);
+        var dx = function () { return (monkeyX - p.x) / 100 * $("#stage").offsetWidth; };
+        var dy = function () { return -$("#stage").offsetHeight * (0.52 - p.bottom / 200); };
+
+        /* fall: x is linear, y accelerates — a natural arc */
+        tl.fromTo(seed, { opacity: 0, x: dx, y: dy, rotate: 0, scaleX: 1, scaleY: 1 },
+                        { opacity: 1, duration: 0.6 }, t0)
+          .to(seed, { x: 0, duration: 3.4, ease: "sine.out" }, t0)
+          .to(seed, { y: 0, rotate: 220, duration: 3.4, ease: "power2.in" }, t0)
+          /* impact */
+          .to(seed, { scaleY: 0.45, scaleX: 1.35, duration: 0.45, ease: "power2.out" }, t0 + 3.4)
+          .to(seed, { opacity: 0, duration: 0.7 }, t0 + 3.8)
+          .fromTo(glow, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7 }, t0 + 3.5)
+          .to(glow, { scale: 1.7, opacity: 0, duration: 1.6 }, t0 + 4.1)
+          /* growth — and it stays grown */
+          .fromTo(p.el, { opacity: 0, scaleY: 0, scaleX: 0.6, rotate: -5 },
+                        { opacity: 1, scaleY: 1, scaleX: 1, rotate: 0, duration: 3.4, ease: "back.out(1.5)" }, t0 + 3.9)
+          .fromTo(leaves, { scale: 0, transformOrigin: "50% 100%" },
+                          { scale: 1, duration: 1.8, stagger: 0.25, ease: "back.out(2)" }, t0 + 4.8);
+    });
+
+    tl.to("#copyMonkey", { opacity: 0, y: -22, duration: 4 }, 46)
+      .to(mk, { x: function () { return vw(0.14); }, y: function () { return -vh(0.04); },
+                scale: 0.58, opacity: 0.7, duration: 12, ease: "power2.inOut" }, 47);
+}
+
+/* =========================
+     DEER SCENE — FLOWERS
+     The watered, planted garden is now green enough to bloom.
+   ========================= */
+function initDeerScene(tl) {
+    var deer = $("#fig-deer");
+    gsap.set(deer, { xPercent: -50, yPercent: -50 });
+
+    tl.fromTo(deer,
+        { opacity: 0, x: function () { return vw(0.42); }, scale: 0.94, rotate: 2 },
+        { opacity: 1, x: 0, scale: 1, rotate: 0, duration: 12, ease: "power2.out" }, 48)
+      .fromTo("#copyDeer", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 4, ease: "power2.out" }, 54);
+
+    /* flowers open one after another, never all at once */
+    garden.flowers.forEach(function (f, i) {
+        var t0 = 54 + i * (12 / garden.flowers.length);
+        tl.fromTo(f, { opacity: 0, scale: 0, rotate: -22 },
+                     { opacity: 1, scale: 1, rotate: 0, duration: 2.6, ease: "back.out(2)" }, t0);
+    });
+
+    tl.to("#copyDeer", { opacity: 0, y: -22, duration: 4 }, 65)
+      .to(deer, { x: function () { return -vw(0.05); }, y: function () { return vh(0.04); },
+                  scale: 0.62, opacity: 0.75, duration: 12, ease: "power2.inOut" }, 66);
+}
+
+/* =========================
+     PARROT SCENE — SPREAD THE WORD
+     Different depths, directions, speeds. Some pass behind the
+     type, some in front of it.
+   ========================= */
+function initParrotScene(tl) {
+    var flights = [
+        { id: "#parrot-1", from: [-0.72,  0.12], to: [ 0.78, -0.10], rot: -7,  scale: 0.72, t: 66, dur: 13 },
+        { id: "#parrot-2", from: [ 0.78, -0.16], to: [-0.74,  0.06], rot:  6,  scale: 1.00, t: 69, dur: 11 },
+        { id: "#parrot-3", from: [-0.66, -0.34], to: [ 0.72,  0.30], rot: 12,  scale: 1.18, t: 72, dur: 10 },
+        { id: "#parrot-4", from: [ 0.62,  0.30], to: [-0.68, -0.24], rot: -12, scale: 0.86, t: 75, dur: 11 },
+        { id: "#parrot-5", from: [-0.80,  0.02], to: [ 0.80,  0.16], rot:  4,  scale: 0.62, t: 78, dur: 12 }
+    ];
+
+    tl.fromTo("#copyParrot", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 4, ease: "power2.out" }, 68);
+
+    flights.forEach(function (f) {
+        var el = $(f.id);
+        gsap.set(el, { xPercent: -50, yPercent: -50 });
+        tl.fromTo(el,
+            { x: function () { return vw(f.from[0]); }, y: function () { return vh(f.from[1]); },
+              rotate: f.rot, scale: f.scale },
+            { x: function () { return vw(f.to[0]); }, y: function () { return vh(f.to[1]); },
+              rotate: -f.rot * 0.5, duration: f.dur, ease: "power1.inOut" }, f.t)
+          .fromTo(el, { opacity: 0 }, { opacity: 1, duration: 1.4 }, f.t)
+          .to(el, { opacity: 0, duration: 1.8 }, f.t + f.dur - 1.8);
+    });
+
+    /* the message itself — used sparingly */
+    ["#frag-1", "#frag-2", "#frag-3", "#frag-4"].forEach(function (id, i) {
+        var t0 = 69 + i * 3.2;
+        tl.fromTo(id, { opacity: 0, y: 24, scale: 0.94 },
+                      { opacity: 1, y: 0, scale: 1, duration: 2, ease: "power2.out" }, t0)
+          .to(id, { opacity: 0, y: -20, duration: 2.4 }, t0 + 5.2);
+    });
+
+    tl.to("#copyParrot", { opacity: 0, y: -22, duration: 4 }, 84);
+}
+
+/* =========================
+     GARDEN REVEAL — the payoff
+     Everything that was built is still here, together.
+   ========================= */
+function initGardenReveal(tl) {
+    var owl = $("#fig-owl-stage");
+    gsap.set(owl, { xPercent: -50, yPercent: -50 });
+    gsap.set(["#revealCopy", "#owlLabel"], { xPercent: -50, x: 0 });
+
+    /* the animals settle into one composition */
+    tl.to("#fig-elephant", { x: function () { return -vw(0.17); }, y: function () { return vh(0.06); },
+                             scale: 0.5,  opacity: 0.92, duration: 14, ease: "power2.inOut" }, 84)
+      .to("#fig-monkey",   { x: function () { return vw(0.12); },  y: function () { return -vh(0.01); },
+                             scale: 0.5,  opacity: 0.92, duration: 14, ease: "power2.inOut" }, 84)
+      .to("#fig-deer",     { x: function () { return -vw(0.10); }, y: function () { return vh(0.05); },
+                             scale: 0.54, opacity: 0.95, duration: 14, ease: "power2.inOut" }, 84);
+
+    /* the owl arrives above the finished garden */
+    tl.fromTo(owl, { opacity: 0, y: function () { return -vh(0.42); }, scale: 0.9, rotate: -4 },
+                   { opacity: 1, y: 0, scale: 1, rotate: 0, duration: 9, ease: "power3.out" }, 84)
+      .fromTo("#revealCopy", { opacity: 0, y: 34, scale: 0.97 },
+                             { opacity: 1, y: 0, scale: 1, duration: 6, ease: "power2.out" }, 90)
+      .fromTo("#owlLabel", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 4, ease: "power2.out" }, 95)
+      .to("#stageVeil", { opacity: 0.55, duration: 8 }, 92);
+
+    /* once settled, the owl simply breathes — driven by the shared
+       rAF loop through `translate` so it never fights the timeline */
+    ScrollTrigger.create({
+        trigger: "#chapterOne", start: "top top", end: "+=680%",
+        onUpdate: function (self) { owlFloating = self.progress > 0.86; }
+    });
+    addFrameTask(function () {
+        if (!owlFloating) { return; }
+        var t = performance.now() / 1000;
+        owl.style.translate = "0px " + (Math.sin(t * 0.85) * 8).toFixed(2) + "px";
+    });
+}
+
+/* ---------------------------------------------------------
+   FINAL CHAPTER-ONE TRANSITION
+   The camera moves into the owl's eyes, the world darkens, and
+   Chapter Two is promised.
+   --------------------------------------------------------- */
+function initBridgeScene() {
+    var eyeY = getComputedStyle(root).getPropertyValue("--owl-left-eye-y").trim() || "33%";
+    gsap.set("#owlBridge", { transformOrigin: "50% " + eyeY });
+
+    gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+            trigger: "#bridge", start: "top top", end: "+=240%",
+            pin: "#bridgeStage", scrub: 1, anticipatePin: 1, invalidateOnRefresh: true
+        }
+    })
+    .fromTo("#owlBridge", { scale: 0.88, opacity: 0.85 },
+                          { scale: 3.6, opacity: 1, duration: 11, ease: "power2.in" }, 0)
+    .to("#bridgeDark", { opacity: 0.94, duration: 5 }, 7)
+    .fromTo("#bridgeLine", { opacity: 0, y: 26, letterSpacing: "0.34em" },
+                           { opacity: 1, y: 0, letterSpacing: "0.02em", duration: 5, ease: "power2.out" }, 10);
+}
+
+/* ---------------------------------------------------------
+   STATIC MODE
+   Reduced motion, or GSAP unavailable: the garden is shown
+   already grown and the story copy is presented as readable
+   text. Nothing is hidden because animation is off.
+   --------------------------------------------------------- */
+function applyStaticMode() {
+    garden.plants.forEach(function (p) { p.el.style.opacity = 1; });
+    garden.flowers.forEach(function (f) { f.style.opacity = 1; });
+    garden.drops.forEach(function (d) { d.style.opacity = 0.5; });
+    $$(".stage-figure").forEach(function (el) { el.style.opacity = 1; });
+    $$(".parrot").forEach(function (el, i) {
+        el.style.opacity = 1;
+        el.style.left = (14 + i * 18) + "%";
+        el.style.top  = (16 + (i % 3) * 9) + "%";
+    });
+    var st = $("#storyStatic");
+    if (st) { st.hidden = false; }
+    var line = $("#bridgeLine");
+    if (line) { line.style.opacity = 1; }
+}
+
+/* ---------------------------------------------------------
+   BOOT
+   --------------------------------------------------------- */
+function boot() {
+    var y = $("#year"); if (y) { y.textContent = new Date().getFullYear(); }
+
+    initHeader();
+    initMobileMenu();
+    initReveals();
+    initPointerTracking();
+    buildGarden();
+    prepWater();
+    initHero();
+
+    if (STATIC_MODE) {
+        applyStaticMode();
+    } else {
+        initChapterIntro();
+        initChapterScroll();
+        initBridgeScene();
+    }
+
+    initOwlEyeTracking();
+    initMouseParallax();
+    initAmbientParticles();
+    startLoop();
+
+    /* never burn frames on a hidden tab */
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { stopLoop(); } else { startLoop(); }
+    });
+
+    window.addEventListener("resize", debounce(function () {
+        if (HAS_GSAP && !STATIC_MODE) { ScrollTrigger.refresh(); }
+    }, 260), { passive: true });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+} else {
+    boot();
+}
+})();
+</script>
+</body>
+</html>

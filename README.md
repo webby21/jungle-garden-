@@ -47,6 +47,11 @@ filenames, where each scene's copy sits, and the owl eye-tracking calibration.
   one continuous world and scrubbing backwards un-tells it.
 - **The garden accumulates in the photography itself**: watered soil → first
   sprout → sprout and blooms → the finished garden.
+- **Nothing is cropped.** Each plate is contained, not cover-cropped, and the
+  camera settles on the complete frame — so the action in every scene (hands in
+  the soil, the water landing, the sign) is always visible. The space around a
+  contained plate is filled with a blurred copy of the same frame, so the stage
+  still reads edge to edge.
 - **Readable type over busy photographs.** All copy lives in a 12-column
   safe-area grid, so it can never touch an edge or overflow. Each scene sits on
   the side away from its subject and carries a directional scrim, so text is

@@ -13,13 +13,33 @@ the markup, next to a comment naming them.
 | `parrots.jpg` | Scene 04 — parrots spread the word |
 | `together.jpg` | Scene 05 — the payoff: the whole cast in the finished garden |
 | `logo.png` | Header mark, cropped to the owl |
+| `*-bg.jpg` | 64px blurred backdrop for each scene (generated, <1 KB each) |
 | `hero.mp4` | Hero background video — silent, 12s, seamless loop |
 | `hero.webm` | Smaller VP9 version of it, tried first |
 | `hero-poster.jpg` | The video's first frame — the still shown until it plays |
 
-Every scene image is used **full-bleed**: it fills the viewport and the camera
-pushes across it. Landscape, 1400px wide or more. Keep subjects away from the
-very edges — the frame is cropped to whatever shape the visitor's screen is.
+Every scene image is shown **whole** — `object-fit: contain`, never cropped —
+so you can always see what the animal is actually doing. The camera pushes
+gently from 1.05 to 1.00, settling on the complete frame.
+
+The space left around a contained image is filled with a heavily blurred copy
+of the same frame, so the stage still reads edge to edge rather than
+letterboxed. Those backdrops are the `*-bg.jpg` files: 64px wide, under 1 KB
+each. Upscaling them *is* the blur, so the browser never runs an expensive
+filter over a full-size photograph.
+
+**If you add or replace a scene image**, regenerate its backdrop:
+
+```python
+from PIL import Image, ImageFilter
+im = Image.open("assets/deer.jpg").convert("RGB")
+sm = im.resize((64, round(64 * im.height / im.width)), Image.LANCZOS)
+sm.filter(ImageFilter.GaussianBlur(1.1)).save("assets/deer-bg.jpg", quality=72, optimize=True)
+```
+
+Landscape, 1400px wide or more. Because nothing is cropped, composition is
+entirely yours — but keep the subject off the extreme edges so the scrim has
+somewhere to sit.
 
 If a `.jpg` is missing the page retries `.png` automatically, and vice versa.
 

@@ -30,7 +30,7 @@ filenames, where each scene's copy sits, and the owl eye-tracking calibration.
 
 | Beat | Image | Copy |
 |---|---|---|
-| Hero | `owl-scene.jpg`, or `hero.mp4` if present | We build stories people remember |
+| Hero | `hero.mp4` over `hero-poster.jpg` | We build stories people remember |
 | Chapter intro | the cut-out owl descends | Chapter One — The Garden |
 | 01 | `elephant.jpg` | Elephants — brought the water |
 | 02 | `monkeys.jpg` | Monkeys — planted the seeds |
@@ -57,10 +57,10 @@ filenames, where each scene's copy sits, and the owl eye-tracking calibration.
   out, so the page paints the eye-whites and moves live pupils inside them.
 - **One shared rAF loop** drives eye tracking, hero parallax and the ambient
   pollen particles that drift away from the cursor.
-- **Optional hero video**: drop `assets/hero.mp4` in and it takes over the
-  hero on its own. It layers over the still and only fades in once it is
-  actually playing, so a missing file, a blocked autoplay, reduced motion or a
-  metered connection all just leave the photograph. See
+- **Hero video**: `assets/hero.mp4` plays behind the headline — silent, 12s,
+  seamlessly looping. It layers over its own first frame and only fades in once
+  it is actually playing, so a missing file, a blocked autoplay, reduced motion
+  or a metered connection all just leave the still. See
   [`assets/README.md`](assets/README.md) for the encoding recipe.
 - **Accessibility**: with `prefers-reduced-motion: reduce` (or if GSAP fails to
   load) the chapter becomes a stacked, readable photo story. No content depends

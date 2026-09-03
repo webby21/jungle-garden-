@@ -13,8 +13,9 @@ the markup, next to a comment naming them.
 | `parrots.jpg` | Scene 04 — parrots spread the word |
 | `together.jpg` | Scene 05 — the payoff: the whole cast in the finished garden |
 | `logo.png` | Header mark, cropped to the owl |
-| `hero.mp4` | **Optional** hero background video |
-| `hero.webm` | **Optional** smaller version, tried before the MP4 |
+| `hero.mp4` | Hero background video — silent, 12s, seamless loop |
+| `hero.webm` | Smaller VP9 version of it, tried first |
+| `hero-poster.jpg` | The video's first frame — the still shown until it plays |
 
 Every scene image is used **full-bleed**: it fills the viewport and the camera
 pushes across it. Landscape, 1400px wide or more. Keep subjects away from the
@@ -33,16 +34,32 @@ need them back.
 If you replace an image, run it through the same treatment — a 2 MB plate is
 noticeable on a phone.
 
-## The optional hero video
+## The hero video
 
-Drop `hero.mp4` into this folder and it takes over the hero by itself — no
-code change. It is layered over `owl-scene.jpg` and only fades in once it is
-genuinely playing, so the photograph stays put if the file is missing, the
-codec is unsupported, autoplay is refused, the visitor prefers reduced motion,
-or they are on Save-Data / 2G. It is muted, looping, inline, and paused
-whenever the hero is off screen.
+`hero.mp4` plays behind the hero headline. It is layered over
+`hero-poster.jpg` — its own first frame, so the fade from still to video is
+invisible — and only fades in once it is genuinely playing. The poster stays
+put if the file is missing, the codec is unsupported, autoplay is refused, the
+visitor prefers reduced motion, or they are on Save-Data / 2G. It is muted,
+looping, inline, and paused whenever the hero is off screen.
 
-**What to give it**
+**What was done to the supplied clip**
+
+The original was 6.06s / 3.7 MB, carried a stereo AAC track, ended on a
+different frame than it started, and had its `moov` atom at the end. As
+shipped it is:
+
+- **silent** — the audio track is stripped. It could never be heard behind a
+  muted element, and it cost ~100 KB and risked autoplay refusals.
+- **seamlessly looping** — played forward then reversed, so there is no jump
+  at the loop point. 6s became a 12s round trip.
+- **`+faststart`** — the `moov` atom is at the front, so playback begins
+  during download instead of after it. Without this a visitor waits for the
+  whole file before seeing a single frame.
+- **2.4 MB** (plus a 2.1 MB VP9 `hero.webm`, tried first), re-encoded at CRF
+  26 — no visible loss behind a scrim at this size.
+
+**If you replace it**
 
 | | |
 |---|---|
@@ -55,15 +72,22 @@ whenever the hero is off screen.
 **Encoding**
 
 ```bash
-# MP4 — the one that matters
-ffmpeg -i source.mov -an -vf "scale=1280:-2" \
-  -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 26 -preset slow \
-  -movflags +faststart assets/hero.mp4
+# MP4 — silent, faststart, and looped forward-then-reversed so it
+# never jumps at the loop point
+ffmpeg -i source.mov -filter_complex \
+  "[0:v]split[a][b];[b]reverse,trim=start_frame=1,setpts=PTS-STARTPTS[r];[a][r]concat=n=2:v=1[v]" \
+  -map "[v]" -an -c:v libx264 -profile:v high -pix_fmt yuv420p \
+  -crf 26 -preset slow -movflags +faststart assets/hero.mp4
 
-# WebM — optional, smaller, tried first
-ffmpeg -i source.mov -an -vf "scale=1280:-2" \
-  -c:v libvpx-vp9 -b:v 0 -crf 34 -row-mt 1 assets/hero.webm
+# WebM — smaller, tried first
+ffmpeg -i assets/hero.mp4 -an -c:v libvpx-vp9 -b:v 0 -crf 36 -row-mt 1 assets/hero.webm
+
+# the poster MUST be the video's first frame, or the fade-in jumps
+ffmpeg -i assets/hero.mp4 -frames:v 1 -q:v 3 assets/hero-poster.jpg
 ```
+
+If your source already loops cleanly, drop the `-filter_complex` and `-map`
+lines and just use `-an ... -movflags +faststart`.
 
 Keep it *slow* — a drifting push through the canopy, light moving on water.
 The headline sits over it, so anything with fast cuts or high contrast in the

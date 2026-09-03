@@ -9,6 +9,17 @@
 <!-- =========================================================
      CHANGE LOG — what changed in this revision
      ---------------------------------------------------------
+     v5  THE HERO VIDEO, IN
+     • assets/hero.mp4 now plays behind the headline, with a VP9
+       hero.webm tried first and hero-poster.jpg (its own first
+       frame) as the still, so the fade-in is invisible.
+     • The supplied clip was re-encoded: audio stripped, moov
+       atom moved to the front (+faststart) so playback starts
+       during download, and looped forward-then-reversed so it
+       no longer jumps every six seconds. 3.7 MB -> 2.4 MB.
+     • Fixed: a long .scene-tag pill could not wrap, pushing the
+       page 39px wider than a phone viewport.
+
      v4  OPTIONAL HERO BACKGROUND VIDEO
      • The hero still and an optional video now share one
        animated frame, so the camera move and the pointer
@@ -78,9 +89,10 @@
      SUPPLIED ARTWORK — every file this page expects
      ---------------------------------------------------------
        assets/logo.png        Massbar owl mark (header)
-       assets/hero.mp4        OPTIONAL hero background video (H.264)
-       assets/hero.webm       OPTIONAL smaller VP9/AV1 version, tried first
-       assets/owl-scene.jpg   Opening shot — also the video's still frame
+       assets/hero.mp4        Hero background video (H.264, silent, looping)
+       assets/hero.webm       Smaller VP9 version of it, tried first
+       assets/hero-poster.jpg Its first frame — the still shown until it plays
+       assets/owl-scene.jpg   Fallback opening shot if the poster is missing
        assets/owl-figure.png  The narrator, cut out. TRANSPARENT PNG.
        assets/elephant.jpg    Scene 01 — elephants, water
        assets/monkeys.jpg     Scene 02 — monkeys, seeds
@@ -726,6 +738,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     .footer-grid{grid-template-columns:1fr}
 }
 @media (max-width:520px){
+    /* A pill long enough to overflow a phone must be allowed to wrap —
+       "the one who sees the whole picture" is wider than 390px. */
+    .scene-tag{white-space:normal;max-width:100%}
     .brand__word{display:none}
     .hero__title{font-size:clamp(30px,9.4vw,46px)}
     .scene-copy__title{font-size:clamp(30px,10vw,50px)}
@@ -820,19 +835,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <section class="hero" id="hero">
     <div class="hero__media">
         <div class="hero__frame" id="heroFrame">
-            <!-- ASSET: assets/owl-scene.jpg — the opening shot, and the
-                 still the video fades up from. The owl is in the photograph
-                 itself here, so no cut-out is layered over it; the cut-out
-                 narrator arrives in the chapter intro below. -->
-            <img id="heroImg" src="assets/owl-scene.jpg" alt="The owl, wings open, in the jungle garden"
-                 fetchpriority="high" data-alt-src="assets/together.jpg" onerror="assetFallback(this)">
+            <!-- ASSET: assets/hero-poster.jpg — the video's own first
+                 frame, so the fade from still to video is invisible. It
+                 also stands alone wherever the video does not play. -->
+            <img id="heroImg" src="assets/hero-poster.jpg" alt="The jungle gathered around the owl"
+                 fetchpriority="high" data-alt-src="assets/owl-scene.jpg" onerror="assetFallback(this)">
 
             <!-- =========================================================
-                 OPTIONAL: assets/hero.mp4 (+ assets/hero.webm)
-                 Drop either file in and it takes over the hero by itself.
-                 With neither present the still above simply stays.
-                 Muted + playsinline are what let it autoplay at all; keep
-                 the file short, silent and small (see assets/README.md).
+                 ASSET: assets/hero.mp4 (+ assets/hero.webm, tried first)
+                 Silent, 12s, loops seamlessly (the source is played
+                 forward then reversed, so there is no cut). Muted +
+                 playsinline are what let it autoplay at all. If it cannot
+                 play for any reason the poster above simply stays.
                  ========================================================= -->
             <video id="heroVideo" class="hero__video" muted loop playsinline
                    preload="metadata" disablepictureinpicture tabindex="-1" aria-hidden="true">

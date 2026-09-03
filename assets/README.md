@@ -13,6 +13,8 @@ the markup, next to a comment naming them.
 | `parrots.jpg` | Scene 04 — parrots spread the word |
 | `together.jpg` | Scene 05 — the payoff: the whole cast in the finished garden |
 | `logo.png` | Header mark, cropped to the owl |
+| `hero.mp4` | **Optional** hero background video |
+| `hero.webm` | **Optional** smaller version, tried before the MP4 |
 
 Every scene image is used **full-bleed**: it fills the viewport and the camera
 pushes across it. Landscape, 1400px wide or more. Keep subjects away from the
@@ -30,6 +32,45 @@ need them back.
 
 If you replace an image, run it through the same treatment — a 2 MB plate is
 noticeable on a phone.
+
+## The optional hero video
+
+Drop `hero.mp4` into this folder and it takes over the hero by itself — no
+code change. It is layered over `owl-scene.jpg` and only fades in once it is
+genuinely playing, so the photograph stays put if the file is missing, the
+codec is unsupported, autoplay is refused, the visitor prefers reduced motion,
+or they are on Save-Data / 2G. It is muted, looping, inline, and paused
+whenever the hero is off screen.
+
+**What to give it**
+
+| | |
+|---|---|
+| Format | H.264 MP4 (`yuv420p`, `+faststart`). Add a VP9 `hero.webm` too if you can — it is tried first and is usually 30–50% smaller |
+| Audio | **None.** Strip the track entirely — it can never be heard, and a silent track still costs bytes and can block autoplay |
+| Length | 6–12 seconds, cut so the last frame flows into the first |
+| Size | 1280×720 is plenty (it sits behind a scrim and large type); 1920×1080 max |
+| Weight | Aim under 4 MB. Over ~8 MB and phones will show the still for several seconds first |
+
+**Encoding**
+
+```bash
+# MP4 — the one that matters
+ffmpeg -i source.mov -an -vf "scale=1280:-2" \
+  -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 26 -preset slow \
+  -movflags +faststart assets/hero.mp4
+
+# WebM — optional, smaller, tried first
+ffmpeg -i source.mov -an -vf "scale=1280:-2" \
+  -c:v libvpx-vp9 -b:v 0 -crf 34 -row-mt 1 assets/hero.webm
+```
+
+Keep it *slow* — a drifting push through the canopy, light moving on water.
+The headline sits over it, so anything with fast cuts or high contrast in the
+lower-left will fight the type.
+
+GitHub warns above 50 MB per file and rejects above 100 MB, so a hero video
+should never come close.
 
 ## Where the words sit
 

@@ -9,6 +9,20 @@
 <!-- =========================================================
      CHANGE LOG — what changed in this revision
      ---------------------------------------------------------
+     v4  OPTIONAL HERO BACKGROUND VIDEO
+     • The hero still and an optional video now share one
+       animated frame, so the camera move and the pointer
+       parallax apply to whichever is showing.
+     • Drop assets/hero.mp4 (and/or the smaller hero.webm, which
+       is tried first) into the assets folder and it takes over
+       the hero on its own — nothing else to change.
+     • It is layered OVER the photograph and only fades in once
+       it is genuinely playing, so every failure mode leaves the
+       still in place: no file, an unsupported codec, autoplay
+       refused, reduced motion, or a metered connection.
+     • Muted, looping, playsinline (the conditions for autoplay
+       at all) and paused whenever the hero is off screen.
+
      v3  THE SUPPLIED ARTWORK, WIRED IN
      • Six real images now drive the page. Five are used as
        full-bleed plates and one is the cut-out narrator.
@@ -64,7 +78,9 @@
      SUPPLIED ARTWORK — every file this page expects
      ---------------------------------------------------------
        assets/logo.png        Massbar owl mark (header)
-       assets/owl-scene.jpg   Opening shot — the owl in its garden
+       assets/hero.mp4        OPTIONAL hero background video (H.264)
+       assets/hero.webm       OPTIONAL smaller VP9/AV1 version, tried first
+       assets/owl-scene.jpg   Opening shot — also the video's still frame
        assets/owl-figure.png  The narrator, cut out. TRANSPARENT PNG.
        assets/elephant.jpg    Scene 01 — elephants, water
        assets/monkeys.jpg     Scene 02 — monkeys, seeds
@@ -376,11 +392,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     padding:var(--safe-top) var(--safe-x) clamp(40px,8vh,86px);
 }
 .hero__media{position:absolute;inset:0;z-index:0;overflow:hidden}
-.hero__media img{
+/* the still and the video share one animated frame, so the camera move
+   and the pointer parallax apply to whichever is showing */
+.hero__frame{position:absolute;inset:0;will-change:transform;transform:scale(1.06)}
+.hero__media img,.hero__video{
+    position:absolute;inset:0;
     width:100%;height:100%;object-fit:cover;object-position:center 42%;
-    will-change:transform;transform:scale(1.06);
     filter:saturate(1.06) brightness(1.04);
 }
+/* The video sits over the still and fades in only once it is actually
+   playing, so a missing file, a blocked autoplay or a slow connection
+   simply leaves the photograph in place. */
+.hero__video{opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+.hero__video.is-playing{opacity:1}
 /* readability scrims — bottom lift + left column */
 .hero__scrim{position:absolute;inset:0;z-index:1;pointer-events:none}
 .hero__scrim--base{
@@ -718,7 +742,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     }
     #ambient{display:none}
     .hero__scroll .track::after{animation:none;opacity:.6}
-    .hero__media img{transform:none}
+    .hero__frame{transform:none}
 }
 </style>
 </head>
@@ -795,11 +819,27 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    ========================= -->
 <section class="hero" id="hero">
     <div class="hero__media">
-        <!-- ASSET: assets/owl-scene.jpg — the opening shot. The owl is in
-             the photograph itself here, so no cut-out is layered over it;
-             the cut-out narrator arrives in the chapter intro below. -->
-        <img id="heroImg" src="assets/owl-scene.jpg" alt="The owl, wings open, in the jungle garden"
-             fetchpriority="high" data-alt-src="assets/together.jpg" onerror="assetFallback(this)">
+        <div class="hero__frame" id="heroFrame">
+            <!-- ASSET: assets/owl-scene.jpg — the opening shot, and the
+                 still the video fades up from. The owl is in the photograph
+                 itself here, so no cut-out is layered over it; the cut-out
+                 narrator arrives in the chapter intro below. -->
+            <img id="heroImg" src="assets/owl-scene.jpg" alt="The owl, wings open, in the jungle garden"
+                 fetchpriority="high" data-alt-src="assets/together.jpg" onerror="assetFallback(this)">
+
+            <!-- =========================================================
+                 OPTIONAL: assets/hero.mp4 (+ assets/hero.webm)
+                 Drop either file in and it takes over the hero by itself.
+                 With neither present the still above simply stays.
+                 Muted + playsinline are what let it autoplay at all; keep
+                 the file short, silent and small (see assets/README.md).
+                 ========================================================= -->
+            <video id="heroVideo" class="hero__video" muted loop playsinline
+                   preload="metadata" disablepictureinpicture tabindex="-1" aria-hidden="true">
+                <source src="assets/hero.webm" type="video/webm">
+                <source src="assets/hero.mp4" type="video/mp4">
+            </video>
+        </div>
     </div>
     <div class="hero__scrim hero__scrim--base" aria-hidden="true"></div>
     <div class="hero__scrim hero__scrim--side" aria-hidden="true"></div>
@@ -1202,7 +1242,7 @@ function initOwlEyeTracking() {
 function initMouseParallax() {
     if (REDUCED) { return; }
     var items = [
-        { el: $("#heroImg"),    d: -0.6, x: 0, y: 0 },
+        { el: $("#heroFrame"),  d: -0.6, x: 0, y: 0 },
         { el: $(".hero__copy"), d:  0.24, x: 0, y: 0 }
     ].filter(function (i) { return !!i.el; });
     if (!items.length) { return; }
@@ -1359,12 +1399,56 @@ function initHero() {
         .from(".hero__title .line i", { yPercent: 118, duration: 1.15, stagger: 0.09 }, 0.15)
         .from(".hero__brandline", { opacity: 0, y: 14, duration: 0.8 }, 0.1)
         .from("#heroLede, .hero__scroll", { opacity: 0, y: 18, duration: 0.9, stagger: 0.1 }, 0.7)
-        .fromTo("#heroImg", { scale: 1.16 }, { scale: 1.06, duration: 2.2, ease: "power2.out" }, 0);
+        .fromTo("#heroFrame", { scale: 1.16 }, { scale: 1.06, duration: 2.2, ease: "power2.out" }, 0);
 
     /* slow drift out of the hero */
     var st = { trigger: "#hero", start: "top top", end: "bottom top", scrub: true };
-    gsap.to("#heroImg",    { yPercent: 10, scale: 1.14, ease: "none", scrollTrigger: st });
+    gsap.to("#heroFrame",  { yPercent: 10, scale: 1.14, ease: "none", scrollTrigger: st });
     gsap.to(".hero__copy", { yPercent: -16, opacity: 0.1, ease: "none", scrollTrigger: st });
+}
+
+/* ---------------------------------------------------------
+   HERO BACKGROUND VIDEO  (progressive enhancement)
+   The photograph is the base layer and always renders. The video
+   is layered over it and only fades in once it is genuinely
+   playing, so every failure mode — no file, blocked autoplay,
+   an unsupported codec, reduced motion, a metered connection —
+   quietly leaves the still in place. It is also paused whenever
+   the hero is off screen, so it costs nothing further down.
+   --------------------------------------------------------- */
+function initHeroVideo() {
+    var video = $("#heroVideo");
+    var hero  = $("#hero");
+    if (!video || !hero) { return; }
+
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var thrifty = !!conn && (conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || ""));
+    if (REDUCED || thrifty) { video.remove(); return; }
+
+    /* A <source> that 404s fires its own error event, and a media element
+       with no usable candidate fires nothing at all — so failure is never
+       detected here. It does not need to be: the video is transparent until
+       it is genuinely playing, so a broken or missing file is simply never
+       seen. Only a real decode error on the element itself is worth
+       clearing away. */
+    video.addEventListener("error", function () {
+        if (video.error) { video.remove(); }
+    });
+
+    video.addEventListener("playing", function () { video.classList.add("is-playing"); });
+
+    function play() {
+        var p = video.play();
+        if (p && p.catch) { p.catch(function () { /* autoplay refused — the still stays */ }); }
+    }
+
+    if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) { play(); } else { video.pause(); }
+        }, { threshold: 0.02 }).observe(hero);
+    } else {
+        play();
+    }
 }
 
 /* ---------------------------------------------------------
@@ -1519,6 +1603,7 @@ function boot() {
     initReveals();
     initPointerTracking();
     initHero();
+    initHeroVideo();
 
     if (!STATIC_MODE) {
         initChapterIntro();

@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Massbar — The Jungle Garden</title>
+<meta name="description" content="Massbar — Chapter One: The Garden. A scroll-driven story about different strengths building one vision.">
+
+<!-- =========================================================
+     CHANGE LOG — what changed in this revision
+     ---------------------------------------------------------
+     v7  THE FULL STORY, AND THE REAL MASSBAR COPY
+     • The story now has its turn. It used to be four animals
+       contributing and then a payoff, which skipped the part
+       that makes the metaphor mean anything. Chapter One is
+       still the four contributions; Chapter Two is "everyone
+       was working hard, but nothing was growing"; Chapter
+       Three is the Owl gathering everyone and making one clear
+       plan; Chapter Four is the garden blooming.
+     • Chapter Two is the same parrots frame with the colour
+       drained out of it — a separate desaturated file, so the
+       drain is a plain cross-fade rather than an animated
+       filter. Chapter Three floods the colour back in with
+       owl-scene.jpg, which finally has the role it deserves.
+     • The chapter marker now counts 01-04 and names the beat.
+     • Below the story: the Owl's line, "every brand has its
+       own jungle", and Capabilities — four roles, one plan,
+       each mapped to its animal (Brand Strategy, Campaign
+       Creative, Media Planning & Buying, Digital & Social).
+     • Real details throughout: hello@massbaradvertising.com,
+       Lusaka, Zambia. The "Chapter Two — in production"
+       placeholder is gone, replaced by the closing CTA.
+
+     v6  FRAMING: SHOW THE WHOLE SCENE
+     • The plates were badly over-cropped: at the start of each
+       beat only 67% of the height showed on a desktop and 32%
+       of the width on a phone, so the actual action — hands in
+       the soil, the water landing, the sign — sat outside the
+       frame. Plates are now CONTAINed, never cropped, and the
+       camera push settles on the complete frame (1.05 -> 1.00).
+     • The space around a contained plate is filled with a
+       heavily blurred copy of the same frame, so the stage
+       still reads edge to edge instead of letterboxed. Those
+       backdrops are 64px-wide files (<1 KB each): upscaling
+       them IS the blur, so no filter ever runs over a
+       full-size photograph.
+     • The hero media now starts below the header
+       (--hero-media-top), so the owl's head is clear of the
+       nav bar instead of tucked under it.
+
+     v5  THE HERO VIDEO, IN
+     • assets/hero.mp4 now plays behind the headline, with a VP9
+       hero.webm tried first and hero-poster.jpg (its own first
+       frame) as the still, so the fade-in is invisible.
+     • The supplied clip was re-encoded: audio stripped, moov
+       atom moved to the front (+faststart) so playback starts
+       during download, and looped forward-then-reversed so it
+       no longer jumps every six seconds. 3.7 MB -> 2.4 MB.
+     • Fixed: a long .scene-tag pill could not wrap, pushing the
+       page 39px wider than a phone viewport.
+
+     v4  OPTIONAL HERO BACKGROUND VIDEO
+     • The hero still and an optional video now share one
+       animated frame, so the camera move and the pointer
+       parallax apply to whichever is showing.
+     • Drop assets/hero.mp4 (and/or the smaller hero.webm, which
+       is tried first) into the assets folder and it takes over
+       the hero on its own — nothing else to change.
+     • It is layered OVER the photograph and only fades in once
+       it is genuinely playing, so every failure mode leaves the
+       still in place: no file, an unsupported codec, autoplay
+       refused, reduced motion, or a metered connection.
+     • Muted, looping, playsinline (the conditions for autoplay
+       at all) and paused whenever the hero is off screen.
+
+     v3  THE SUPPLIED ARTWORK, WIRED IN
+     • Six real images now drive the page. Five are used as
+       full-bleed plates and one is the cut-out narrator.
+     • HERO is the owl's own scene (owl-scene.jpg). The owl is
+       in the photograph there, so no cut-out is layered over
+       it — the cut-out narrator arrives in the chapter intro.
+     • CHAPTER ONE now runs five plates: elephants, monkeys,
+       deer, parrots, and together.jpg as the payoff, where the
+       whole cast stands in the finished garden with the owl on
+       the rock between them. The reveal needed no composite —
+       the artwork already is the ensemble.
+     • Owl eyes were measured from the alpha channel of
+       owl-figure.png (the artwork's eyes are knocked out), so
+       the sockets and pupils line up exactly.
+     • Assets optimised: 16.4 MB of PNG became 2.8 MB. Scenes
+       are JPEG, the narrator keeps its alpha, and the header
+       logo is cropped to the mark (the "ADVERTISING" lettering
+       is unreadable at 30px, and the wordmark sits beside it
+       in type instead).
+     • On phones the ensemble plate is letterboxed rather than
+       cropped, so the whole cast survives a portrait screen.
+
+     v2  ART DIRECTION: PHOTOGRAPHIC, NOT ILLUSTRATED
+     • Every drawn stand-in is gone. No SVG animals, no SVG
+       plants, flowers, seeds, water ribbons, canopies or vines.
+       The supplied artwork now IS the scene.
+     • Each story beat is a full-bleed cinematic "plate": the
+       image fills the viewport and the camera moves across it
+       (slow Ken Burns push/pull), so the characters are as
+       large and prominent as the screen allows.
+     • Scenes cross-dissolve inside one pinned stage, so the
+       chapter still reads as one continuous world and still
+       scrubs backwards cleanly.
+     • The garden accumulates through the artwork itself:
+       bare watered soil -> first sprout -> sprout + blooms ->
+       the finished garden.
+     • TYPOGRAPHY: copy now lives in a 12-column safe-area grid
+       with generous padding, so it can never collide with the
+       viewport edge or overflow. Each scene declares which
+       side it sits on (away from that image's subject) and
+       gets a matching directional scrim, so text is always on
+       a controlled dark field and stays readable over a busy
+       photograph.
+     • The owl is the one floating character (transparent PNG).
+       Its pupils still track the cursor; the eye sockets are
+       masked so the artwork's own pupils don't double up.
+       Add ?calibrate to the URL to see the socket guides.
+     • Reduced motion / no-GSAP now presents the four plates as
+       a stacked, readable photo story instead of a tableau.
+     ========================================================= -->
+
+<!-- =========================================================
+     SUPPLIED ARTWORK — every file this page expects
+     ---------------------------------------------------------
+       assets/logo.png        Massbar owl mark (header)
+       assets/hero.mp4        Hero background video (H.264, silent, looping)
+       assets/hero.webm       Smaller VP9 version of it, tried first
+       assets/hero-poster.jpg Its first frame — the still shown until it plays
+       assets/owl-scene.jpg   Fallback opening shot if the poster is missing
+       assets/owl-figure.png  The narrator, cut out. TRANSPARENT PNG.
+       assets/elephant.jpg    Scene 01 — elephants, water
+       assets/monkeys.jpg     Scene 02 — monkeys, seeds
+       assets/deer.jpg        Scene 03 — deer, flowers
+       assets/parrots.jpg     Scene 04 — parrots, the word
+       assets/together.jpg    Scene 05 — the whole garden, together
+       assets/*-bg.jpg        64px blurred backdrops, one per scene
+     All paths appear exactly once each, in the markup below.
+     ========================================================= -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="preload" as="image" href="assets/owl-scene.jpg">
+
+<script>
+/* Asset resilience, defined before the images parse:
+   1. a plate saved as .png (or .jpg) still loads either way
+   2. if a scene image is missing, the opening shot and the last
+      plate stand in for each other                              */
+function assetFallback(img){
+    var src = img.getAttribute("src");
+    if (img.dataset.tried) {
+        if (img.dataset.altSrc && img.src.indexOf(img.dataset.altSrc) === -1) {
+            img.src = img.dataset.altSrc;
+        }
+        return;
+    }
+    img.dataset.tried = "1";
+    img.src = /\.jpg$/i.test(src) ? src.replace(/\.jpg$/i, ".png")
+                                  : src.replace(/\.png$/i, ".jpg");
+}
+</script>
+
+<!-- =========================
+     GLOBAL STYLES
+   ========================= -->
+<style>
+:root{
+    /* ---- MASSBAR PALETTE ---- */
+    --ink:#0a0626;
+    --ink-soft:#110a31;
+
+    --purple:#631d99;
+    --purple-light:#7d2bc1;
+    --violet:#3f2690;
+
+    --pink:#e24386;
+    --orange:#fe7344;
+    --gold:#feb14a;
+
+    --teal:#7db2bb;
+    --blue:#3f4f9a;
+
+    --white:#f9fafb;
+    --muted:#a9a6b8;
+
+    --line:rgba(249,250,251,.12);
+
+    --font-display:"Space Grotesk",sans-serif;
+    --font-body:"DM Sans",sans-serif;
+
+    /* ---- GLASS ---- */
+    --glass-bg:rgba(249,250,251,.06);
+    --glass-border:1px solid rgba(249,250,251,.14);
+    --glass-blur:blur(18px);
+
+    --nav-h:74px;
+    /* the hero media starts below the header, so nothing important —
+       the owl's head above all — sits tucked under the nav bar */
+    --hero-media-top:calc(var(--nav-h) + clamp(10px,2vh,26px));
+
+    /* =====================================================
+       OWL EYE CALIBRATION  —  assets/owl-figure.png
+       The pupils are real DOM elements drawn on top of the
+       artwork. `--owl-eye-fill` paints a disc that covers the
+       artwork's own painted pupil, so only the live pupil is
+       visible; set it to the colour of the owl's eye-whites.
+
+       Add ?calibrate to the URL to outline the sockets, then
+       nudge these four values until they sit dead centre on
+       the eyes, and match --owl-eye-size to the eye-white.
+       ===================================================== */
+    /* Measured from the alpha channel of assets/owl-figure.png:
+       the artwork's eyes are knocked out, so these discs become the
+       eye-whites and the live pupils sit on top of them. */
+    --owl-left-eye-x:30.05%;   --owl-left-eye-y:42.25%;
+    --owl-left-eye-w:30.9%;    --owl-left-eye-h:26%;
+
+    --owl-right-eye-x:62.3%;   --owl-right-eye-y:42%;
+    --owl-right-eye-w:28.2%;   --owl-right-eye-h:26.8%;
+
+    --owl-eye-fill:#fbf7ff;      /* the eye-white painted behind the pupil */
+    --owl-pupil-size:.44;        /* pupil / socket ratio                   */
+    --owl-pupil-travel:22%;      /* how far a pupil may travel             */
+
+    /* ---- STAGE SAFE AREA (keeps copy off every edge) ---- */
+    --safe-x:clamp(20px,5vw,86px);
+    --safe-top:calc(var(--nav-h) + clamp(16px,4vh,40px));
+    --safe-bottom:clamp(34px,9vh,92px);
+}
+
+/* ---- RESET ---- */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+    background:var(--ink);
+    color:var(--white);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+::selection{background:var(--orange);color:var(--ink)}
+
+/* ---- TYPE PRIMITIVES ---- */
+.display{
+    font-family:var(--font-display);
+    font-weight:600;line-height:.95;letter-spacing:-.03em;margin:0;
+}
+.eyebrow{
+    font-family:var(--font-display);
+    font-size:clamp(10px,.95vw,12px);font-weight:600;
+    letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin:0;
+}
+.lede{
+    color:var(--muted);font-size:clamp(15px,1.3vw,19px);
+    line-height:1.6;margin:0;max-width:44ch;
+}
+.sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
+/* ---- GLASS ---- */
+.glass,.scene-tag{
+    background:var(--glass-bg);border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.16),0 18px 40px rgba(5,2,18,.4);
+}
+.scene-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:7px 15px;border-radius:100px;
+    font-family:var(--font-display);font-size:clamp(9.5px,.85vw,11px);
+    letter-spacing:.28em;text-transform:uppercase;color:var(--white);
+    white-space:nowrap;
+}
+.scene-tag .pip{
+    width:5px;height:5px;border-radius:50%;flex:0 0 auto;
+    background:var(--gold);box-shadow:0 0 8px var(--orange);
+}
+
+/* =========================
+     HEADER
+   ========================= */
+.site-header{
+    position:fixed;inset:0 0 auto 0;z-index:120;height:var(--nav-h);
+    display:flex;align-items:center;gap:24px;
+    padding:0 clamp(16px,3.4vw,46px);
+    background:linear-gradient(180deg,rgba(10,6,38,.72),rgba(10,6,38,.28));
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(20px) saturate(140%);
+    -webkit-backdrop-filter:blur(20px) saturate(140%);
+    transition:background .5s ease;
+}
+.site-header.is-lifted{background:rgba(10,6,38,.82)}
+.brand{display:flex;align-items:center;gap:12px;flex:0 0 auto}
+.brand__mark{height:30px;width:auto;object-fit:contain}
+.brand__word{font-family:var(--font-display);font-weight:700;letter-spacing:.24em;font-size:14px;text-transform:uppercase}
+.nav{margin-left:auto;display:flex;align-items:center;gap:clamp(18px,2.2vw,34px)}
+.nav a{font-size:13.5px;color:var(--muted);position:relative;padding:6px 0;transition:color .35s ease}
+.nav a::after{
+    content:"";position:absolute;left:0;bottom:0;height:1px;width:0;
+    background:linear-gradient(90deg,var(--gold),var(--orange));
+    transition:width .45s cubic-bezier(.22,1,.36,1);
+}
+.nav a:hover,.nav a[aria-current="true"]{color:var(--white)}
+.nav a:hover::after,.nav a[aria-current="true"]::after{width:100%}
+
+.btn-quote{
+    position:relative;overflow:hidden;isolation:isolate;
+    display:inline-flex;align-items:center;gap:9px;
+    padding:11px 20px;border-radius:100px;
+    font-family:var(--font-display);font-weight:500;font-size:13.5px;
+    color:var(--white);
+    background:linear-gradient(135deg,rgba(125,43,193,.36),rgba(249,250,251,.08) 55%,rgba(99,29,153,.26));
+    border:1px solid rgba(249,250,251,.18);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.28),inset 0 -10px 18px rgba(63,38,144,.24),0 12px 26px rgba(5,2,18,.42);
+    transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s ease,border-color .5s ease;
+}
+.btn-quote__dot{width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--orange);transition:transform .5s ease}
+.btn-quote__sweep{
+    position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(105deg,transparent 32%,rgba(249,250,251,.22) 48%,transparent 64%);
+    transform:translate3d(-120%,0,0);
+}
+.btn-quote:hover{transform:translate3d(0,-2px,0);border-color:rgba(254,177,74,.42)}
+.btn-quote:hover .btn-quote__sweep{transform:translate3d(120%,0,0);transition:transform .9s cubic-bezier(.22,1,.36,1)}
+.btn-quote:hover .btn-quote__dot{transform:scale(1.5)}
+.btn-quote--lg{padding:15px 28px;font-size:15px}
+
+.menu-toggle{
+    display:none;margin-left:auto;flex:0 0 auto;
+    width:44px;height:44px;border-radius:50%;
+    align-items:center;justify-content:center;
+    background:var(--glass-bg);border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+.menu-toggle span{display:block;width:16px;height:1.5px;background:var(--white);position:relative;transition:background .3s}
+.menu-toggle span::before,.menu-toggle span::after{
+    content:"";position:absolute;left:0;width:16px;height:1.5px;background:var(--white);
+    transition:transform .4s cubic-bezier(.22,1,.36,1);
+}
+.menu-toggle span::before{transform:translateY(-5px)}
+.menu-toggle span::after{transform:translateY(5px)}
+.menu-toggle[aria-expanded="true"] span{background:transparent}
+.menu-toggle[aria-expanded="true"] span::before{transform:rotate(45deg)}
+.menu-toggle[aria-expanded="true"] span::after{transform:rotate(-45deg)}
+
+.mobile-panel{
+    position:fixed;z-index:115;inset:var(--nav-h) 0 auto 0;
+    padding:26px clamp(16px,5vw,32px) 34px;
+    background:rgba(10,6,38,.9);
+    backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);
+    border-bottom:1px solid var(--line);
+    display:grid;gap:4px;
+    transform:translate3d(0,-14px,0);opacity:0;pointer-events:none;visibility:hidden;
+    transition:opacity .4s ease,transform .5s cubic-bezier(.22,1,.36,1),visibility .4s;
+}
+.mobile-panel.is-open{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.mobile-panel a{font-family:var(--font-display);font-size:22px;font-weight:500;padding:12px 0;border-bottom:1px solid var(--line)}
+.mobile-panel .btn-quote{margin-top:18px;justify-content:center;border-bottom:0}
+
+/* =========================
+     ATMOSPHERE
+   ========================= */
+#ambient{position:fixed;inset:0;z-index:3;pointer-events:none;mix-blend-mode:screen;opacity:.85}
+.grain{
+    position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.13;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.5'/></svg>");
+}
+
+/* =========================
+     CHAPTER MARKER + PROGRESS
+   ========================= */
+.chapter-marker{
+    position:fixed;z-index:100;left:clamp(14px,2.2vw,30px);top:50%;
+    transform:translateY(-50%);display:flex;align-items:center;gap:14px;
+    opacity:0;transition:opacity .8s ease;pointer-events:none;
+}
+.chapter-marker.is-visible{opacity:1}
+.chapter-marker__rail{width:1px;height:min(28vh,220px);background:var(--line);position:relative;border-radius:2px}
+.chapter-marker__fill{
+    position:absolute;top:0;left:-.5px;width:2px;height:0%;
+    background:linear-gradient(180deg,var(--gold),var(--orange));
+    box-shadow:0 0 12px rgba(254,115,68,.5);border-radius:2px;
+}
+.chapter-marker__meta{writing-mode:vertical-rl;display:flex;align-items:center;gap:14px}
+.chapter-marker__num{font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:.1em}
+.chapter-marker__label{
+    font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);
+    transition:color .5s ease;
+}
+
+/* =========================
+     OWL — the one floating character
+     Transparent PNG. Pupils are live DOM elements; the socket
+     disc covers the pupils painted into the artwork.
+   ========================= */
+.owl{position:relative;width:100%;line-height:0;will-change:transform}
+.owl__img{
+    width:100%;height:auto;object-fit:contain;
+    filter:drop-shadow(0 30px 55px rgba(0,0,0,.45));
+}
+.owl__eye{
+    position:absolute;z-index:2;pointer-events:none;
+    transform:translate(-50%,-50%);
+    border-radius:50%;display:grid;place-items:center;
+    background:var(--owl-eye-fill);
+}
+.owl__eye--l{
+    left:var(--owl-left-eye-x);top:var(--owl-left-eye-y);
+    width:var(--owl-left-eye-w);height:var(--owl-left-eye-h);
+}
+.owl__eye--r{
+    left:var(--owl-right-eye-x);top:var(--owl-right-eye-y);
+    width:var(--owl-right-eye-w);height:var(--owl-right-eye-h);
+}
+.owl__pupil{
+    width:calc(100% * var(--owl-pupil-size));aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle at 34% 30%,#3a2160,#0b0420 68%);
+    box-shadow:0 0 6px rgba(10,6,38,.55);
+    will-change:transform;
+}
+/* ?calibrate — shows where the sockets are sitting */
+.is-calibrating .owl__eye{outline:2px dashed var(--gold);outline-offset:2px;background:rgba(255,255,255,.55)}
+
+/* =========================
+     HERO
+   ========================= */
+.hero{
+    position:relative;min-height:100svh;overflow:hidden;isolation:isolate;
+    background:linear-gradient(180deg,var(--ink),var(--ink-soft));
+    display:grid;align-content:end;
+    padding:var(--safe-top) var(--safe-x) clamp(40px,8vh,86px);
+}
+.hero__media{position:absolute;inset:var(--hero-media-top) 0 0 0;z-index:0;overflow:hidden}
+/* the still and the video share one animated frame, so the camera move
+   and the pointer parallax apply to whichever is showing */
+.hero__frame{position:absolute;inset:0;will-change:transform;transform:scale(1.06)}
+.hero__media img,.hero__video{
+    position:absolute;inset:0;
+    width:100%;height:100%;object-fit:cover;object-position:center 42%;
+    filter:saturate(1.06) brightness(1.04);
+}
+/* The video sits over the still and fades in only once it is actually
+   playing, so a missing file, a blocked autoplay or a slow connection
+   simply leaves the photograph in place. */
+.hero__video{opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+.hero__video.is-playing{opacity:1}
+/* readability scrims — bottom lift + left column */
+.hero__scrim{position:absolute;inset:var(--hero-media-top) 0 0 0;z-index:1;pointer-events:none}
+.hero__scrim--base{
+    background:
+        linear-gradient(0deg,rgba(10,6,38,.94) 0%,rgba(10,6,38,.72) 22%,rgba(10,6,38,.18) 52%,rgba(10,6,38,.34) 100%);
+}
+.hero__scrim--side{
+    background:linear-gradient(90deg,rgba(10,6,38,.82) 0%,rgba(10,6,38,.42) 38%,transparent 66%);
+}
+.hero__copy{position:relative;z-index:4;max-width:min(100%,1180px);display:grid;gap:clamp(14px,2.4vh,26px)}
+.hero__brandline{display:flex;align-items:center;gap:14px}
+.hero__brandline .rule{height:1px;width:clamp(40px,8vw,110px);background:linear-gradient(90deg,var(--gold),transparent)}
+.hero__title{
+    font-size:clamp(34px,6.2vw,92px);text-transform:uppercase;
+    text-shadow:0 12px 44px rgba(10,6,38,.75);
+}
+.hero__title .line{display:block;overflow:hidden}
+.hero__title .line i{display:block;font-style:normal;will-change:transform}
+.hero__title .accent{
+    background:linear-gradient(96deg,var(--gold),var(--orange) 46%,var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero__sub{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(16px,4vw,56px)}
+.hero__sub .lede{color:#d7d3e4;text-shadow:0 3px 16px rgba(10,6,38,.9)}
+.hero__scroll{display:inline-flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+.hero__scroll .track{width:34px;height:1px;background:var(--line);position:relative;overflow:hidden}
+.hero__scroll .track::after{
+    content:"";position:absolute;inset:0;width:40%;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    animation:scrollHint 2.4s cubic-bezier(.6,0,.4,1) infinite;
+}
+@keyframes scrollHint{0%{transform:translateX(-110%)}60%,100%{transform:translateX(280%)}}
+
+/* =========================
+     CHAPTER ONE — INTRODUCTION
+   ========================= */
+.chapter-intro{
+    position:relative;min-height:100svh;display:grid;place-items:center;
+    padding:14vh var(--safe-x);text-align:center;overflow:hidden;
+    background:
+        radial-gradient(78% 60% at 50% 4%,rgba(63,38,144,.5),transparent 64%),
+        linear-gradient(180deg,var(--ink) 0%,var(--ink-soft) 48%,var(--ink) 100%);
+}
+.chapter-intro__num{
+    position:absolute;top:8%;left:50%;transform:translateX(-50%);z-index:1;
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(70px,16vw,200px);line-height:.8;letter-spacing:-.04em;
+    color:transparent;-webkit-text-stroke:1px rgba(249,250,251,.2);
+    pointer-events:none;user-select:none;
+}
+.chapter-intro__inner{position:relative;z-index:3;display:grid;gap:clamp(14px,2.4vh,26px);justify-items:center;max-width:820px}
+.chapter-intro__owl{position:relative;width:clamp(130px,16vw,250px);margin-bottom:clamp(4px,2vh,18px)}
+.chapter-intro__title{font-size:clamp(40px,9vw,140px);text-transform:uppercase}
+.chapter-intro .lede{text-align:center;max-width:34ch;margin-inline:auto}
+.reveal-word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.reveal-word i{display:inline-block;font-style:normal;will-change:transform}
+
+/* =========================
+     CHAPTER ONE — CINEMATIC STAGE
+     One pinned stage. Each story beat is a full-bleed plate of
+     the supplied artwork; the camera pushes and pulls across
+     it and the beats cross-dissolve.
+   ========================= */
+.stage{position:relative;height:100svh;overflow:hidden;background:var(--ink)}
+
+.plates{position:absolute;inset:0;z-index:1}
+.plate{position:absolute;inset:0;opacity:0;will-change:opacity}
+
+/* The whole scene must be visible — you should be able to see what the
+   animal is actually doing — so the plate is CONTAINed, never cropped.
+   The gap around it is filled by a heavily blurred copy of the same
+   frame, so the stage still reads edge to edge instead of letterboxed.
+   That backdrop is a 64px-wide file: upscaling it IS the blur, so the
+   browser never runs a filter over a full-size photograph. */
+.plate__bg{position:absolute;inset:0;overflow:hidden}
+.plate__bg img{
+    width:100%;height:100%;object-fit:cover;
+    transform:scale(1.2);
+    filter:blur(14px) saturate(1.2) brightness(.5);
+}
+.plate__media{position:absolute;inset:0;overflow:hidden}
+.plate__media img{
+    width:100%;height:100%;object-fit:contain;
+    object-position:var(--focal,center);
+    will-change:transform;transform:scale(1.04);
+    filter:saturate(1.08) brightness(1.05);
+}
+/* per-scene directional scrim — always behind the copy, never
+   over the subject */
+.plate__scrim{position:absolute;inset:0;pointer-events:none;opacity:0;will-change:opacity}
+.plate__scrim--left{
+    background:
+        linear-gradient(90deg,rgba(10,6,38,.93) 0%,rgba(10,6,38,.74) 26%,rgba(10,6,38,.14) 56%,transparent 74%),
+        linear-gradient(0deg,rgba(10,6,38,.72),transparent 44%);
+}
+.plate__scrim--right{
+    background:
+        linear-gradient(270deg,rgba(10,6,38,.93) 0%,rgba(10,6,38,.74) 26%,rgba(10,6,38,.14) 56%,transparent 74%),
+        linear-gradient(0deg,rgba(10,6,38,.72),transparent 44%);
+}
+.plate__scrim--bottom{
+    background:linear-gradient(0deg,rgba(10,6,38,.95) 0%,rgba(10,6,38,.8) 26%,rgba(10,6,38,.18) 58%,transparent 78%);
+}
+/* constant cinematic treatment over every plate */
+.stage__vignette{
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(126% 92% at 50% 46%,transparent 46%,rgba(10,6,38,.5) 100%);
+}
+.stage__veil{position:absolute;inset:0;z-index:3;pointer-events:none;background:var(--ink);opacity:0}
+
+/* ---- the safe-area grid every scene's copy lives in ---- */
+.stage__ui{
+    position:absolute;inset:0;z-index:6;
+    display:grid;grid-template-columns:repeat(12,1fr);
+    align-items:end;
+    padding:var(--safe-top) var(--safe-x) var(--safe-bottom);
+    pointer-events:none;
+}
+.scene-copy{
+    grid-row:1;display:grid;gap:clamp(10px,1.6vh,18px);
+    opacity:0;will-change:transform,opacity;
+}
+.scene-copy[data-align="left"]{grid-column:1 / span 5;justify-items:start;text-align:left}
+.scene-copy[data-align="right"]{grid-column:8 / span 5;justify-items:end;text-align:right}
+.scene-copy[data-align="bottom"]{grid-column:2 / span 10;justify-items:center;text-align:center}
+.scene-copy__title{
+    font-family:var(--font-display);font-weight:600;
+    font-size:clamp(34px,5vw,74px);line-height:.94;letter-spacing:-.03em;
+    text-transform:uppercase;margin:0;
+    text-shadow:0 10px 40px rgba(10,6,38,.85);
+}
+.scene-copy__line{
+    margin:0;font-size:clamp(17px,1.9vw,25px);font-weight:500;color:#efedf6;
+    text-shadow:0 4px 22px rgba(10,6,38,.95);max-width:24ch;
+}
+
+/* The turn and the plan are told in a sentence, not a label, so those
+   beats get a wider centred block instead of the NAME / role pattern. */
+.scene-copy--statement{grid-column:2 / span 10;justify-items:center;text-align:center}
+.scene-copy__statement{
+    font-family:var(--font-display);font-weight:500;
+    font-size:clamp(24px,3.1vw,44px);line-height:1.22;letter-spacing:-.02em;margin:0;
+    max-width:27ch;text-shadow:0 10px 40px rgba(10,6,38,.9);
+}
+.scene-copy__statement b{font-weight:700;color:var(--gold)}
+.scene-copy__aside{
+    margin:0;font-size:clamp(14px,1.35vw,17px);color:var(--muted);
+    text-shadow:0 4px 20px rgba(10,6,38,.95);max-width:38ch;
+}
+
+/* ---- the payoff, over the finished garden ---- */
+.reveal-copy{
+    grid-column:2 / span 10;grid-row:1;align-self:end;
+    display:grid;gap:clamp(12px,2vh,22px);justify-items:center;text-align:center;
+    opacity:0;will-change:transform,opacity;
+}
+.reveal-copy__title{
+    font-family:var(--font-display);font-weight:600;text-transform:uppercase;
+    font-size:clamp(32px,5.6vw,84px);line-height:.96;letter-spacing:-.03em;margin:0;
+    text-shadow:0 12px 46px rgba(10,6,38,.9);
+}
+.reveal-copy__title .grad{
+    background:linear-gradient(96deg,var(--gold),var(--orange) 52%,var(--pink));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.reveal-copy .lede{color:#ddd9e8;text-align:center;text-shadow:0 4px 20px rgba(10,6,38,.95)}
+
+/* ---- naming the owl in the final plate ----
+   Centred with auto margins rather than a transform, so the only
+   thing the timeline touches is opacity and y. ---- */
+.owl-label{
+    position:absolute;z-index:7;left:0;right:0;
+    top:calc(var(--safe-top) + clamp(2px,1.6vh,18px));
+    width:fit-content;margin-inline:auto;
+    opacity:0;will-change:transform,opacity;
+    white-space:normal;text-align:center;max-width:min(86vw,440px);line-height:1.6;
+}
+
+/* =========================
+     THE OWL'S LINE
+   ========================= */
+.owl-quote{
+    position:relative;overflow:hidden;
+    padding:clamp(90px,18vh,180px) var(--safe-x);
+    background:
+        radial-gradient(60% 50% at 50% 0%,rgba(63,38,144,.42),transparent 66%),
+        var(--ink);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.owl-quote__inner{max-width:900px;margin-inline:auto;text-align:center;display:grid;gap:26px;justify-items:center}
+.owl-quote__mark{
+    width:clamp(52px,6vw,84px);height:auto;opacity:.9;
+    filter:drop-shadow(0 14px 30px rgba(0,0,0,.5));
+}
+.owl-quote__text{
+    font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;
+    font-size:clamp(23px,3.4vw,46px);line-height:1.34;margin:0;
+    color:var(--white);text-wrap:balance;
+}
+.owl-quote__attr{
+    font-family:var(--font-display);font-size:11px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--gold);margin:0;
+}
+
+/* =========================
+     MASSBAR MESSAGE / PHILOSOPHY
+   ========================= */
+.philosophy{
+    position:relative;overflow:hidden;
+    padding:clamp(80px,16vh,170px) var(--safe-x);
+    background:
+        radial-gradient(68% 50% at 78% 6%,rgba(125,43,193,.3),transparent 62%),
+        radial-gradient(58% 44% at 10% 94%,rgba(254,115,68,.13),transparent 64%),
+        linear-gradient(180deg,#0d0730,var(--ink));
+}
+.philosophy__grid{
+    position:relative;z-index:2;max-width:1180px;margin-inline:auto;
+    display:grid;gap:clamp(28px,5vw,72px);
+    grid-template-columns:minmax(0,1fr) minmax(0,.82fr);align-items:center;
+}
+.philosophy__title{font-size:clamp(26px,3.4vw,46px);line-height:1.12}
+.philosophy__title em{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-weight:400}
+.cap-head{max-width:1180px;margin:0 auto clamp(34px,6vh,64px);display:grid;gap:16px;justify-items:center;text-align:center}
+.cap-head__title{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.6vw,62px);letter-spacing:-.03em;margin:0}
+.cap-head__title b{color:var(--gold);font-weight:600}
+.cap-grid{
+    max-width:1180px;margin-inline:auto;
+    display:grid;gap:clamp(14px,1.6vw,20px);grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.cap-card{
+    display:grid;gap:12px;padding:clamp(24px,2.6vw,36px);border-radius:18px;
+    background:var(--glass-bg);border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.14);
+    transition:transform .55s cubic-bezier(.22,1,.36,1),border-color .45s ease;
+}
+.cap-card:hover{transform:translate3d(0,-4px,0);border-color:rgba(254,177,74,.34)}
+.cap-card__idx{
+    width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--ink);
+    background:linear-gradient(140deg,var(--gold),var(--orange));
+}
+.cap-card__tag{font-family:var(--font-display);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin:0}
+.cap-card__name{font-family:var(--font-display);font-weight:600;font-size:clamp(19px,1.9vw,25px);margin:0}
+.cap-card__desc{margin:0;color:var(--muted);font-size:15px;line-height:1.6;max-width:42ch}
+
+/* =========================
+     FINAL TRANSITION — into the owl's eyes
+   ========================= */
+.bridge{position:relative;background:var(--ink)}
+.bridge__stage{
+    position:relative;height:100svh;overflow:hidden;display:grid;place-items:center;
+    background:radial-gradient(70% 60% at 50% 42%,rgba(63,38,144,.4),transparent 68%),var(--ink);
+}
+.bridge__owl{position:relative;width:clamp(190px,25vw,420px);z-index:2;will-change:transform}
+.bridge__dark{position:absolute;inset:0;z-index:3;background:var(--ink);opacity:0;pointer-events:none}
+.bridge__line{
+    position:absolute;z-index:4;left:50%;top:50%;
+    width:min(90vw,900px);transform:translate3d(-50%,-50%,0);
+    text-align:center;opacity:0;margin:0;
+    font-family:var(--font-display);font-weight:600;text-transform:uppercase;
+    font-size:clamp(24px,4.4vw,62px);letter-spacing:-.02em;line-height:1.04;
+}
+.closing{
+    position:relative;overflow:hidden;
+    padding:clamp(80px,15vh,170px) var(--safe-x);
+    display:grid;gap:clamp(18px,3vh,34px);justify-items:center;text-align:center;
+    background:
+        radial-gradient(58% 50% at 50% 8%,rgba(125,43,193,.3),transparent 64%),
+        linear-gradient(180deg,var(--ink),#0c0730);
+    border-top:1px solid var(--line);
+}
+.closing__owl{width:clamp(60px,7vw,96px);height:auto;filter:drop-shadow(0 16px 34px rgba(0,0,0,.5))}
+.closing__title{
+    font-family:var(--font-display);font-weight:600;letter-spacing:-.03em;
+    font-size:clamp(32px,5.6vw,74px);line-height:1.04;margin:0;max-width:20ch;
+}
+
+/* =========================
+     FOOTER
+   ========================= */
+.site-footer{
+    position:relative;overflow:hidden;
+    padding:clamp(70px,13vh,150px) var(--safe-x) 40px;
+    background:
+        radial-gradient(58% 58% at 16% 0%,rgba(99,29,153,.34),transparent 64%),
+        radial-gradient(48% 48% at 88% 28%,rgba(254,115,68,.14),transparent 66%),
+        var(--ink);
+    border-top:1px solid var(--line);
+}
+.site-footer__inner{position:relative;z-index:2;max-width:1180px;margin-inline:auto}
+.footer-word{
+    font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;
+    font-size:clamp(50px,14vw,180px);line-height:.86;margin:0 0 clamp(24px,5vh,52px);
+    background:linear-gradient(96deg,var(--white),rgba(249,250,251,.28));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.footer-grid{
+    display:grid;gap:clamp(24px,4vw,58px);
+    grid-template-columns:minmax(0,1.1fr) minmax(0,.6fr) minmax(0,.8fr);
+    align-items:start;padding-bottom:clamp(30px,6vh,58px);border-bottom:1px solid var(--line);
+}
+.footer-claim{font-family:var(--font-display);font-size:clamp(19px,2.2vw,30px);line-height:1.25;margin:0}
+.footer-claim span{color:var(--muted)}
+.footer-nav{display:grid;gap:10px}
+.footer-nav a{color:var(--muted);font-size:14.5px;transition:color .35s ease,transform .45s cubic-bezier(.22,1,.36,1)}
+.footer-nav a:hover{color:var(--white);transform:translateX(4px)}
+.footer-cta{display:grid;gap:16px;justify-items:start}
+.footer-cta p{margin:0;color:var(--muted);font-size:14.5px;max-width:26ch}
+.footer-base{
+    display:flex;flex-wrap:wrap;gap:12px 26px;align-items:center;justify-content:space-between;
+    padding-top:22px;font-size:12.5px;color:var(--muted);
+}
+
+/* =========================
+     SECONDARY REVEALS
+   ========================= */
+[data-reveal]{
+    opacity:0;transform:translate3d(0,20px,0);
+    transition:opacity .95s cubic-bezier(.22,1,.36,1),transform .95s cubic-bezier(.22,1,.36,1);
+}
+[data-reveal].is-in{opacity:1;transform:none}
+
+/* =========================
+     STATIC MODE
+     Reduced motion, or GSAP unavailable. The four plates become
+     a stacked photo story — same artwork, same words, no motion.
+   ========================= */
+.story-static{display:none;background:linear-gradient(180deg,var(--ink),#0d0730)}
+.is-static #chapterOne{display:none}
+.is-static .story-static{display:block}
+.is-static [data-reveal]{opacity:1;transform:none}
+.is-static .chapter-marker{display:none}
+.is-static .bridge__line{opacity:1}
+
+.static-scene{position:relative;min-height:min(76vh,660px);display:grid;align-items:end;overflow:hidden}
+.static-scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.static-scene__scrim{
+    position:absolute;inset:0;z-index:1;
+    background:linear-gradient(0deg,rgba(10,6,38,.95) 0%,rgba(10,6,38,.6) 32%,transparent 68%);
+}
+.static-scene__copy{
+    position:relative;z-index:2;display:grid;gap:12px;justify-items:start;
+    padding:0 var(--safe-x) clamp(34px,7vh,70px);max-width:640px;
+}
+
+/* =========================
+     RESPONSIVE
+   ========================= */
+@media (max-width:1100px){
+    .cap-grid{grid-template-columns:1fr}
+    .philosophy__grid{grid-template-columns:1fr}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:34px}
+    .footer-cta{grid-column:1 / -1}
+    .scene-copy[data-align="left"]{grid-column:1 / span 7}
+    .scene-copy[data-align="right"]{grid-column:6 / span 7}
+}
+@media (max-width:860px){
+    .nav,.site-header .btn-quote{display:none}
+    .menu-toggle{display:flex}
+    .chapter-marker{display:none}
+
+    /* Mobile is composed, not shrunk: the copy takes the full
+       safe area at the bottom of the frame and every plate gets
+       the same bottom scrim, so the subject stays clear above
+       the words. */
+    .stage__ui{align-items:end}
+    .scene-copy[data-align="left"],
+    .scene-copy[data-align="right"],
+    .scene-copy[data-align="bottom"]{
+        grid-column:1 / -1;justify-items:start;text-align:left;
+    }
+    .scene-copy--statement{grid-column:1 / -1;justify-items:start;text-align:left}
+    .scene-copy__statement{max-width:none}
+    .scene-copy__line{max-width:30ch}
+    .reveal-copy{grid-column:1 / -1;align-self:end}
+    .hero__scrim--side{background:none}
+
+    /* On a phone every plate sits as a band in the upper half with the
+       copy beneath it, so the whole scene survives a portrait screen. */
+    .plate__media img{object-position:center 38%}
+    .plate__scrim--left,.plate__scrim--right,.plate__scrim--bottom{
+        background:linear-gradient(0deg,rgba(10,6,38,.96) 0%,rgba(10,6,38,.74) 30%,transparent 58%);
+    }
+    .footer-grid{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+    /* A pill long enough to overflow a phone must be allowed to wrap —
+       "the one who sees the whole picture" is wider than 390px. */
+    .scene-tag{white-space:normal;max-width:100%}
+    .brand__word{display:none}
+    .hero__title{font-size:clamp(30px,9.4vw,46px)}
+    .scene-copy__title{font-size:clamp(30px,10vw,50px)}
+    .reveal-copy__title{font-size:clamp(27px,8.6vw,44px)}
+}
+
+/* =========================
+     ACCESSIBILITY — REDUCED MOTION
+   ========================= */
+@media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.001ms !important;animation-iteration-count:1 !important;
+        transition-duration:.001ms !important;scroll-behavior:auto !important;
+    }
+    #ambient{display:none}
+    .hero__scroll .track::after{animation:none;opacity:.6}
+    .hero__frame{transform:none}
+}
+</style>
+</head>
+<body>
+<noscript>
+<style>
+    [data-reveal]{opacity:1 !important;transform:none !important}
+    #chapterOne{display:none !important}
+    .story-static{display:block !important}
+    .bridge__line{opacity:1 !important}
+</style>
+</noscript>
+
+<!-- =========================
+     HEADER
+   ========================= -->
+<header class="site-header" id="header">
+    <a class="brand" href="#top" aria-label="Massbar — home">
+        <!-- ASSET: assets/logo.png — the Massbar logo.
+             The wordmark beside it is the fallback while the file
+             is missing; delete it once the real logo is in place. -->
+        <img class="brand__mark" src="assets/logo.png" alt="Massbar" width="120" height="30"
+             onerror="this.style.display='none'">
+        <span class="brand__word">Massbar</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+        <a href="#top" aria-current="true">Home</a>
+        <a href="#story">Story</a>
+        <a href="#services">Capabilities</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <a class="btn-quote" href="#contact">
+        <span class="btn-quote__sweep" aria-hidden="true"></span>
+        <span class="btn-quote__dot" aria-hidden="true"></span>
+        Get Quote <span aria-hidden="true">↗</span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
+        <span aria-hidden="true"></span>
+    </button>
+</header>
+
+<div class="mobile-panel" id="mobilePanel">
+    <a href="#top">Home</a>
+    <a href="#story">Story</a>
+    <a href="#services">Capabilities</a>
+    <a href="#contact">Contact</a>
+    <a class="btn-quote" href="#contact">
+        <span class="btn-quote__sweep" aria-hidden="true"></span>
+        <span class="btn-quote__dot" aria-hidden="true"></span>
+        Get Quote <span aria-hidden="true">↗</span>
+    </a>
+</div>
+
+<canvas id="ambient" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<aside class="chapter-marker" id="chapterMarker" aria-hidden="true">
+    <div class="chapter-marker__rail"><span class="chapter-marker__fill" id="chapterFill"></span></div>
+    <div class="chapter-marker__meta">
+        <span class="chapter-marker__num" id="markerNum">01</span>
+        <span class="chapter-marker__label" id="markerLabel">The Garden</span>
+    </div>
+</aside>
+
+<main id="top">
+
+<!-- =========================
+     HERO
+   ========================= -->
+<section class="hero" id="hero">
+    <div class="hero__media">
+        <div class="hero__frame" id="heroFrame">
+            <!-- ASSET: assets/hero-poster.jpg — the video's own first
+                 frame, so the fade from still to video is invisible. It
+                 also stands alone wherever the video does not play. -->
+            <img id="heroImg" src="assets/hero-poster.jpg" alt="The jungle gathered around the owl"
+                 fetchpriority="high" data-alt-src="assets/owl-scene.jpg" onerror="assetFallback(this)">
+
+            <!-- =========================================================
+                 ASSET: assets/hero.mp4 (+ assets/hero.webm, tried first)
+                 Silent, 12s, loops seamlessly (the source is played
+                 forward then reversed, so there is no cut). Muted +
+                 playsinline are what let it autoplay at all. If it cannot
+                 play for any reason the poster above simply stays.
+                 ========================================================= -->
+            <video id="heroVideo" class="hero__video" muted loop playsinline
+                   preload="metadata" disablepictureinpicture tabindex="-1" aria-hidden="true">
+                <source src="assets/hero.webm" type="video/webm">
+                <source src="assets/hero.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+    <div class="hero__scrim hero__scrim--base" aria-hidden="true"></div>
+    <div class="hero__scrim hero__scrim--side" aria-hidden="true"></div>
+
+    <div class="hero__copy">
+        <div class="hero__brandline">
+            <span class="rule" aria-hidden="true"></span>
+            <p class="eyebrow">Massbar</p>
+        </div>
+        <h1 class="display hero__title">
+            <span class="line"><i>We build stories</i></span>
+            <span class="line"><i class="accent">people remember.</i></span>
+        </h1>
+        <div class="hero__sub">
+            <p class="lede" id="heroLede">Every brand has a story.<br>Let's make yours impossible to ignore.</p>
+            <span class="hero__scroll">Scroll <span class="track" aria-hidden="true"></span></span>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     CHAPTER ONE — INTRODUCTION
+   ========================= -->
+<section class="chapter-intro" id="story">
+    <span class="chapter-intro__num" aria-hidden="true">01</span>
+    <div class="chapter-intro__inner">
+        <!-- ASSET: assets/owl-figure.png — the narrator descends into the
+             story. Only the pupils move; calibrate them with the --owl-*
+             variables at the top of this file (add ?calibrate to the URL
+             to outline the sockets). -->
+        <div class="chapter-intro__owl owl" id="owlIntro">
+            <img class="owl__img" src="assets/owl-figure.png" alt="" loading="lazy">
+            <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
+            <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
+        </div>
+
+        <p class="eyebrow" data-reveal>Chapter One</p>
+        <h2 class="display chapter-intro__title" data-reveal>
+            <span class="reveal-word"><i>The</i></span> <span class="reveal-word"><i>Garden</i></span>
+        </h2>
+        <p class="lede" data-reveal>Deep in the jungle, all the animals decided to build the most beautiful garden.</p>
+    </div>
+</section>
+
+<!-- =========================
+     CHAPTER ONE — CINEMATIC STAGE
+     Pinned. Scroll drives one timeline across four full-bleed
+     plates of the supplied artwork, then the garden reveal.
+   ========================= -->
+<section id="chapterOne">
+  <div class="stage" id="stage">
+
+    <div class="plates" id="plates">
+        <!-- ---- SCENE 01 · ELEPHANTS — subject sits left, so the copy sits right ---- -->
+        <div class="plate" id="plate-elephant" data-align="right">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/elephant-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/elephant.jpg -->
+                <img src="assets/elephant.jpg" onerror="assetFallback(this)" alt="An elephant watering the young garden" style="--focal:38% center">
+            </div>
+            <div class="plate__scrim plate__scrim--right" aria-hidden="true"></div>
+        </div>
+
+        <!-- ---- SCENE 02 · MONKEYS — subjects centre, copy left ---- -->
+        <div class="plate" id="plate-monkeys" data-align="left">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/monkeys-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/monkeys.jpg -->
+                <img src="assets/monkeys.jpg" onerror="assetFallback(this)" alt="Two monkeys planting a seedling in the soil" loading="lazy" style="--focal:48% center">
+            </div>
+            <div class="plate__scrim plate__scrim--left" aria-hidden="true"></div>
+        </div>
+
+        <!-- ---- SCENE 03 · DEER — subject right, copy left ---- -->
+        <div class="plate" id="plate-deer" data-align="left">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/deer-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/deer.jpg -->
+                <img src="assets/deer.jpg" onerror="assetFallback(this)" alt="A deer among the first flowers of the garden" loading="lazy" style="--focal:62% center">
+            </div>
+            <div class="plate__scrim plate__scrim--left" aria-hidden="true"></div>
+        </div>
+
+        <!-- ---- SCENE 04 · PARROTS — subjects left and right, copy bottom ---- -->
+        <div class="plate" id="plate-parrots" data-align="bottom">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/parrots-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/parrots.jpg -->
+                <img src="assets/parrots.jpg" onerror="assetFallback(this)" alt="Two parrots holding a sign above the finished garden" loading="lazy" style="--focal:center 44%">
+            </div>
+            <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
+        </div>
+
+        <!-- ---- CHAPTER TWO · THE TURN — the same frame with the life
+                  drained out of it. Everyone is still working; nothing is
+                  growing. A separate desaturated file, so the drain is a
+                  plain cross-fade rather than an animated filter. ---- -->
+        <div class="plate" id="plate-drained" data-align="bottom">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/parrots-dim-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/parrots-dim.jpg -->
+                <img src="assets/parrots-dim.jpg" onerror="assetFallback(this)" alt="The garden, colourless and still" loading="lazy" style="--focal:center 44%">
+            </div>
+            <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
+        </div>
+
+        <!-- ---- CHAPTER THREE · THE OWL — colour comes back with the plan ---- -->
+        <div class="plate" id="plate-owl" data-align="bottom">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/owl-scene-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/owl-scene.jpg -->
+                <img src="assets/owl-scene.jpg" onerror="assetFallback(this)" alt="The owl, wings open, gathering the animals" loading="lazy" style="--focal:center 42%">
+            </div>
+            <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
+        </div>
+
+        <!-- ---- CHAPTER FOUR · TOGETHER — the payoff. Every animal in one
+                  frame, with the owl on the rock between them. ---- -->
+        <div class="plate" id="plate-together" data-align="bottom">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/together-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/together.jpg -->
+                <img src="assets/together.jpg" onerror="assetFallback(this)" alt="The whole jungle gathered in the finished garden, the owl on a rock between them" loading="lazy" style="--focal:center 40%">
+            </div>
+            <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <div class="stage__vignette" aria-hidden="true"></div>
+    <div class="stage__veil" id="stageVeil" aria-hidden="true"></div>
+
+    <!-- The owl needs no cut-out here: it is standing on the rock in the
+         middle of assets/together.jpg. This names it. -->
+    <span class="scene-tag owl-label" id="owlLabel">The one who sees the whole picture</span>
+
+    <!-- ---- copy: one 12-column safe-area grid, one focus at a time ---- -->
+    <div class="stage__ui">
+        <div class="scene-copy" id="copyElephant" data-align="right">
+            <span class="scene-tag"><span class="pip"></span> Contribution 01</span>
+            <h3 class="scene-copy__title">Elephants</h3>
+            <p class="scene-copy__line">Brought the water.</p>
+        </div>
+
+        <div class="scene-copy" id="copyMonkeys" data-align="left">
+            <span class="scene-tag"><span class="pip"></span> Contribution 02</span>
+            <h3 class="scene-copy__title">Monkeys</h3>
+            <p class="scene-copy__line">Planted the seeds.</p>
+        </div>
+
+        <div class="scene-copy" id="copyDeer" data-align="left">
+            <span class="scene-tag"><span class="pip"></span> Contribution 03</span>
+            <h3 class="scene-copy__title">Deer</h3>
+            <p class="scene-copy__line">Collected the flowers.</p>
+        </div>
+
+        <div class="scene-copy" id="copyParrots" data-align="bottom">
+            <span class="scene-tag"><span class="pip"></span> Contribution 04</span>
+            <h3 class="scene-copy__title">Parrots</h3>
+            <p class="scene-copy__line">Spread the word.</p>
+        </div>
+
+        <div class="scene-copy scene-copy--statement" id="copyTurn" data-align="bottom">
+            <span class="scene-tag"><span class="pip"></span> Chapter Two</span>
+            <p class="scene-copy__statement">Everyone was working hard. But <b>nothing was growing.</b></p>
+            <p class="scene-copy__aside">Everyone had good ideas. But nobody was communicating.</p>
+        </div>
+
+        <div class="scene-copy scene-copy--statement" id="copyOwl" data-align="bottom">
+            <span class="scene-tag"><span class="pip"></span> Chapter Three</span>
+            <p class="scene-copy__statement">Then the Owl gathered everyone, listened, and made <b>one clear plan</b> — with a role for each of them.</p>
+        </div>
+
+        <div class="scene-copy scene-copy--statement" id="copyBloom" data-align="bottom">
+            <span class="scene-tag"><span class="pip"></span> Chapter Four</span>
+            <p class="scene-copy__statement">Slowly, <b>the garden began to bloom.</b></p>
+        </div>
+
+        <div class="reveal-copy" id="revealCopy">
+            <h3 class="reveal-copy__title">Different strengths.<br><span class="grad">One vision.</span></h3>
+            <p class="lede">That's how something beautiful gets built.</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     STORY — STATIC PRESENTATION
+     Shown when motion is reduced or GSAP is unavailable, so the
+     chapter is always readable. Same artwork, same words.
+     ========================================================= -->
+<section class="story-static" id="storyStatic" aria-label="Chapter One — The Garden">
+    <article class="static-scene">
+        <img src="assets/elephant.jpg" onerror="assetFallback(this)" alt="An elephant watering the young garden" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Contribution 01</span>
+            <h3 class="scene-copy__title">Elephants</h3>
+            <p class="scene-copy__line">Brought the water.</p>
+        </div>
+    </article>
+    <article class="static-scene">
+        <img src="assets/monkeys.jpg" onerror="assetFallback(this)" alt="Two monkeys planting a seedling in the soil" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Contribution 02</span>
+            <h3 class="scene-copy__title">Monkeys</h3>
+            <p class="scene-copy__line">Planted the seeds.</p>
+        </div>
+    </article>
+    <article class="static-scene">
+        <img src="assets/deer.jpg" onerror="assetFallback(this)" alt="A deer among the first flowers of the garden" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Contribution 03</span>
+            <h3 class="scene-copy__title">Deer</h3>
+            <p class="scene-copy__line">Collected the flowers.</p>
+        </div>
+    </article>
+    <article class="static-scene">
+        <img src="assets/parrots.jpg" onerror="assetFallback(this)" alt="Two parrots holding a sign above the finished garden" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Contribution 04</span>
+            <h3 class="scene-copy__title">Parrots</h3>
+            <p class="scene-copy__line">Spread the word.</p>
+        </div>
+    </article>
+    <article class="static-scene">
+        <img src="assets/parrots-dim.jpg" onerror="assetFallback(this)" alt="The garden, colourless and still" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Chapter Two</span>
+            <h3 class="scene-copy__title">Nothing grew</h3>
+            <p class="scene-copy__line">Everyone was working hard. But nothing was growing — everyone had good ideas, and nobody was communicating.</p>
+        </div>
+    </article>
+    <article class="static-scene">
+        <img src="assets/owl-scene.jpg" onerror="assetFallback(this)" alt="The owl, wings open, gathering the animals" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Chapter Three</span>
+            <h3 class="scene-copy__title">The Owl</h3>
+            <p class="scene-copy__line">Then the Owl gathered everyone, listened, and made one clear plan — with a role for each of them.</p>
+        </div>
+    </article>
+    <article class="static-scene">
+        <img src="assets/together.jpg" onerror="assetFallback(this)" alt="The whole jungle gathered in the finished garden" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Chapter Four</span>
+            <h3 class="scene-copy__title">It bloomed</h3>
+            <p class="scene-copy__line">Slowly, the garden began to bloom.</p>
+        </div>
+    </article>
+    <div class="static-scene__copy" style="padding-top:clamp(50px,9vh,90px);max-width:820px;margin-inline:auto;justify-items:center;text-align:center">
+        <h3 class="reveal-copy__title">Different strengths. One vision.</h3>
+        <p class="lede" style="text-align:center">That's how something beautiful gets built.</p>
+        <span class="scene-tag"><span class="pip"></span> The owl: the one who sees the whole picture</span>
+    </div>
+</section>
+
+<!-- =========================
+     THE OWL'S LINE — the moral, in the Owl's own words
+   ========================= -->
+<section class="owl-quote" id="quote">
+    <div class="owl-quote__inner">
+        <!-- ASSET: assets/logo.png — the mark, whose eyes are painted in
+             (owl-figure.png has knocked-out eyes and needs the pupil rig) -->
+        <img class="owl-quote__mark" src="assets/logo.png" alt="" loading="lazy" data-reveal>
+        <p class="owl-quote__text" data-reveal>
+            "Great things don't happen when everyone simply works hard.
+            They happen when everyone understands the same idea."
+        </p>
+        <p class="owl-quote__attr" data-reveal>— The Owl</p>
+    </div>
+</section>
+
+<!-- =========================
+     THE TURN INTO MASSBAR
+   ========================= -->
+<section class="philosophy" id="bridge-copy">
+    <div class="philosophy__grid">
+        <div style="display:grid;gap:20px" data-reveal>
+            <p class="eyebrow">This is what we do</p>
+            <h2 class="display philosophy__title">
+                Every brand has its own <em>jungle</em>.
+            </h2>
+        </div>
+        <p class="lede" data-reveal>
+            Good people, good ideas, good intentions — all pulling in slightly different
+            directions. Massbar is the Owl: we listen, build the one clear plan, and give
+            every part of your marketing a role in it.
+        </p>
+    </div>
+</section>
+
+<!-- =========================
+     CAPABILITIES — four roles, one plan
+   ========================= -->
+<section class="philosophy" id="services" style="padding-top:0">
+    <div class="cap-head">
+        <p class="eyebrow" data-reveal>Capabilities</p>
+        <h2 class="cap-head__title" data-reveal>Four roles. <b>One plan.</b></h2>
+    </div>
+    <div class="cap-grid">
+        <article class="cap-card" data-reveal>
+            <span class="cap-card__idx">01</span>
+            <p class="cap-card__tag">Deer — the flowers</p>
+            <h3 class="cap-card__name">Brand Strategy</h3>
+            <p class="cap-card__desc">Positioning, identity, and a story worth telling — chosen with care, not guessed at.</p>
+        </article>
+        <article class="cap-card" data-reveal>
+            <span class="cap-card__idx">02</span>
+            <p class="cap-card__tag">Monkeys — the seeds</p>
+            <h3 class="cap-card__name">Campaign Creative</h3>
+            <p class="cap-card__desc">Ideas planted in one bed, not scattered — concepts that travel across every format.</p>
+        </article>
+        <article class="cap-card" data-reveal>
+            <span class="cap-card__idx">03</span>
+            <p class="cap-card__tag">Elephants — the water</p>
+            <h3 class="cap-card__name">Media Planning &amp; Buying</h3>
+            <p class="cap-card__desc">Resources, on schedule and in the right place — reach that's earned, not wasted.</p>
+        </article>
+        <article class="cap-card" data-reveal>
+            <span class="cap-card__idx">04</span>
+            <p class="cap-card__tag">Parrots — the word</p>
+            <h3 class="cap-card__name">Digital &amp; Social</h3>
+            <p class="cap-card__desc">One message, spread everywhere it needs to be heard — consistently, not chaotically.</p>
+        </article>
+    </div>
+</section>
+
+<!-- =========================
+     FINAL CHAPTER-ONE TRANSITION
+   ========================= -->
+<section class="bridge" id="bridge">
+    <div class="bridge__stage" id="bridgeStage">
+        <!-- ASSET: assets/owl-figure.png -->
+        <div class="bridge__owl owl" id="owlBridge">
+            <img class="owl__img" src="assets/owl-figure.png" alt="The owl, close" loading="lazy">
+            <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
+            <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
+        </div>
+        <div class="bridge__dark" id="bridgeDark" aria-hidden="true"></div>
+        <p class="bridge__line" id="bridgeLine">The story is only beginning.</p>
+    </div>
+</section>
+
+<!-- =========================
+     CLOSING CTA
+   ========================= -->
+<section class="closing" id="start">
+    <!-- ASSET: assets/logo.png -->
+    <img class="closing__owl" src="assets/logo.png" alt="" loading="lazy" data-reveal>
+    <h2 class="closing__title" data-reveal>Let's build something that grows.</h2>
+    <a class="btn-quote btn-quote--lg" href="mailto:hello@massbaradvertising.com" data-reveal>
+        <span class="btn-quote__sweep" aria-hidden="true"></span>
+        <span class="btn-quote__dot" aria-hidden="true"></span>
+        hello@massbaradvertising.com
+    </a>
+</section>
+</main>
+
+<!-- =========================
+     FOOTER
+   ========================= -->
+<footer class="site-footer" id="contact">
+    <div class="site-footer__inner">
+        <p class="footer-word">Massbar</p>
+        <div class="footer-grid">
+            <p class="footer-claim">Different strengths.<br><span>One plan.</span><br>Let's build something that grows.</p>
+            <nav class="footer-nav" aria-label="Footer">
+                <a href="#story">Story</a>
+                <a href="#services">Capabilities</a>
+                <a href="#quote">The Owl's line</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="footer-cta">
+                <p>Tell us about your jungle. We'll bring the plan.</p>
+                <a class="btn-quote btn-quote--lg" href="mailto:hello@massbaradvertising.com">
+                    <span class="btn-quote__sweep" aria-hidden="true"></span>
+                    <span class="btn-quote__dot" aria-hidden="true"></span>
+                    Get Quote <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        </div>
+        <div class="footer-base">
+            <span>Lusaka, Zambia — © <span id="year">2026</span> Massbar Advertising</span>
+            <span>The Jungle Garden</span>
+        </div>
+    </div>
+</footer>
+
+<!-- =========================
+     JAVASCRIPT
+   ========================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+"use strict";
+
+/* ---------------------------------------------------------
+   ENVIRONMENT
+   --------------------------------------------------------- */
+var root        = document.documentElement;
+var REDUCED     = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var HAS_GSAP    = !!(window.gsap && window.ScrollTrigger);
+var STATIC_MODE = REDUCED || !HAS_GSAP;
+var CALIBRATE   = /[?&]calibrate\b/.test(location.search);
+
+var $  = function (s, c) { return (c || document).querySelector(s); };
+var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+var TIER = window.innerWidth < 700 ? "mobile" : window.innerWidth < 1100 ? "tablet" : "desktop";
+var PARTICLES = { mobile: 12, tablet: 24, desktop: 40 }[TIER];
+
+if (HAS_GSAP) { gsap.registerPlugin(ScrollTrigger); }
+if (STATIC_MODE) { root.classList.add("is-static"); }
+if (CALIBRATE)   { root.classList.add("is-calibrating"); }
+
+/* ---------------------------------------------------------
+   SHARED POINTER FIELD
+   One pointer source, one rAF loop. `fine` flips on the first
+   real mouse/pen move, so pointer effects switch themselves on
+   only where there is a cursor.
+   --------------------------------------------------------- */
+var pointer = { x: 0, y: 0, lx: 0, ly: 0, nx: 0, ny: 0, active: false, fine: false };
+var frameTasks = [];
+var rafId = null, running = false;
+
+function addFrameTask(fn) { frameTasks.push(fn); }
+
+function loop() {
+    pointer.lx += (pointer.x - pointer.lx) * 0.075;
+    pointer.ly += (pointer.y - pointer.ly) * 0.075;
+    pointer.nx = (pointer.lx / window.innerWidth  - 0.5) * 2;
+    pointer.ny = (pointer.ly / window.innerHeight - 0.5) * 2;
+    for (var i = 0; i < frameTasks.length; i++) { frameTasks[i](); }
+    rafId = requestAnimationFrame(loop);
+}
+function startLoop() { if (!running && frameTasks.length) { running = true; rafId = requestAnimationFrame(loop); } }
+function stopLoop()  { if (running) { running = false; cancelAnimationFrame(rafId); } }
+
+function initPointerTracking() {
+    pointer.x = pointer.lx = window.innerWidth  / 2;
+    pointer.y = pointer.ly = window.innerHeight / 2;
+    if (REDUCED) { return; }
+    window.addEventListener("pointermove", function (e) {
+        if (e.pointerType === "touch") { return; }
+        pointer.x = e.clientX; pointer.y = e.clientY;
+        pointer.active = true; pointer.fine = true;
+    }, { passive: true });
+    window.addEventListener("pointerleave", function () { pointer.active = false; }, { passive: true });
+}
+
+/* ---------------------------------------------------------
+   OWL EYE TRACKING
+   Only the pupils move. Capped travel, smooth interpolation,
+   and nothing at all on touch devices.
+   --------------------------------------------------------- */
+function initOwlEyeTracking() {
+    if (REDUCED) { return; }
+    var owls = $$(".owl");
+    if (!owls.length) { return; }
+
+    var eyes = [];
+    owls.forEach(function (owl) {
+        $$(".owl__eye", owl).forEach(function (eye) {
+            eyes.push({ owl: owl, eye: eye, pupil: $(".owl__pupil", eye), x: 0, y: 0, tx: 0, ty: 0, live: false });
+        });
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+            eyes.forEach(function (e) { if (e.owl === en.target) { e.live = en.isIntersecting; } });
+        });
+    }, { rootMargin: "12% 0px" });
+    owls.forEach(function (o) { io.observe(o); });
+
+    var travelPct = parseFloat(getComputedStyle(root).getPropertyValue("--owl-pupil-travel")) || 23;
+
+    addFrameTask(function () {
+        if (!pointer.fine) { return; }
+        var i, e, r, dx, dy, angle, dist, max;
+        /* pass 1 — read */
+        for (i = 0; i < eyes.length; i++) {
+            e = eyes[i];
+            if (!e.live) { continue; }
+            r = e.eye.getBoundingClientRect();
+            if (!r.width) { continue; }
+            max   = r.width * travelPct / 100;
+            dx    = pointer.lx - (r.left + r.width  / 2);
+            dy    = pointer.ly - (r.top  + r.height / 2);
+            angle = Math.atan2(dy, dx);
+            dist  = Math.min(max, Math.sqrt(dx * dx + dy * dy) / 26);
+            e.tx  = Math.cos(angle) * dist;
+            e.ty  = Math.sin(angle) * dist;
+        }
+        /* pass 2 — write */
+        for (i = 0; i < eyes.length; i++) {
+            e = eyes[i];
+            if (!e.live) { continue; }
+            e.x += (e.tx - e.x) * 0.09;
+            e.y += (e.ty - e.y) * 0.09;
+            e.pupil.style.transform = "translate3d(" + e.x.toFixed(2) + "px," + e.y.toFixed(2) + "px,0)";
+        }
+    });
+}
+
+/* ---------------------------------------------------------
+   HERO POINTER PARALLAX
+   The photograph drifts one way, the owl the other, the type
+   barely at all — a camera easing through a layered scene.
+   Uses `translate`, so it composes with GSAP's transforms.
+   --------------------------------------------------------- */
+function initMouseParallax() {
+    if (REDUCED) { return; }
+    var items = [
+        { el: $("#heroFrame"),  d: -0.6, x: 0, y: 0 },
+        { el: $(".hero__copy"), d:  0.24, x: 0, y: 0 }
+    ].filter(function (i) { return !!i.el; });
+    if (!items.length) { return; }
+
+    var heroVisible = true;
+    var hero = $("#hero");
+    if (hero && "IntersectionObserver" in window) {
+        new IntersectionObserver(function (e) { heroVisible = e[0].isIntersecting; }).observe(hero);
+    }
+
+    addFrameTask(function () {
+        if (!heroVisible || !pointer.fine) { return; }
+        for (var i = 0; i < items.length; i++) {
+            var it = items[i];
+            var tx = -pointer.nx * 26 * it.d;
+            var ty = -pointer.ny * 18 * it.d;
+            it.x += (tx - it.x) * 0.08;
+            it.y += (ty - it.y) * 0.08;
+            it.el.style.translate = it.x.toFixed(2) + "px " + it.y.toFixed(2) + "px";
+        }
+    });
+}
+
+/* ---------------------------------------------------------
+   AMBIENT PARTICLES
+   Pollen and firefly light over the plates. A few dozen, drawn
+   from pre-rendered glow sprites, nudged aside by the cursor.
+   --------------------------------------------------------- */
+function initAmbientParticles() {
+    var canvas = $("#ambient");
+    if (!canvas || REDUCED) { if (canvas) { canvas.style.display = "none"; } return; }
+
+    var ctx = canvas.getContext("2d");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, parts = [];
+    var COLORS = ["#feb14a", "#fe7344", "#7db2bb", "#e24386", "#7d2bc1"];
+    var REPULSE = TIER === "mobile" ? 0 : 300;
+    var sprites = {};
+
+    function makeSprite(color) {
+        var s = document.createElement("canvas"), size = 48, c = s.getContext("2d");
+        s.width = s.height = size;
+        var g = c.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+        g.addColorStop(0, color); g.addColorStop(0.28, color); g.addColorStop(1, "rgba(0,0,0,0)");
+        c.fillStyle = g; c.beginPath(); c.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2); c.fill();
+        return s;
+    }
+    COLORS.forEach(function (c) { sprites[c] = makeSprite(c); });
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function build() {
+        parts.length = 0;
+        for (var i = 0; i < PARTICLES; i++) {
+            parts.push({
+                x: Math.random() * W, y: Math.random() * H,
+                r: rand(1.4, 4.4),
+                vx: rand(-0.16, 0.16), vy: rand(-0.32, -0.06),
+                ox: 0, oy: 0, a: rand(0.16, 0.55),
+                tw: rand(0.4, 1.6), tp: Math.random() * Math.PI * 2,
+                col: COLORS[(Math.random() * COLORS.length) | 0]
+            });
+        }
+    }
+    function resize() {
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = W * dpr; canvas.height = H * dpr;
+        canvas.style.width = W + "px"; canvas.style.height = H + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        build();
+    }
+    resize();
+    window.addEventListener("resize", debounce(resize, 220), { passive: true });
+
+    addFrameTask(function () {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < parts.length; i++) {
+            var p = parts[i];
+            p.x += p.vx; p.y += p.vy; p.tp += 0.02 * p.tw;
+            if (p.y < -20) { p.y = H + 20; p.x = Math.random() * W; }
+            if (p.x < -20) { p.x = W + 20; } else if (p.x > W + 20) { p.x = -20; }
+
+            var px = 0, py = 0;
+            if (REPULSE && pointer.active && pointer.fine) {
+                var dx = p.x - pointer.lx, dy = p.y - pointer.ly;
+                var d = Math.sqrt(dx * dx + dy * dy);
+                if (d < REPULSE && d > 0.001) {
+                    var f = (1 - d / REPULSE) * 26;
+                    px = (dx / d) * f; py = (dy / d) * f;
+                }
+            }
+            p.ox += (px - p.ox) * 0.06;
+            p.oy += (py - p.oy) * 0.06;
+
+            var size = p.r * 7;
+            ctx.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(p.tp));
+            ctx.drawImage(sprites[p.col], p.x + p.ox - size / 2, p.y + p.oy - size / 2, size, size);
+        }
+        ctx.globalAlpha = 1;
+    });
+}
+
+function debounce(fn, ms) {
+    var t; return function () { clearTimeout(t); var a = arguments, s = this;
+        t = setTimeout(function () { fn.apply(s, a); }, ms); };
+}
+
+/* ---------------------------------------------------------
+   HEADER + MOBILE MENU
+   --------------------------------------------------------- */
+function initHeader() {
+    var header = $("#header"), last = -1;
+    window.addEventListener("scroll", function () {
+        var y = window.scrollY > 40 ? 1 : 0;
+        if (y !== last) { last = y; header.classList.toggle("is-lifted", !!y); }
+    }, { passive: true });
+}
+
+function initMobileMenu() {
+    var btn = $("#menuToggle"), panel = $("#mobilePanel");
+    if (!btn || !panel) { return; }
+    function setOpen(open) {
+        btn.setAttribute("aria-expanded", String(open));
+        btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        panel.classList.toggle("is-open", open);
+    }
+    btn.addEventListener("click", function () { setOpen(btn.getAttribute("aria-expanded") !== "true"); });
+    $$("a", panel).forEach(function (a) { a.addEventListener("click", function () { setOpen(false); }); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { setOpen(false); } });
+}
+
+/* ---------------------------------------------------------
+   SECONDARY REVEALS (detail, not story choreography)
+   --------------------------------------------------------- */
+function initReveals() {
+    var els = $$("[data-reveal]");
+    if (!("IntersectionObserver" in window)) {
+        els.forEach(function (el) { el.classList.add("is-in"); }); return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+        });
+    }, { threshold: 0.18, rootMargin: "0px 0px -8% 0px" });
+    els.forEach(function (el, i) { el.style.transitionDelay = (i % 5) * 70 + "ms"; io.observe(el); });
+}
+
+/* ---------------------------------------------------------
+   HERO
+   --------------------------------------------------------- */
+function initHero() {
+    if (STATIC_MODE) { return; }
+
+    gsap.timeline({ defaults: { ease: "power3.out" } })
+        .from(".hero__title .line i", { yPercent: 118, duration: 1.15, stagger: 0.09 }, 0.15)
+        .from(".hero__brandline", { opacity: 0, y: 14, duration: 0.8 }, 0.1)
+        .from("#heroLede, .hero__scroll", { opacity: 0, y: 18, duration: 0.9, stagger: 0.1 }, 0.7)
+        .fromTo("#heroFrame", { scale: 1.16 }, { scale: 1.06, duration: 2.2, ease: "power2.out" }, 0);
+
+    /* slow drift out of the hero */
+    var st = { trigger: "#hero", start: "top top", end: "bottom top", scrub: true };
+    gsap.to("#heroFrame",  { yPercent: 10, scale: 1.14, ease: "none", scrollTrigger: st });
+    gsap.to(".hero__copy", { yPercent: -16, opacity: 0.1, ease: "none", scrollTrigger: st });
+}
+
+/* ---------------------------------------------------------
+   HERO BACKGROUND VIDEO  (progressive enhancement)
+   The photograph is the base layer and always renders. The video
+   is layered over it and only fades in once it is genuinely
+   playing, so every failure mode — no file, blocked autoplay,
+   an unsupported codec, reduced motion, a metered connection —
+   quietly leaves the still in place. It is also paused whenever
+   the hero is off screen, so it costs nothing further down.
+   --------------------------------------------------------- */
+function initHeroVideo() {
+    var video = $("#heroVideo");
+    var hero  = $("#hero");
+    if (!video || !hero) { return; }
+
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var thrifty = !!conn && (conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || ""));
+    if (REDUCED || thrifty) { video.remove(); return; }
+
+    /* A <source> that 404s fires its own error event, and a media element
+       with no usable candidate fires nothing at all — so failure is never
+       detected here. It does not need to be: the video is transparent until
+       it is genuinely playing, so a broken or missing file is simply never
+       seen. Only a real decode error on the element itself is worth
+       clearing away. */
+    video.addEventListener("error", function () {
+        if (video.error) { video.remove(); }
+    });
+
+    video.addEventListener("playing", function () { video.classList.add("is-playing"); });
+
+    function play() {
+        var p = video.play();
+        if (p && p.catch) { p.catch(function () { /* autoplay refused — the still stays */ }); }
+    }
+
+    if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) { play(); } else { video.pause(); }
+        }, { threshold: 0.02 }).observe(hero);
+    } else {
+        play();
+    }
+}
+
+/* ---------------------------------------------------------
+   CHAPTER ONE INTRODUCTION — the owl descends
+   --------------------------------------------------------- */
+function initChapterIntro() {
+    if (STATIC_MODE) { return; }
+    var owl = $("#owlIntro");
+    gsap.set(owl, { opacity: 0 });
+
+    ScrollTrigger.create({
+        trigger: "#story", start: "top 72%", once: true,
+        onEnter: function () {
+            gsap.timeline()
+                .fromTo(owl,
+                    { opacity: 0, y: function () { return -window.innerHeight; }, rotate: -5, scale: 0.92 },
+                    { opacity: 1, y: 0, rotate: 0, scale: 1, duration: 1.7, ease: "power3.out" })
+                .add(function () {
+                    gsap.to(owl, { y: "+=14", rotate: 1.2, duration: 3.8, ease: "sine.inOut", yoyo: true, repeat: -1 });
+                });
+        }
+    });
+
+    gsap.to(".chapter-intro__num", {
+        yPercent: 40, opacity: 0.35, ease: "none",
+        scrollTrigger: { trigger: "#story", start: "top bottom", end: "bottom top", scrub: true }
+    });
+}
+
+/* ---------------------------------------------------------
+   CHAPTER ONE — THE PLATE TIMELINE
+   Four full-bleed plates of the supplied artwork. Scroll is the
+   story position: plates cross-dissolve, the camera pushes and
+   pulls across each one, and one block of copy is legible at a
+   time. Scrubbing back un-tells it in the same order.
+   --------------------------------------------------------- */
+var SCENES = [
+    /* --- Chapter One: four animals, four contributions --- */
+    { plate: "#plate-elephant", copy: "#copyElephant", chapter: "01", label: "Elephants",
+      start:  0, end: 17, copyIn:  4, copyOut: 12, zoom: [1.05, 1.00] },
+    { plate: "#plate-monkeys",  copy: "#copyMonkeys",  chapter: "01", label: "Monkeys",
+      start: 15, end: 32, copyIn: 19, copyOut: 27, zoom: [1.05, 1.00] },
+    { plate: "#plate-deer",     copy: "#copyDeer",     chapter: "01", label: "Deer",
+      start: 30, end: 47, copyIn: 34, copyOut: 42, zoom: [1.05, 1.00] },
+    { plate: "#plate-parrots",  copy: "#copyParrots",  chapter: "01", label: "Parrots",
+      start: 45, end: 60, copyIn: 49, copyOut: 56, zoom: [1.05, 1.00] },
+
+    /* --- Chapter Two: the turn. Same frame, colour drained out --- */
+    { plate: "#plate-drained",  copy: "#copyTurn",     chapter: "02", label: "Nothing grew",
+      start: 58, end: 74, copyIn: 62, copyOut: 70, zoom: [1.03, 1.00] },
+
+    /* --- Chapter Three: the Owl makes one clear plan --- */
+    { plate: "#plate-owl",      copy: "#copyOwl",      chapter: "03", label: "The Owl",
+      start: 72, end: 88, copyIn: 76, copyOut: 84, zoom: [1.05, 1.00] },
+
+    /* --- Chapter Four: it blooms. This plate also carries the payoff --- */
+    { plate: "#plate-together", copy: "#copyBloom",    chapter: "04", label: "It bloomed",
+      start: 86, end: 100, copyIn: 88, copyOut: 93, zoom: [1.06, 1.00] }
+];
+
+function initChapterScroll() {
+    var fill   = $("#chapterFill");
+    var marker = $("#chapterMarker");
+    var label  = $("#markerLabel");
+    var num    = $("#markerNum");
+
+    function mark(sc) {
+        if (label) { label.textContent = sc.label; }
+        if (num)   { num.textContent   = sc.chapter; }
+    }
+
+    var master = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+            trigger: "#chapterOne",
+            start: "top top",
+            end: "+=880%",
+            pin: "#stage",
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: function (self) { fill.style.height = (self.progress * 100).toFixed(2) + "%"; },
+            onToggle: function (self) { marker.classList.toggle("is-visible", self.isActive); }
+        }
+    });
+
+    SCENES.forEach(function (scene, i) {
+        var plate = $(scene.plate);
+        var img   = $(".plate__media img", plate);
+        var scrim = $(".plate__scrim", plate);
+        var copy  = $(scene.copy);
+        var last  = i === SCENES.length - 1;
+
+        /* the plate arrives */
+        master.fromTo(plate, { opacity: 0 }, { opacity: 1, duration: 6, ease: "power1.inOut" }, scene.start)
+              .fromTo(scrim, { opacity: 0 }, { opacity: 1, duration: 6 }, scene.start + 2)
+              /* camera: a slow push across the whole time the plate is up */
+              .fromTo(img, { scale: scene.zoom[0] }, { scale: scene.zoom[1], duration: scene.end - scene.start },
+                      scene.start);
+
+        /* …and hands over to the next one */
+        if (!last) {
+            master.to(plate, { opacity: 0, duration: 6, ease: "power1.inOut" }, scene.end - 6);
+        }
+
+        /* copy: in after the image has settled, out before the cut */
+        if (copy) {
+            master.fromTo(copy, { opacity: 0, y: 30 },
+                                { opacity: 1, y: 0, duration: 5, ease: "power2.out" }, scene.copyIn)
+                  .to(copy, { opacity: 0, y: -24, duration: 4 }, scene.copyOut);
+        }
+
+        /* the chapter marker names the beat, and counts the chapters */
+        master.call(mark, [scene], scene.start + 3);
+        if (i > 0) {
+            master.call(mark, [SCENES[i - 1]], scene.start - 0.5);
+        }
+    });
+
+    initGardenReveal(master);
+}
+
+/* =========================
+     GARDEN REVEAL — the payoff
+     The last plate IS the finished garden: everything the other
+     animals contributed is standing in it. The camera pulls back
+     across it, the owl arrives to watch, and the line lands.
+   ========================= */
+function initGardenReveal(tl) {
+    /* The owl is standing on the rock in the middle of the last plate,
+       so nothing is layered over it — the frame just settles, darkens a
+       little so the type reads, and the line lands. */
+    tl.to("#stageVeil", { opacity: 0.34, duration: 8 }, 90)
+      .fromTo("#owlLabel", { opacity: 0, y: -12 },
+                           { opacity: 1, y: 0, duration: 4, ease: "power2.out" }, 90)
+      .fromTo("#revealCopy", { opacity: 0, y: 34 },
+                             { opacity: 1, y: 0, duration: 5, ease: "power2.out" }, 94);
+}
+
+/* ---------------------------------------------------------
+   FINAL TRANSITION — the camera moves into the owl's eyes
+   --------------------------------------------------------- */
+function initBridgeScene() {
+    var eyeY = getComputedStyle(root).getPropertyValue("--owl-left-eye-y").trim() || "39%";
+    gsap.set("#owlBridge", { transformOrigin: "50% " + eyeY });
+
+    gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+            trigger: "#bridge", start: "top top", end: "+=240%",
+            pin: "#bridgeStage", scrub: 1, anticipatePin: 1, invalidateOnRefresh: true
+        }
+    })
+    .fromTo("#owlBridge", { scale: 0.88, opacity: 0.9 }, { scale: 3.6, opacity: 1, duration: 11, ease: "power2.in" }, 0)
+    .to("#bridgeDark", { opacity: 0.94, duration: 5 }, 7)
+    .fromTo("#bridgeLine", { opacity: 0, y: 26, letterSpacing: "0.34em" },
+                           { opacity: 1, y: 0, letterSpacing: "0.02em", duration: 5, ease: "power2.out" }, 10);
+}
+
+/* ---------------------------------------------------------
+   BOOT
+   --------------------------------------------------------- */
+function boot() {
+    var y = $("#year"); if (y) { y.textContent = new Date().getFullYear(); }
+
+    initHeader();
+    initMobileMenu();
+    initReveals();
+    initPointerTracking();
+    initHero();
+    initHeroVideo();
+
+    if (!STATIC_MODE) {
+        initChapterIntro();
+        initChapterScroll();
+        initBridgeScene();
+    }
+
+    initOwlEyeTracking();
+    initMouseParallax();
+    initAmbientParticles();
+    startLoop();
+
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { stopLoop(); } else { startLoop(); }
+    });
+    window.addEventListener("resize", debounce(function () {
+        if (HAS_GSAP && !STATIC_MODE) { ScrollTrigger.refresh(); }
+    }, 260), { passive: true });
+
+    /* the plates are the whole show — refresh once they are decoded
+       so pin distances are measured against the real layout */
+    window.addEventListener("load", function () {
+        if (HAS_GSAP && !STATIC_MODE) { ScrollTrigger.refresh(); }
+    });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+} else {
+    boot();
+}
+})();
+</script>
+</body>
+</html>

@@ -4,10 +4,15 @@ A single-file, scroll-driven story site for the creative agency **Massbar**.
 
 > Deep in the jungle, all the animals decided to build the most beautiful
 > garden. The elephants brought the water, the monkeys planted the seeds, the
-> deer collected the flowers, the parrots spread the word — and the owl saw how
-> all of it fit together.
+> deer collected the flowers, the parrots spread the word.
 >
-> **Different strengths. One vision.**
+> Everyone was working hard. But nothing was growing.
+>
+> Then the Owl gathered everyone, listened, and made one clear plan — with a
+> role for each of them. Slowly, the garden began to bloom.
+>
+> *"Great things don't happen when everyone simply works hard. They happen when
+> everyone understands the same idea."* — The Owl
 
 ## Running it
 
@@ -26,18 +31,28 @@ The supplied artwork *is* the site — there are no drawn stand-ins. Put the
 files in `assets/` and see [`assets/README.md`](assets/README.md) for the
 filenames, where each scene's copy sits, and the owl eye-tracking calibration.
 
-## The five plates
+## The beats
 
-| Beat | Image | Copy |
+| # | Image | Beat |
 |---|---|---|
-| Hero | `hero.mp4` over `hero-poster.jpg` | We build stories people remember |
-| Chapter intro | the cut-out owl descends | Chapter One — The Garden |
+| — | `hero.mp4` over `hero-poster.jpg` | We build stories people remember |
+| — | the cut-out owl descends | Chapter One — The Garden |
 | 01 | `elephant.jpg` | Elephants — brought the water |
-| 02 | `monkeys.jpg` | Monkeys — planted the seeds |
-| 03 | `deer.jpg` | Deer — collected the flowers |
-| 04 | `parrots.jpg` | Parrots — spread the word |
-| 05 | `together.jpg` | Different strengths. One vision. |
-| Transition | the cut-out owl, close | The story is only beginning |
+| 01 | `monkeys.jpg` | Monkeys — planted the seeds |
+| 01 | `deer.jpg` | Deer — collected the flowers |
+| 01 | `parrots.jpg` | Parrots — spread the word |
+| **02** | `parrots-dim.jpg` | Everyone was working hard. But **nothing was growing** |
+| **03** | `owl-scene.jpg` | Then the Owl gathered everyone and made **one clear plan** |
+| **04** | `together.jpg` | Slowly, **the garden began to bloom** → Different strengths. One vision. |
+| — | the cut-out owl, close | The story is only beginning |
+
+Then: the Owl's line, *every brand has its own jungle*, Capabilities (four
+roles, one plan), and the closing CTA.
+
+The turn is the point of the whole thing — Chapter Two is the same parrots
+frame with the colour drained out of it, and Chapter Three floods it back in.
+Both are plain cross-fades between files, so nothing expensive runs at scroll
+time.
 
 ## What's inside
 

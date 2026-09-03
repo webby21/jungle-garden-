@@ -9,6 +9,28 @@
 <!-- =========================================================
      CHANGE LOG — what changed in this revision
      ---------------------------------------------------------
+     v7  THE FULL STORY, AND THE REAL MASSBAR COPY
+     • The story now has its turn. It used to be four animals
+       contributing and then a payoff, which skipped the part
+       that makes the metaphor mean anything. Chapter One is
+       still the four contributions; Chapter Two is "everyone
+       was working hard, but nothing was growing"; Chapter
+       Three is the Owl gathering everyone and making one clear
+       plan; Chapter Four is the garden blooming.
+     • Chapter Two is the same parrots frame with the colour
+       drained out of it — a separate desaturated file, so the
+       drain is a plain cross-fade rather than an animated
+       filter. Chapter Three floods the colour back in with
+       owl-scene.jpg, which finally has the role it deserves.
+     • The chapter marker now counts 01-04 and names the beat.
+     • Below the story: the Owl's line, "every brand has its
+       own jungle", and Capabilities — four roles, one plan,
+       each mapped to its animal (Brand Strategy, Campaign
+       Creative, Media Planning & Buying, Digital & Social).
+     • Real details throughout: hello@massbaradvertising.com,
+       Lusaka, Zambia. The "Chapter Two — in production"
+       placeholder is gone, replaced by the closing CTA.
+
      v6  FRAMING: SHOW THE WHOLE SCENE
      • The plates were badly over-cropped: at the start of each
        beat only 67% of the height showed on a desktop and 32%
@@ -575,6 +597,20 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     text-shadow:0 4px 22px rgba(10,6,38,.95);max-width:24ch;
 }
 
+/* The turn and the plan are told in a sentence, not a label, so those
+   beats get a wider centred block instead of the NAME / role pattern. */
+.scene-copy--statement{grid-column:2 / span 10;justify-items:center;text-align:center}
+.scene-copy__statement{
+    font-family:var(--font-display);font-weight:500;
+    font-size:clamp(24px,3.1vw,44px);line-height:1.22;letter-spacing:-.02em;margin:0;
+    max-width:27ch;text-shadow:0 10px 40px rgba(10,6,38,.9);
+}
+.scene-copy__statement b{font-weight:700;color:var(--gold)}
+.scene-copy__aside{
+    margin:0;font-size:clamp(14px,1.35vw,17px);color:var(--muted);
+    text-shadow:0 4px 20px rgba(10,6,38,.95);max-width:38ch;
+}
+
 /* ---- the payoff, over the finished garden ---- */
 .reveal-copy{
     grid-column:2 / span 10;grid-row:1;align-self:end;
@@ -604,6 +640,32 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 
 /* =========================
+     THE OWL'S LINE
+   ========================= */
+.owl-quote{
+    position:relative;overflow:hidden;
+    padding:clamp(90px,18vh,180px) var(--safe-x);
+    background:
+        radial-gradient(60% 50% at 50% 0%,rgba(63,38,144,.42),transparent 66%),
+        var(--ink);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.owl-quote__inner{max-width:900px;margin-inline:auto;text-align:center;display:grid;gap:26px;justify-items:center}
+.owl-quote__mark{
+    width:clamp(52px,6vw,84px);height:auto;opacity:.9;
+    filter:drop-shadow(0 14px 30px rgba(0,0,0,.5));
+}
+.owl-quote__text{
+    font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;
+    font-size:clamp(23px,3.4vw,46px);line-height:1.34;margin:0;
+    color:var(--white);text-wrap:balance;
+}
+.owl-quote__attr{
+    font-family:var(--font-display);font-size:11px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--gold);margin:0;
+}
+
+/* =========================
      MASSBAR MESSAGE / PHILOSOPHY
    ========================= */
 .philosophy{
@@ -621,18 +683,29 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .philosophy__title{font-size:clamp(26px,3.4vw,46px);line-height:1.12}
 .philosophy__title em{font-family:Georgia,serif;font-style:italic;color:var(--gold);font-weight:400}
-.strength-list{display:grid;gap:11px;margin:0;padding:0;list-style:none}
-.strength{
-    display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;
-    padding:16px 20px;border-radius:16px;
+.cap-head{max-width:1180px;margin:0 auto clamp(34px,6vh,64px);display:grid;gap:16px;justify-items:center;text-align:center}
+.cap-head__title{font-family:var(--font-display);font-weight:600;font-size:clamp(30px,4.6vw,62px);letter-spacing:-.03em;margin:0}
+.cap-head__title b{color:var(--gold);font-weight:600}
+.cap-grid{
+    max-width:1180px;margin-inline:auto;
+    display:grid;gap:clamp(14px,1.6vw,20px);grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.cap-card{
+    display:grid;gap:12px;padding:clamp(24px,2.6vw,36px);border-radius:18px;
     background:var(--glass-bg);border:var(--glass-border);
     backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.14);
     transition:transform .55s cubic-bezier(.22,1,.36,1),border-color .45s ease;
 }
-.strength:hover{transform:translate3d(0,-3px,0);border-color:rgba(254,177,74,.34)}
-.strength__idx{font-family:var(--font-display);font-size:12px;color:var(--gold);letter-spacing:.14em}
-.strength__name{font-family:var(--font-display);font-weight:600}
-.strength__role{font-size:13px;color:var(--muted);text-align:right}
+.cap-card:hover{transform:translate3d(0,-4px,0);border-color:rgba(254,177,74,.34)}
+.cap-card__idx{
+    width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--ink);
+    background:linear-gradient(140deg,var(--gold),var(--orange));
+}
+.cap-card__tag{font-family:var(--font-display);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin:0}
+.cap-card__name{font-family:var(--font-display);font-weight:600;font-size:clamp(19px,1.9vw,25px);margin:0}
+.cap-card__desc{margin:0;color:var(--muted);font-size:15px;line-height:1.6;max-width:42ch}
 
 /* =========================
      FINAL TRANSITION — into the owl's eyes
@@ -651,15 +724,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     font-family:var(--font-display);font-weight:600;text-transform:uppercase;
     font-size:clamp(24px,4.4vw,62px);letter-spacing:-.02em;line-height:1.04;
 }
-.next-chapter{
-    padding:clamp(70px,13vh,150px) var(--safe-x);
+.closing{
+    position:relative;overflow:hidden;
+    padding:clamp(80px,15vh,170px) var(--safe-x);
+    display:grid;gap:clamp(18px,3vh,34px);justify-items:center;text-align:center;
+    background:
+        radial-gradient(58% 50% at 50% 8%,rgba(125,43,193,.3),transparent 64%),
+        linear-gradient(180deg,var(--ink),#0c0730);
     border-top:1px solid var(--line);
-    display:grid;gap:12px;justify-items:center;text-align:center;
-    background:linear-gradient(180deg,var(--ink),#0c0730);
 }
-.next-chapter__num{
-    font-family:var(--font-display);font-size:clamp(40px,8vw,110px);font-weight:700;line-height:1;
-    color:transparent;-webkit-text-stroke:1px rgba(249,250,251,.18);
+.closing__owl{width:clamp(60px,7vw,96px);height:auto;filter:drop-shadow(0 16px 34px rgba(0,0,0,.5))}
+.closing__title{
+    font-family:var(--font-display);font-weight:600;letter-spacing:-.03em;
+    font-size:clamp(32px,5.6vw,74px);line-height:1.04;margin:0;max-width:20ch;
 }
 
 /* =========================
@@ -734,6 +811,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
      RESPONSIVE
    ========================= */
 @media (max-width:1100px){
+    .cap-grid{grid-template-columns:1fr}
     .philosophy__grid{grid-template-columns:1fr}
     .footer-grid{grid-template-columns:1fr 1fr;gap:34px}
     .footer-cta{grid-column:1 / -1}
@@ -755,6 +833,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     .scene-copy[data-align="bottom"]{
         grid-column:1 / -1;justify-items:start;text-align:left;
     }
+    .scene-copy--statement{grid-column:1 / -1;justify-items:start;text-align:left}
+    .scene-copy__statement{max-width:none}
     .scene-copy__line{max-width:30ch}
     .reveal-copy{grid-column:1 / -1;align-self:end}
     .hero__scrim--side{background:none}
@@ -817,8 +897,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <nav class="nav" aria-label="Primary">
         <a href="#top" aria-current="true">Home</a>
         <a href="#story">Story</a>
-        <a href="#services">Services</a>
-        <a href="#work">Work</a>
+        <a href="#services">Capabilities</a>
         <a href="#contact">Contact</a>
     </nav>
 
@@ -836,8 +915,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <div class="mobile-panel" id="mobilePanel">
     <a href="#top">Home</a>
     <a href="#story">Story</a>
-    <a href="#services">Services</a>
-    <a href="#work">Work</a>
+    <a href="#services">Capabilities</a>
     <a href="#contact">Contact</a>
     <a class="btn-quote" href="#contact">
         <span class="btn-quote__sweep" aria-hidden="true"></span>
@@ -852,8 +930,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <aside class="chapter-marker" id="chapterMarker" aria-hidden="true">
     <div class="chapter-marker__rail"><span class="chapter-marker__fill" id="chapterFill"></span></div>
     <div class="chapter-marker__meta">
-        <span class="chapter-marker__num">01</span>
-        <span class="chapter-marker__label" id="markerLabel">Chapter One</span>
+        <span class="chapter-marker__num" id="markerNum">01</span>
+        <span class="chapter-marker__label" id="markerLabel">The Garden</span>
     </div>
 </aside>
 
@@ -973,7 +1051,28 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
             <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
         </div>
 
-        <!-- ---- SCENE 05 · TOGETHER — the payoff. Every animal in one
+        <!-- ---- CHAPTER TWO · THE TURN — the same frame with the life
+                  drained out of it. Everyone is still working; nothing is
+                  growing. A separate desaturated file, so the drain is a
+                  plain cross-fade rather than an animated filter. ---- -->
+        <div class="plate" id="plate-drained" data-align="bottom">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/parrots-dim-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/parrots-dim.jpg -->
+                <img src="assets/parrots-dim.jpg" onerror="assetFallback(this)" alt="The garden, colourless and still" loading="lazy" style="--focal:center 44%">
+            </div>
+            <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
+        </div>
+
+        <!-- ---- CHAPTER THREE · THE OWL — colour comes back with the plan ---- -->
+        <div class="plate" id="plate-owl" data-align="bottom">
+            <div class="plate__bg" aria-hidden="true"><img src="assets/owl-scene-bg.jpg" alt="" loading="lazy"></div>
+            <div class="plate__media"><!-- ASSET: assets/owl-scene.jpg -->
+                <img src="assets/owl-scene.jpg" onerror="assetFallback(this)" alt="The owl, wings open, gathering the animals" loading="lazy" style="--focal:center 42%">
+            </div>
+            <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
+        </div>
+
+        <!-- ---- CHAPTER FOUR · TOGETHER — the payoff. Every animal in one
                   frame, with the owl on the rock between them. ---- -->
         <div class="plate" id="plate-together" data-align="bottom">
             <div class="plate__bg" aria-hidden="true"><img src="assets/together-bg.jpg" alt="" loading="lazy"></div>
@@ -1015,6 +1114,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
             <span class="scene-tag"><span class="pip"></span> Contribution 04</span>
             <h3 class="scene-copy__title">Parrots</h3>
             <p class="scene-copy__line">Spread the word.</p>
+        </div>
+
+        <div class="scene-copy scene-copy--statement" id="copyTurn" data-align="bottom">
+            <span class="scene-tag"><span class="pip"></span> Chapter Two</span>
+            <p class="scene-copy__statement">Everyone was working hard. But <b>nothing was growing.</b></p>
+            <p class="scene-copy__aside">Everyone had good ideas. But nobody was communicating.</p>
+        </div>
+
+        <div class="scene-copy scene-copy--statement" id="copyOwl" data-align="bottom">
+            <span class="scene-tag"><span class="pip"></span> Chapter Three</span>
+            <p class="scene-copy__statement">Then the Owl gathered everyone, listened, and made <b>one clear plan</b> — with a role for each of them.</p>
+        </div>
+
+        <div class="scene-copy scene-copy--statement" id="copyBloom" data-align="bottom">
+            <span class="scene-tag"><span class="pip"></span> Chapter Four</span>
+            <p class="scene-copy__statement">Slowly, <b>the garden began to bloom.</b></p>
         </div>
 
         <div class="reveal-copy" id="revealCopy">
@@ -1068,12 +1183,30 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         </div>
     </article>
     <article class="static-scene">
+        <img src="assets/parrots-dim.jpg" onerror="assetFallback(this)" alt="The garden, colourless and still" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Chapter Two</span>
+            <h3 class="scene-copy__title">Nothing grew</h3>
+            <p class="scene-copy__line">Everyone was working hard. But nothing was growing — everyone had good ideas, and nobody was communicating.</p>
+        </div>
+    </article>
+    <article class="static-scene">
+        <img src="assets/owl-scene.jpg" onerror="assetFallback(this)" alt="The owl, wings open, gathering the animals" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> Chapter Three</span>
+            <h3 class="scene-copy__title">The Owl</h3>
+            <p class="scene-copy__line">Then the Owl gathered everyone, listened, and made one clear plan — with a role for each of them.</p>
+        </div>
+    </article>
+    <article class="static-scene">
         <img src="assets/together.jpg" onerror="assetFallback(this)" alt="The whole jungle gathered in the finished garden" loading="lazy">
         <div class="static-scene__scrim" aria-hidden="true"></div>
         <div class="static-scene__copy">
-            <span class="scene-tag"><span class="pip"></span> The garden</span>
-            <h3 class="scene-copy__title">Together</h3>
-            <p class="scene-copy__line">And the garden was beautiful.</p>
+            <span class="scene-tag"><span class="pip"></span> Chapter Four</span>
+            <h3 class="scene-copy__title">It bloomed</h3>
+            <p class="scene-copy__line">Slowly, the garden began to bloom.</p>
         </div>
     </article>
     <div class="static-scene__copy" style="padding-top:clamp(50px,9vh,90px);max-width:820px;margin-inline:auto;justify-items:center;text-align:center">
@@ -1084,28 +1217,73 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 </section>
 
 <!-- =========================
-     MASSBAR MESSAGE / TRANSITION
+     THE OWL'S LINE — the moral, in the Owl's own words
    ========================= -->
-<section class="philosophy" id="services">
+<section class="owl-quote" id="quote">
+    <div class="owl-quote__inner">
+        <!-- ASSET: assets/logo.png — the mark, whose eyes are painted in
+             (owl-figure.png has knocked-out eyes and needs the pupil rig) -->
+        <img class="owl-quote__mark" src="assets/logo.png" alt="" loading="lazy" data-reveal>
+        <p class="owl-quote__text" data-reveal>
+            "Great things don't happen when everyone simply works hard.
+            They happen when everyone understands the same idea."
+        </p>
+        <p class="owl-quote__attr" data-reveal>— The Owl</p>
+    </div>
+</section>
+
+<!-- =========================
+     THE TURN INTO MASSBAR
+   ========================= -->
+<section class="philosophy" id="bridge-copy">
     <div class="philosophy__grid">
         <div style="display:grid;gap:20px" data-reveal>
-            <p class="eyebrow">The Massbar way</p>
+            <p class="eyebrow">This is what we do</p>
             <h2 class="display philosophy__title">
-                Great brands are built the same way — <em>different strengths</em> working together around one clear vision.
+                Every brand has its own <em>jungle</em>.
             </h2>
-            <p class="lede">
-                Strategy carries the water. Ideas plant the seeds. Design collects the beauty.
-                Communication spreads the word. Nothing here works alone — and that is exactly the point.
-            </p>
         </div>
+        <p class="lede" data-reveal>
+            Good people, good ideas, good intentions — all pulling in slightly different
+            directions. Massbar is the Owl: we listen, build the one clear plan, and give
+            every part of your marketing a role in it.
+        </p>
+    </div>
+</section>
 
-        <ul class="strength-list" aria-label="How Massbar works">
-            <li class="strength" data-reveal><span class="strength__idx">01</span><span class="strength__name">Strategy</span><span class="strength__role">Brought the water</span></li>
-            <li class="strength" data-reveal><span class="strength__idx">02</span><span class="strength__name">Ideas</span><span class="strength__role">Planted the seeds</span></li>
-            <li class="strength" data-reveal><span class="strength__idx">03</span><span class="strength__name">Design</span><span class="strength__role">Collected the flowers</span></li>
-            <li class="strength" data-reveal><span class="strength__idx">04</span><span class="strength__name">Reach</span><span class="strength__role">Spread the word</span></li>
-            <li class="strength" data-reveal><span class="strength__idx">05</span><span class="strength__name">Perspective</span><span class="strength__role">Sees the whole picture</span></li>
-        </ul>
+<!-- =========================
+     CAPABILITIES — four roles, one plan
+   ========================= -->
+<section class="philosophy" id="services" style="padding-top:0">
+    <div class="cap-head">
+        <p class="eyebrow" data-reveal>Capabilities</p>
+        <h2 class="cap-head__title" data-reveal>Four roles. <b>One plan.</b></h2>
+    </div>
+    <div class="cap-grid">
+        <article class="cap-card" data-reveal>
+            <span class="cap-card__idx">01</span>
+            <p class="cap-card__tag">Deer — the flowers</p>
+            <h3 class="cap-card__name">Brand Strategy</h3>
+            <p class="cap-card__desc">Positioning, identity, and a story worth telling — chosen with care, not guessed at.</p>
+        </article>
+        <article class="cap-card" data-reveal>
+            <span class="cap-card__idx">02</span>
+            <p class="cap-card__tag">Monkeys — the seeds</p>
+            <h3 class="cap-card__name">Campaign Creative</h3>
+            <p class="cap-card__desc">Ideas planted in one bed, not scattered — concepts that travel across every format.</p>
+        </article>
+        <article class="cap-card" data-reveal>
+            <span class="cap-card__idx">03</span>
+            <p class="cap-card__tag">Elephants — the water</p>
+            <h3 class="cap-card__name">Media Planning &amp; Buying</h3>
+            <p class="cap-card__desc">Resources, on schedule and in the right place — reach that's earned, not wasted.</p>
+        </article>
+        <article class="cap-card" data-reveal>
+            <span class="cap-card__idx">04</span>
+            <p class="cap-card__tag">Parrots — the word</p>
+            <h3 class="cap-card__name">Digital &amp; Social</h3>
+            <p class="cap-card__desc">One message, spread everywhere it needs to be heard — consistently, not chaotically.</p>
+        </article>
     </div>
 </section>
 
@@ -1125,14 +1303,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     </div>
 </section>
 
-<!-- =========================================================
-     CHAPTER TWO WILL BEGIN HERE
-     ========================================================= -->
-<section class="next-chapter" id="work">
-    <span class="next-chapter__num" aria-hidden="true">02</span>
-    <p class="eyebrow">Chapter Two</p>
-    <h2 class="display" style="font-size:clamp(26px,4vw,54px);text-transform:uppercase">In production</h2>
-    <p class="lede" style="text-align:center;margin-inline:auto">The next chapter of the Massbar story — work, craft and the brands we've helped people remember.</p>
+<!-- =========================
+     CLOSING CTA
+   ========================= -->
+<section class="closing" id="start">
+    <!-- ASSET: assets/logo.png -->
+    <img class="closing__owl" src="assets/logo.png" alt="" loading="lazy" data-reveal>
+    <h2 class="closing__title" data-reveal>Let's build something that grows.</h2>
+    <a class="btn-quote btn-quote--lg" href="mailto:hello@massbaradvertising.com" data-reveal>
+        <span class="btn-quote__sweep" aria-hidden="true"></span>
+        <span class="btn-quote__dot" aria-hidden="true"></span>
+        hello@massbaradvertising.com
+    </a>
 </section>
 </main>
 
@@ -1143,16 +1325,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <div class="site-footer__inner">
         <p class="footer-word">Massbar</p>
         <div class="footer-grid">
-            <p class="footer-claim">Different strengths.<br><span>One vision.</span><br>Let's build something beautiful.</p>
+            <p class="footer-claim">Different strengths.<br><span>One plan.</span><br>Let's build something that grows.</p>
             <nav class="footer-nav" aria-label="Footer">
                 <a href="#story">Story</a>
-                <a href="#services">Services</a>
-                <a href="#work">Work</a>
+                <a href="#services">Capabilities</a>
+                <a href="#quote">The Owl's line</a>
                 <a href="#contact">Contact</a>
             </nav>
             <div class="footer-cta">
-                <p>Tell us what you're building. We'll bring the rest of the garden.</p>
-                <a class="btn-quote btn-quote--lg" href="mailto:hello@massbar.studio">
+                <p>Tell us about your jungle. We'll bring the plan.</p>
+                <a class="btn-quote btn-quote--lg" href="mailto:hello@massbaradvertising.com">
                     <span class="btn-quote__sweep" aria-hidden="true"></span>
                     <span class="btn-quote__dot" aria-hidden="true"></span>
                     Get Quote <span aria-hidden="true">↗</span>
@@ -1160,8 +1342,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
             </div>
         </div>
         <div class="footer-base">
-            <span>© <span id="year">2026</span> Massbar. All rights reserved.</span>
-            <span>Chapter One — The Garden</span>
+            <span>Lusaka, Zambia — © <span id="year">2026</span> Massbar Advertising</span>
+            <span>The Jungle Garden</span>
         </div>
     </div>
 </footer>
@@ -1535,30 +1717,46 @@ function initChapterIntro() {
    time. Scrubbing back un-tells it in the same order.
    --------------------------------------------------------- */
 var SCENES = [
-    { plate: "#plate-elephant", copy: "#copyElephant", label: "Elephants",
-      start:  0, end:  24, copyIn:  6, copyOut: 17, zoom: [1.05, 1.00] },
-    { plate: "#plate-monkeys",  copy: "#copyMonkeys",  label: "Monkeys",
-      start: 22, end:  46, copyIn: 28, copyOut: 39, zoom: [1.05, 1.00] },
-    { plate: "#plate-deer",     copy: "#copyDeer",     label: "Deer",
-      start: 44, end:  66, copyIn: 50, copyOut: 59, zoom: [1.05, 1.00] },
-    { plate: "#plate-parrots",  copy: "#copyParrots",  label: "Parrots",
-      start: 64, end:  84, copyIn: 70, copyOut: 78, zoom: [1.05, 1.00] },
-    /* the payoff plate carries the reveal copy instead of a scene block */
-    { plate: "#plate-together", copy: null,            label: "The Garden",
-      start: 82, end: 100, zoom: [1.06, 1.00] }
+    /* --- Chapter One: four animals, four contributions --- */
+    { plate: "#plate-elephant", copy: "#copyElephant", chapter: "01", label: "Elephants",
+      start:  0, end: 17, copyIn:  4, copyOut: 12, zoom: [1.05, 1.00] },
+    { plate: "#plate-monkeys",  copy: "#copyMonkeys",  chapter: "01", label: "Monkeys",
+      start: 15, end: 32, copyIn: 19, copyOut: 27, zoom: [1.05, 1.00] },
+    { plate: "#plate-deer",     copy: "#copyDeer",     chapter: "01", label: "Deer",
+      start: 30, end: 47, copyIn: 34, copyOut: 42, zoom: [1.05, 1.00] },
+    { plate: "#plate-parrots",  copy: "#copyParrots",  chapter: "01", label: "Parrots",
+      start: 45, end: 60, copyIn: 49, copyOut: 56, zoom: [1.05, 1.00] },
+
+    /* --- Chapter Two: the turn. Same frame, colour drained out --- */
+    { plate: "#plate-drained",  copy: "#copyTurn",     chapter: "02", label: "Nothing grew",
+      start: 58, end: 74, copyIn: 62, copyOut: 70, zoom: [1.03, 1.00] },
+
+    /* --- Chapter Three: the Owl makes one clear plan --- */
+    { plate: "#plate-owl",      copy: "#copyOwl",      chapter: "03", label: "The Owl",
+      start: 72, end: 88, copyIn: 76, copyOut: 84, zoom: [1.05, 1.00] },
+
+    /* --- Chapter Four: it blooms. This plate also carries the payoff --- */
+    { plate: "#plate-together", copy: "#copyBloom",    chapter: "04", label: "It bloomed",
+      start: 86, end: 100, copyIn: 88, copyOut: 93, zoom: [1.06, 1.00] }
 ];
 
 function initChapterScroll() {
     var fill   = $("#chapterFill");
     var marker = $("#chapterMarker");
     var label  = $("#markerLabel");
+    var num    = $("#markerNum");
+
+    function mark(sc) {
+        if (label) { label.textContent = sc.label; }
+        if (num)   { num.textContent   = sc.chapter; }
+    }
 
     var master = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
             trigger: "#chapterOne",
             start: "top top",
-            end: "+=620%",
+            end: "+=880%",
             pin: "#stage",
             scrub: 1,
             anticipatePin: 1,
@@ -1594,10 +1792,10 @@ function initChapterScroll() {
                   .to(copy, { opacity: 0, y: -24, duration: 4 }, scene.copyOut);
         }
 
-        /* the chapter marker names the beat you are in */
-        master.call(function () { if (label) { label.textContent = scene.label; } }, null, scene.start + 3);
+        /* the chapter marker names the beat, and counts the chapters */
+        master.call(mark, [scene], scene.start + 3);
         if (i > 0) {
-            master.call(function () { if (label) { label.textContent = SCENES[i - 1].label; } }, null, scene.start - 0.5);
+            master.call(mark, [SCENES[i - 1]], scene.start - 0.5);
         }
     });
 
@@ -1614,11 +1812,11 @@ function initGardenReveal(tl) {
     /* The owl is standing on the rock in the middle of the last plate,
        so nothing is layered over it — the frame just settles, darkens a
        little so the type reads, and the line lands. */
-    tl.to("#stageVeil", { opacity: 0.34, duration: 9 }, 87)
+    tl.to("#stageVeil", { opacity: 0.34, duration: 8 }, 90)
       .fromTo("#owlLabel", { opacity: 0, y: -12 },
-                           { opacity: 1, y: 0, duration: 5, ease: "power2.out" }, 88)
+                           { opacity: 1, y: 0, duration: 4, ease: "power2.out" }, 90)
       .fromTo("#revealCopy", { opacity: 0, y: 34 },
-                             { opacity: 1, y: 0, duration: 6, ease: "power2.out" }, 91);
+                             { opacity: 1, y: 0, duration: 5, ease: "power2.out" }, 94);
 }
 
 /* ---------------------------------------------------------

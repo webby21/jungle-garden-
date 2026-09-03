@@ -5,14 +5,15 @@ the markup, next to a comment naming them.
 
 | File | Used for |
 |---|---|
-| `owl-scene.jpg` | Hero — the owl, wings open, in its garden |
+| `owl-scene.jpg` | Chapter Three — the Owl gathers everyone and makes the plan |
 | `owl-figure.png` | The cut-out narrator (chapter intro + final transition). **Transparent PNG** |
 | `elephant.jpg` | Scene 01 — elephants brought the water |
 | `monkeys.jpg` | Scene 02 — monkeys planted the seeds |
 | `deer.jpg` | Scene 03 — deer collected the flowers |
 | `parrots.jpg` | Scene 04 — parrots spread the word |
-| `together.jpg` | Scene 05 — the payoff: the whole cast in the finished garden |
+| `together.jpg` | Chapter Four — the payoff: the whole cast in the finished garden |
 | `logo.png` | Header mark, cropped to the owl |
+| `parrots-dim.jpg` | Chapter Two — the same frame, colour drained out (generated) |
 | `*-bg.jpg` | 64px blurred backdrop for each scene (generated, <1 KB each) |
 | `hero.mp4` | Hero background video — silent, 12s, seamless loop |
 | `hero.webm` | Smaller VP9 version of it, tried first |
@@ -127,6 +128,8 @@ image's subject, and gets a matching dark gradient behind the text:
 | Monkeys | centre | left |
 | Deer | centre-right | left |
 | Parrots | left and right, sign centre | bottom |
+| Nothing grew | the drained parrots frame | bottom (a sentence, not a label) |
+| The Owl | centre, wings open | bottom (a sentence, not a label) |
 | Together | spread across the frame | bottom |
 
 Swapping in an image composed differently means changing that plate's

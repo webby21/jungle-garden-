@@ -9,6 +9,28 @@
 <!-- =========================================================
      CHANGE LOG — what changed in this revision
      ---------------------------------------------------------
+     v3  THE SUPPLIED ARTWORK, WIRED IN
+     • Six real images now drive the page. Five are used as
+       full-bleed plates and one is the cut-out narrator.
+     • HERO is the owl's own scene (owl-scene.jpg). The owl is
+       in the photograph there, so no cut-out is layered over
+       it — the cut-out narrator arrives in the chapter intro.
+     • CHAPTER ONE now runs five plates: elephants, monkeys,
+       deer, parrots, and together.jpg as the payoff, where the
+       whole cast stands in the finished garden with the owl on
+       the rock between them. The reveal needed no composite —
+       the artwork already is the ensemble.
+     • Owl eyes were measured from the alpha channel of
+       owl-figure.png (the artwork's eyes are knocked out), so
+       the sockets and pupils line up exactly.
+     • Assets optimised: 16.4 MB of PNG became 2.8 MB. Scenes
+       are JPEG, the narrator keeps its alpha, and the header
+       logo is cropped to the mark (the "ADVERTISING" lettering
+       is unreadable at 30px, and the wordmark sits beside it
+       in type instead).
+     • On phones the ensemble plate is letterboxed rather than
+       cropped, so the whole cast survives a portrait screen.
+
      v2  ART DIRECTION: PHOTOGRAPHIC, NOT ILLUSTRATED
      • Every drawn stand-in is gone. No SVG animals, no SVG
        plants, flowers, seeds, water ribbons, canopies or vines.
@@ -41,13 +63,14 @@
 <!-- =========================================================
      SUPPLIED ARTWORK — every file this page expects
      ---------------------------------------------------------
-       assets/logo.png        Massbar logo (header)
-       assets/hero.jpg        Opening establishing shot
-       assets/owl.png         The narrator. TRANSPARENT PNG.
+       assets/logo.png        Massbar owl mark (header)
+       assets/owl-scene.jpg   Opening shot — the owl in its garden
+       assets/owl-figure.png  The narrator, cut out. TRANSPARENT PNG.
        assets/elephant.jpg    Scene 01 — elephants, water
        assets/monkeys.jpg     Scene 02 — monkeys, seeds
        assets/deer.jpg        Scene 03 — deer, flowers
-       assets/parrots.jpg     Scene 04 — parrots, the finished garden
+       assets/parrots.jpg     Scene 04 — parrots, the word
+       assets/together.jpg    Scene 05 — the whole garden, together
      All paths appear exactly once each, in the markup below.
      ========================================================= -->
 
@@ -55,14 +78,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="preload" as="image" href="assets/hero.jpg">
-<link rel="preload" as="image" href="assets/owl.png">
+<link rel="preload" as="image" href="assets/owl-scene.jpg">
 
 <script>
 /* Asset resilience, defined before the images parse:
    1. a plate saved as .png (or .jpg) still loads either way
-   2. if no dedicated assets/hero.jpg was supplied, the opening
-      shot falls back to the finished-garden plate               */
+   2. if a scene image is missing, the opening shot and the last
+      plate stand in for each other                              */
 function assetFallback(img){
     var src = img.getAttribute("src");
     if (img.dataset.tried) {
@@ -113,7 +135,7 @@ function assetFallback(img){
     --nav-h:74px;
 
     /* =====================================================
-       OWL EYE CALIBRATION  —  assets/owl.png
+       OWL EYE CALIBRATION  —  assets/owl-figure.png
        The pupils are real DOM elements drawn on top of the
        artwork. `--owl-eye-fill` paints a disc that covers the
        artwork's own painted pupil, so only the live pupil is
@@ -123,15 +145,18 @@ function assetFallback(img){
        nudge these four values until they sit dead centre on
        the eyes, and match --owl-eye-size to the eye-white.
        ===================================================== */
-    --owl-left-eye-x:40.5%;
-    --owl-left-eye-y:39.5%;
-    --owl-right-eye-x:60%;
-    --owl-right-eye-y:39%;
+    /* Measured from the alpha channel of assets/owl-figure.png:
+       the artwork's eyes are knocked out, so these discs become the
+       eye-whites and the live pupils sit on top of them. */
+    --owl-left-eye-x:30.05%;   --owl-left-eye-y:42.25%;
+    --owl-left-eye-w:30.9%;    --owl-left-eye-h:26%;
 
-    --owl-eye-size:13.5%;        /* socket diameter, % of image width */
-    --owl-eye-fill:#ffffff;      /* colour of the artwork's eye-white  */
-    --owl-pupil-size:.46;        /* pupil / socket ratio               */
-    --owl-pupil-travel:23%;      /* max pupil offset                   */
+    --owl-right-eye-x:62.3%;   --owl-right-eye-y:42%;
+    --owl-right-eye-w:28.2%;   --owl-right-eye-h:26.8%;
+
+    --owl-eye-fill:#fbf7ff;      /* the eye-white painted behind the pupil */
+    --owl-pupil-size:.44;        /* pupil / socket ratio                   */
+    --owl-pupil-travel:22%;      /* how far a pupil may travel             */
 
     /* ---- STAGE SAFE AREA (keeps copy off every edge) ---- */
     --safe-x:clamp(20px,5vw,86px);
@@ -321,14 +346,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .owl__eye{
     position:absolute;z-index:2;pointer-events:none;
-    width:var(--owl-eye-size);aspect-ratio:1;
-    margin-left:calc(var(--owl-eye-size) / -2);
-    transform:translateY(-50%);
+    transform:translate(-50%,-50%);
     border-radius:50%;display:grid;place-items:center;
     background:var(--owl-eye-fill);
 }
-.owl__eye--l{left:var(--owl-left-eye-x);top:var(--owl-left-eye-y)}
-.owl__eye--r{left:var(--owl-right-eye-x);top:var(--owl-right-eye-y)}
+.owl__eye--l{
+    left:var(--owl-left-eye-x);top:var(--owl-left-eye-y);
+    width:var(--owl-left-eye-w);height:var(--owl-left-eye-h);
+}
+.owl__eye--r{
+    left:var(--owl-right-eye-x);top:var(--owl-right-eye-y);
+    width:var(--owl-right-eye-w);height:var(--owl-right-eye-h);
+}
 .owl__pupil{
     width:calc(100% * var(--owl-pupil-size));aspect-ratio:1;border-radius:50%;
     background:radial-gradient(circle at 34% 30%,#3a2160,#0b0420 68%);
@@ -350,6 +379,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .hero__media img{
     width:100%;height:100%;object-fit:cover;object-position:center 42%;
     will-change:transform;transform:scale(1.06);
+    filter:saturate(1.06) brightness(1.04);
 }
 /* readability scrims — bottom lift + left column */
 .hero__scrim{position:absolute;inset:0;z-index:1;pointer-events:none}
@@ -383,11 +413,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     animation:scrollHint 2.4s cubic-bezier(.6,0,.4,1) infinite;
 }
 @keyframes scrollHint{0%{transform:translateX(-110%)}60%,100%{transform:translateX(280%)}}
-.hero__owl{
-    position:absolute;z-index:3;
-    right:clamp(12px,5vw,110px);top:clamp(96px,17vh,190px);
-    width:clamp(120px,17vw,270px);
-}
 
 /* =========================
      CHAPTER ONE — INTRODUCTION
@@ -428,6 +453,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     width:100%;height:100%;object-fit:cover;
     object-position:var(--focal,center);
     will-change:transform;transform:scale(1.12);
+    filter:saturate(1.08) brightness(1.05);
 }
 /* per-scene directional scrim — always behind the copy, never
    over the subject */
@@ -448,7 +474,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* constant cinematic treatment over every plate */
 .stage__vignette{
     position:absolute;inset:0;z-index:2;pointer-events:none;
-    background:radial-gradient(122% 88% at 50% 46%,transparent 38%,rgba(10,6,38,.66) 100%);
+    background:radial-gradient(126% 92% at 50% 46%,transparent 46%,rgba(10,6,38,.5) 100%);
 }
 .stage__veil{position:absolute;inset:0;z-index:3;pointer-events:none;background:var(--ink);opacity:0}
 
@@ -495,17 +521,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .reveal-copy .lede{color:#ddd9e8;text-align:center;text-shadow:0 4px 20px rgba(10,6,38,.95)}
 
-/* ---- the owl, watching the finished garden ----
-   The label is a child of the owl block, so the two can never
-   drift into each other at any viewport size. ---- */
-.stage__owl{
-    position:absolute;z-index:5;left:0;right:0;top:9%;
-    display:grid;justify-items:center;gap:clamp(10px,1.6vh,18px);
-    padding:0 var(--safe-x);
-    opacity:0;will-change:transform,opacity;
-}
-.stage__owl .owl{width:clamp(120px,14vw,230px)}
+/* ---- naming the owl in the final plate ----
+   Centred with auto margins rather than a transform, so the only
+   thing the timeline touches is opacity and y. ---- */
 .owl-label{
+    position:absolute;z-index:7;left:0;right:0;
+    top:calc(var(--safe-top) + clamp(2px,1.6vh,18px));
+    width:fit-content;margin-inline:auto;
     opacity:0;will-change:transform,opacity;
     white-space:normal;text-align:center;max-width:min(86vw,440px);line-height:1.6;
 }
@@ -668,9 +690,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         background:linear-gradient(0deg,rgba(10,6,38,.95) 0%,rgba(10,6,38,.78) 30%,rgba(10,6,38,.2) 62%,transparent 80%);
     }
     .hero__scrim--side{background:none}
-    .hero__owl{top:auto;bottom:46%;right:5%;width:clamp(104px,30vw,180px)}
-    .stage__owl{top:10%}
-    .stage__owl .owl{width:clamp(132px,38vw,210px)}
+
+    /* The payoff plate is an ensemble: a portrait crop would throw most
+       of the cast away, so on phones it is letterboxed instead and the
+       copy sits in the dark band beneath it. */
+    #plate-together .plate__media{background:var(--ink)}
+    #plate-together .plate__media img{object-fit:contain;object-position:center 46%}
+    #plate-together .plate__scrim{
+        background:linear-gradient(0deg,rgba(10,6,38,.96) 0%,rgba(10,6,38,.72) 30%,transparent 56%);
+    }
     .footer-grid{grid-template-columns:1fr}
 }
 @media (max-width:520px){
@@ -767,22 +795,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    ========================= -->
 <section class="hero" id="hero">
     <div class="hero__media">
-        <!-- ASSET: assets/hero.jpg — the opening establishing shot. -->
-        <img id="heroImg" src="assets/hero.jpg" alt="The jungle garden at golden hour" fetchpriority="high"
-             data-alt-src="assets/parrots.jpg" onerror="assetFallback(this)" onerror="assetFallback(this)">
+        <!-- ASSET: assets/owl-scene.jpg — the opening shot. The owl is in
+             the photograph itself here, so no cut-out is layered over it;
+             the cut-out narrator arrives in the chapter intro below. -->
+        <img id="heroImg" src="assets/owl-scene.jpg" alt="The owl, wings open, in the jungle garden"
+             fetchpriority="high" data-alt-src="assets/together.jpg" onerror="assetFallback(this)">
     </div>
     <div class="hero__scrim hero__scrim--base" aria-hidden="true"></div>
     <div class="hero__scrim hero__scrim--side" aria-hidden="true"></div>
-
-    <!-- ASSET: assets/owl.png — the narrator. Transparent PNG.
-         Only the pupils move; calibrate them with the --owl-*
-         variables at the top of this file (add ?calibrate to the
-         URL to see the sockets). -->
-    <div class="hero__owl owl" id="owlHero">
-        <img class="owl__img" src="assets/owl.png" alt="An owl watching over the jungle" onerror="assetFallback(this)">
-        <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
-        <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
-    </div>
 
     <div class="hero__copy">
         <div class="hero__brandline">
@@ -806,9 +826,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <section class="chapter-intro" id="story">
     <span class="chapter-intro__num" aria-hidden="true">01</span>
     <div class="chapter-intro__inner">
-        <!-- ASSET: assets/owl.png — the narrator descends into the story -->
+        <!-- ASSET: assets/owl-figure.png — the narrator descends into the
+             story. Only the pupils move; calibrate them with the --owl-*
+             variables at the top of this file (add ?calibrate to the URL
+             to outline the sockets). -->
         <div class="chapter-intro__owl owl" id="owlIntro">
-            <img class="owl__img" src="assets/owl.png" alt="" loading="lazy">
+            <img class="owl__img" src="assets/owl-figure.png" alt="" loading="lazy">
             <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
             <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
         </div>
@@ -841,7 +864,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
         <!-- ---- SCENE 02 · MONKEYS — subjects centre, copy left ---- -->
         <div class="plate" id="plate-monkeys" data-align="left">
             <div class="plate__media"><!-- ASSET: assets/monkeys.jpg -->
-                <img src="assets/monkeys.jpg" onerror="assetFallback(this)" alt="Two monkeys planting a seedling in the soil" loading="lazy" style="--focal:58% center">
+                <img src="assets/monkeys.jpg" onerror="assetFallback(this)" alt="Two monkeys planting a seedling in the soil" loading="lazy" style="--focal:48% center">
             </div>
             <div class="plate__scrim plate__scrim--left" aria-hidden="true"></div>
         </div>
@@ -861,20 +884,23 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
             </div>
             <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
         </div>
+
+        <!-- ---- SCENE 05 · TOGETHER — the payoff. Every animal in one
+                  frame, with the owl on the rock between them. ---- -->
+        <div class="plate" id="plate-together" data-align="bottom">
+            <div class="plate__media"><!-- ASSET: assets/together.jpg -->
+                <img src="assets/together.jpg" onerror="assetFallback(this)" alt="The whole jungle gathered in the finished garden, the owl on a rock between them" loading="lazy" style="--focal:center 40%">
+            </div>
+            <div class="plate__scrim plate__scrim--bottom" aria-hidden="true"></div>
+        </div>
     </div>
 
     <div class="stage__vignette" aria-hidden="true"></div>
     <div class="stage__veil" id="stageVeil" aria-hidden="true"></div>
 
-    <!-- ASSET: assets/owl.png — present for the garden reveal -->
-    <div class="stage__owl" id="stageOwl">
-        <div class="owl">
-            <img class="owl__img" src="assets/owl.png" alt="The owl watching the finished garden" loading="lazy">
-            <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
-            <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
-        </div>
-        <span class="scene-tag owl-label" id="owlLabel">The one who sees the whole picture</span>
-    </div>
+    <!-- The owl needs no cut-out here: it is standing on the rock in the
+         middle of assets/together.jpg. This names it. -->
+    <span class="scene-tag owl-label" id="owlLabel">The one who sees the whole picture</span>
 
     <!-- ---- copy: one 12-column safe-area grid, one focus at a time ---- -->
     <div class="stage__ui">
@@ -952,6 +978,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
             <p class="scene-copy__line">Spread the word.</p>
         </div>
     </article>
+    <article class="static-scene">
+        <img src="assets/together.jpg" onerror="assetFallback(this)" alt="The whole jungle gathered in the finished garden" loading="lazy">
+        <div class="static-scene__scrim" aria-hidden="true"></div>
+        <div class="static-scene__copy">
+            <span class="scene-tag"><span class="pip"></span> The garden</span>
+            <h3 class="scene-copy__title">Together</h3>
+            <p class="scene-copy__line">And the garden was beautiful.</p>
+        </div>
+    </article>
     <div class="static-scene__copy" style="padding-top:clamp(50px,9vh,90px);max-width:820px;margin-inline:auto;justify-items:center;text-align:center">
         <h3 class="reveal-copy__title">Different strengths. One vision.</h3>
         <p class="lede" style="text-align:center">That's how something beautiful gets built.</p>
@@ -990,9 +1025,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    ========================= -->
 <section class="bridge" id="bridge">
     <div class="bridge__stage" id="bridgeStage">
-        <!-- ASSET: assets/owl.png -->
+        <!-- ASSET: assets/owl-figure.png -->
         <div class="bridge__owl owl" id="owlBridge">
-            <img class="owl__img" src="assets/owl.png" alt="The owl, close" loading="lazy">
+            <img class="owl__img" src="assets/owl-figure.png" alt="The owl, close" loading="lazy">
             <span class="owl__eye owl__eye--l" aria-hidden="true"><span class="owl__pupil"></span></span>
             <span class="owl__eye owl__eye--r" aria-hidden="true"><span class="owl__pupil"></span></span>
         </div>
@@ -1167,9 +1202,8 @@ function initOwlEyeTracking() {
 function initMouseParallax() {
     if (REDUCED) { return; }
     var items = [
-        { el: $("#heroImg"),   d: -0.5, x: 0, y: 0 },
-        { el: $("#owlHero"),   d:  1.0, x: 0, y: 0 },
-        { el: $(".hero__copy"),d:  0.22, x: 0, y: 0 }
+        { el: $("#heroImg"),    d: -0.6, x: 0, y: 0 },
+        { el: $(".hero__copy"), d:  0.24, x: 0, y: 0 }
     ].filter(function (i) { return !!i.el; });
     if (!items.length) { return; }
 
@@ -1325,17 +1359,12 @@ function initHero() {
         .from(".hero__title .line i", { yPercent: 118, duration: 1.15, stagger: 0.09 }, 0.15)
         .from(".hero__brandline", { opacity: 0, y: 14, duration: 0.8 }, 0.1)
         .from("#heroLede, .hero__scroll", { opacity: 0, y: 18, duration: 0.9, stagger: 0.1 }, 0.7)
-        .from("#owlHero", { opacity: 0, y: -70, scale: 0.94, rotate: -4, duration: 1.5, ease: "power2.out" }, 0.35)
         .fromTo("#heroImg", { scale: 1.16 }, { scale: 1.06, duration: 2.2, ease: "power2.out" }, 0);
-
-    /* the owl breathes */
-    gsap.to("#owlHero", { y: "+=12", duration: 4.2, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.7 });
 
     /* slow drift out of the hero */
     var st = { trigger: "#hero", start: "top top", end: "bottom top", scrub: true };
     gsap.to("#heroImg",    { yPercent: 10, scale: 1.14, ease: "none", scrollTrigger: st });
     gsap.to(".hero__copy", { yPercent: -16, opacity: 0.1, ease: "none", scrollTrigger: st });
-    gsap.to("#owlHero",    { yPercent: 34, opacity: 0.2, ease: "none", scrollTrigger: st });
 }
 
 /* ---------------------------------------------------------
@@ -1374,13 +1403,16 @@ function initChapterIntro() {
    --------------------------------------------------------- */
 var SCENES = [
     { plate: "#plate-elephant", copy: "#copyElephant", label: "Elephants",
-      start:  0, end:  30, zoom: [1.16, 1.02] },
+      start:  0, end:  24, copyIn:  6, copyOut: 17, zoom: [1.16, 1.02] },
     { plate: "#plate-monkeys",  copy: "#copyMonkeys",  label: "Monkeys",
-      start: 28, end:  54, zoom: [1.14, 1.02] },
+      start: 22, end:  46, copyIn: 28, copyOut: 39, zoom: [1.14, 1.02] },
     { plate: "#plate-deer",     copy: "#copyDeer",     label: "Deer",
-      start: 52, end:  78, zoom: [1.15, 1.02] },
+      start: 44, end:  66, copyIn: 50, copyOut: 59, zoom: [1.15, 1.02] },
     { plate: "#plate-parrots",  copy: "#copyParrots",  label: "Parrots",
-      start: 76, end: 100, zoom: [1.22, 1.00] }
+      start: 64, end:  84, copyIn: 70, copyOut: 78, zoom: [1.16, 1.02] },
+    /* the payoff plate carries the reveal copy instead of a scene block */
+    { plate: "#plate-together", copy: null,            label: "The Garden",
+      start: 82, end: 100, zoom: [1.20, 1.00] }
 ];
 
 function initChapterScroll() {
@@ -1423,9 +1455,11 @@ function initChapterScroll() {
         }
 
         /* copy: in after the image has settled, out before the cut */
-        master.fromTo(copy, { opacity: 0, y: 30 },
-                            { opacity: 1, y: 0, duration: 5, ease: "power2.out" }, scene.start + 8)
-              .to(copy, { opacity: 0, y: -24, duration: 4 }, scene.end - (last ? 14 : 9));
+        if (copy) {
+            master.fromTo(copy, { opacity: 0, y: 30 },
+                                { opacity: 1, y: 0, duration: 5, ease: "power2.out" }, scene.copyIn)
+                  .to(copy, { opacity: 0, y: -24, duration: 4 }, scene.copyOut);
+        }
 
         /* the chapter marker names the beat you are in */
         master.call(function () { if (label) { label.textContent = scene.label; } }, null, scene.start + 3);
@@ -1443,30 +1477,15 @@ function initChapterScroll() {
      animals contributed is standing in it. The camera pulls back
      across it, the owl arrives to watch, and the line lands.
    ========================= */
-var owlFloating = false;
-
 function initGardenReveal(tl) {
-    var owl = $("#stageOwl");
-
-    tl.to("#stageVeil", { opacity: 0.4, duration: 8 }, 88)
-      .fromTo(owl, { opacity: 0, y: function () { return -window.innerHeight * 0.42; }, scale: 0.9, rotate: -4 },
-                   { opacity: 1, y: 0, scale: 1, rotate: 0, duration: 9, ease: "power3.out" }, 86)
+    /* The owl is standing on the rock in the middle of the last plate,
+       so nothing is layered over it — the frame just settles, darkens a
+       little so the type reads, and the line lands. */
+    tl.to("#stageVeil", { opacity: 0.34, duration: 9 }, 87)
+      .fromTo("#owlLabel", { opacity: 0, y: -12 },
+                           { opacity: 1, y: 0, duration: 5, ease: "power2.out" }, 88)
       .fromTo("#revealCopy", { opacity: 0, y: 34 },
-                             { opacity: 1, y: 0, duration: 6, ease: "power2.out" }, 92)
-      .fromTo("#owlLabel", { opacity: 0, y: 14 },
-                           { opacity: 1, y: 0, duration: 4, ease: "power2.out" }, 96)
-      .call(function () { var l = $("#markerLabel"); if (l) { l.textContent = "The Garden"; } }, null, 92);
-
-    /* once settled the owl simply breathes — driven through the
-       `translate` property so it never fights the timeline */
-    ScrollTrigger.create({
-        trigger: "#chapterOne", start: "top top", end: "+=620%",
-        onUpdate: function (self) { owlFloating = self.progress > 0.88; }
-    });
-    addFrameTask(function () {
-        if (!owlFloating) { return; }
-        owl.style.translate = "0px " + (Math.sin(performance.now() / 1000 * 0.85) * 8).toFixed(2) + "px";
-    });
+                             { opacity: 1, y: 0, duration: 6, ease: "power2.out" }, 91);
 }
 
 /* ---------------------------------------------------------

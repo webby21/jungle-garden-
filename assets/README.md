@@ -1,26 +1,35 @@
 # Assets — Massbar · The Jungle Garden
 
-Drop the supplied artwork into this folder using the filenames below.
-`index.html` references them directly — no code changes needed.
+These are the files `index.html` uses. All paths appear exactly once each in
+the markup, next to a comment naming them.
 
-| File | Used for | Notes |
-|---|---|---|
-| `owl.png` | The narrator — hero, chapter intro, garden reveal, final transition | **Transparent PNG.** Calibrate the eyes (below) |
-| `elephant.jpg` | Scene 01 — elephants bring the water | Full scene, landscape |
-| `monkeys.jpg` | Scene 02 — monkeys plant the seeds | Full scene, landscape |
-| `deer.jpg` | Scene 03 — deer collect the flowers | Full scene, landscape |
-| `parrots.jpg` | Scene 04 — parrots, the finished garden | Full scene, landscape |
-| `hero.jpg` | Opening establishing shot | Optional — falls back to `parrots.jpg` |
-| `logo.png` | Header logo | Optional — a wordmark shows until it exists |
-
-**Extensions are forgiving.** If a scene was exported as a PNG, the page
-retries `.png` automatically (and vice versa), so `elephant.png` works
-without editing anything.
+| File | Used for |
+|---|---|
+| `owl-scene.jpg` | Hero — the owl, wings open, in its garden |
+| `owl-figure.png` | The cut-out narrator (chapter intro + final transition). **Transparent PNG** |
+| `elephant.jpg` | Scene 01 — elephants brought the water |
+| `monkeys.jpg` | Scene 02 — monkeys planted the seeds |
+| `deer.jpg` | Scene 03 — deer collected the flowers |
+| `parrots.jpg` | Scene 04 — parrots spread the word |
+| `together.jpg` | Scene 05 — the payoff: the whole cast in the finished garden |
+| `logo.png` | Header mark, cropped to the owl |
 
 Every scene image is used **full-bleed**: it fills the viewport and the camera
-pushes across it. Landscape, roughly 3:2 or 4:3, 1600px wide or more is ideal.
-Keep the subject away from the very edges — the frame is cropped to whatever
-shape the visitor's screen is.
+pushes across it. Landscape, 1400px wide or more. Keep subjects away from the
+very edges — the frame is cropped to whatever shape the visitor's screen is.
+
+If a `.jpg` is missing the page retries `.png` automatically, and vice versa.
+
+## Optimisation
+
+The uploaded PNGs were 16.4 MB in total — too heavy for a page a visitor
+scrolls through. Scenes are now JPEG (quality 86) at their native pixel size,
+the narrator keeps its alpha as a 1200px PNG, and the logo is cropped to the
+mark, for **2.8 MB total**. The originals remain in git history if you ever
+need them back.
+
+If you replace an image, run it through the same treatment — a 2 MB plate is
+noticeable on a phone.
 
 ## Where the words sit
 
@@ -31,35 +40,39 @@ image's subject, and gets a matching dark gradient behind the text:
 |---|---|---|
 | Elephants | left of frame | right |
 | Monkeys | centre | left |
-| Deer | right of frame | left |
-| Parrots | left and right | bottom centre |
+| Deer | centre-right | left |
+| Parrots | left and right, sign centre | bottom |
+| Together | spread across the frame | bottom |
 
-If you swap an image for one composed differently, change that plate's
-`data-align` and its `plate__scrim--*` class in `index.html` to match. On
-phones every scene switches to a bottom-anchored layout automatically.
+Swapping in an image composed differently means changing that plate's
+`data-align` and its `plate__scrim--*` class in `index.html`. On phones every
+scene switches to a bottom-anchored layout automatically, and the ensemble
+plate is letterboxed rather than cropped so the whole cast survives.
 
 The `--focal` value on each plate's `<img>` sets the crop's focal point
-(`object-position`) — nudge it if a subject drifts out of frame on narrow
-screens.
+(`object-position`) — nudge it if a subject drifts out of frame on a narrow
+screen.
 
-## Calibrating the owl's eyes
+## The owl's eyes
 
-The pupils are live DOM elements drawn on top of the artwork, and a disc in
-`--owl-eye-fill` covers the pupils painted into the PNG so they don't double
-up. **Add `?calibrate` to the URL** to outline the sockets, then adjust these
-values at the top of `index.html` until they sit dead centre on the eyes:
+The eyes in `owl-figure.png` are knocked out of the artwork, so the page paints
+its own eye-whites into those holes and moves live pupils on top. The values
+below were measured from the file's alpha channel:
 
 ```css
---owl-left-eye-x: 40.5%;   /* centre of the left eye, % of the image box */
---owl-left-eye-y: 39.5%;
---owl-right-eye-x: 60%;
---owl-right-eye-y: 39%;
+--owl-left-eye-x: 30.05%;  --owl-left-eye-y: 42.25%;
+--owl-left-eye-w: 30.9%;   --owl-left-eye-h: 26%;
 
---owl-eye-size: 13.5%;     /* socket diameter, % of image width — match the eye-white */
---owl-eye-fill: #ffffff;   /* colour of the artwork's eye-white */
---owl-pupil-size: .46;     /* pupil / socket ratio */
---owl-pupil-travel: 23%;   /* how far a pupil may travel */
+--owl-right-eye-x: 62.3%;  --owl-right-eye-y: 42%;
+--owl-right-eye-w: 28.2%;  --owl-right-eye-h: 26.8%;
+
+--owl-eye-fill: #fbf7ff;   /* the eye-white painted behind the pupil */
+--owl-pupil-size: .44;     /* pupil / socket ratio */
+--owl-pupil-travel: 22%;   /* how far a pupil may travel */
 ```
 
-Eye tracking is disabled on touch devices and when the visitor prefers
-reduced motion.
+**If you replace the owl artwork**, add `?calibrate` to the URL — the sockets
+are outlined in gold — and adjust those values until they sit on the eyes.
+
+Eye tracking is off on touch devices and when the visitor prefers reduced
+motion.

@@ -9,6 +9,34 @@
 <!-- =========================================================
      CHANGE LOG — what changed in this revision
      ---------------------------------------------------------
+     v8  THE COMPANY PROFILE, FOLDED IN
+     • Services grew from four invented roles to the five real
+       practice areas in the Massbar profile — Brand Strategy &
+       Identity, Creative Design & Content, Digital Marketing &
+       Media, Web & Digital Solutions, Advertising & Campaign
+       Execution — each still tagged with the animal that
+       carries it in the story, and each with its own
+       what's-included list.
+     • New sections, all built from the profile: the integrated
+       model (the output of one is the input of the next), the
+       six-stage process, why Massbar, industries served, and
+       the client wall.
+     • Real contact details replace the placeholders: Lufubu
+       Road 5638, Lusaka; +260 779 674 849;
+       info@massbaradvertising.com; massbaradvertising.co; and
+       the two social handles.
+     • Textures lifted from the deck itself — the node, hex and
+       petal patterns — sit far back behind the profile
+       sections, and the faceted strip from the mark is used as
+       a hairline rule between them. The facets are the brand's
+       own metaphor: many disciplines, cut precisely, assembled
+       into one whole.
+     • One card component throughout, with a staggered
+       scroll-in and a highlight that follows the cursor. The
+       highlight is two CSS variables written once per frame
+       from the shared pointer field, so hovering never costs
+       a layout.
+
      v7  THE FULL STORY, AND THE REAL MASSBAR COPY
      • The story now has its turn. It used to be four animals
        contributing and then a payoff, which skipped the part
@@ -27,8 +55,8 @@
        own jungle", and Capabilities — four roles, one plan,
        each mapped to its animal (Brand Strategy, Campaign
        Creative, Media Planning & Buying, Digital & Social).
-     • Real details throughout: hello@massbaradvertising.com,
-       Lusaka, Zambia. The "Chapter Two — in production"
+     • Real details throughout: the agency address in Lusaka,
+       Zambia. The "Chapter Two — in production"
        placeholder is gone, replaced by the closing CTA.
 
      v6  FRAMING: SHOW THE WHOLE SCENE
@@ -139,6 +167,9 @@
        assets/parrots.jpg     Scene 04 — parrots, the word
        assets/together.jpg    Scene 05 — the whole garden, together
        assets/*-bg.jpg        64px blurred backdrops, one per scene
+       assets/texture-*.jpg   Profile textures, held far back
+       assets/facets.jpg      The mark's facet strip, used as a rule
+       assets/clients/*.png   Client marks from the company profile
      All paths appear exactly once each, in the markup below.
      ========================================================= -->
 
@@ -776,6 +807,193 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 
 /* =========================
+     SECTION SYSTEM
+     One header pattern, one card pattern, one texture layer —
+     so the profile sections read as a set rather than a pile.
+   ========================= */
+.sec{
+    position:relative;overflow:hidden;
+    padding:clamp(76px,13vh,140px) var(--safe-x);
+    scroll-margin-top:calc(var(--nav-h) + 16px);
+}
+/* every anchor target clears the fixed header */
+[id]{scroll-margin-top:calc(var(--nav-h) + 16px)}
+.sec__inner{position:relative;z-index:2;max-width:1180px;margin-inline:auto}
+
+/* textures lifted from the Massbar company profile, held far back */
+.sec__tex{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-repeat:repeat;background-size:min(48vw,760px);
+    opacity:.14;mix-blend-mode:screen;
+}
+.sec__tex--nodes{background-image:url("assets/texture-nodes.jpg")}
+.sec__tex--hex{background-image:url("assets/texture-hex.jpg")}
+.sec__tex--petals{background-image:url("assets/texture-petals.jpg")}
+.sec__glow{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(62% 46% at 50% 0%,rgba(99,29,153,.34),transparent 66%);
+}
+
+.sec-head{display:grid;gap:14px;justify-items:center;text-align:center;margin-bottom:clamp(34px,6vh,66px)}
+.sec-head--left{justify-items:start;text-align:left}
+.sec-head__title{
+    font-family:var(--font-display);font-weight:600;letter-spacing:-.03em;
+    font-size:clamp(28px,4.2vw,56px);line-height:1.04;margin:0;max-width:20ch;
+}
+.sec-head__title b{color:var(--gold);font-weight:600}
+.sec-head__lede{margin:0;color:var(--muted);font-size:clamp(15px,1.3vw,18px);line-height:1.6;max-width:62ch}
+
+/* the facet motif from the mark, used as a hairline rule */
+.facet-rule{
+    height:3px;width:min(100%,1180px);margin:0 auto;border-radius:3px;
+    background:url("assets/facets.jpg") center/cover;
+    opacity:.75;
+}
+
+/* =========================
+     CARDS
+     One card component with a pointer-tracked highlight. The
+     spotlight is two CSS variables written by the shared rAF
+     loop, so hovering never triggers layout.
+   ========================= */
+.card{
+    position:relative;isolation:isolate;overflow:hidden;
+    display:grid;gap:12px;align-content:start;
+    padding:clamp(22px,2.4vw,32px);border-radius:18px;
+    background:var(--glass-bg);border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.14);
+    transition:transform .6s cubic-bezier(.22,1,.36,1),
+               border-color .45s ease, box-shadow .45s ease;
+}
+.card::before{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),
+               rgba(254,177,74,.16),transparent 70%);
+    opacity:0;transition:opacity .45s ease;
+}
+.card:hover{
+    transform:translate3d(0,-6px,0);
+    border-color:rgba(254,177,74,.38);
+    box-shadow:inset 0 1px 0 rgba(249,250,251,.2),0 26px 50px rgba(5,2,18,.5);
+}
+.card:hover::before{opacity:1}
+
+.card__idx{
+    width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+    font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--ink);
+    background:linear-gradient(140deg,var(--gold),var(--orange));
+    transition:transform .6s cubic-bezier(.22,1,.36,1);
+}
+.card:hover .card__idx{transform:scale(1.1) rotate(-8deg)}
+.card__tag{font-family:var(--font-display);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);margin:0}
+.card__name{font-family:var(--font-display);font-weight:600;font-size:clamp(18px,1.8vw,24px);margin:0;line-height:1.2}
+.card__desc{margin:0;color:var(--muted);font-size:14.5px;line-height:1.62}
+.card__list{margin:2px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+.card__list li{
+    position:relative;padding-left:18px;font-size:13.5px;color:#c9c5d6;line-height:1.5;
+}
+.card__list li::before{
+    content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;
+    background:linear-gradient(140deg,var(--gold),var(--orange));
+}
+
+/* cards enter in sequence rather than all at once */
+.card-in{opacity:0;transform:translate3d(0,26px,0)}
+
+/* =========================
+     SERVICES · THE MODEL · PROCESS · REASONS · SECTORS · CLIENTS
+   ========================= */
+.svc-grid{display:grid;gap:clamp(14px,1.5vw,18px);grid-template-columns:repeat(6,1fr)}
+.svc-grid .card:nth-child(1),
+.svc-grid .card:nth-child(2),
+.svc-grid .card:nth-child(3){grid-column:span 2}
+.svc-grid .card:nth-child(4),
+.svc-grid .card:nth-child(5){grid-column:span 3}
+
+.model-grid{display:grid;gap:clamp(12px,1.4vw,16px);grid-template-columns:repeat(5,1fr)}
+.model-step{
+    position:relative;display:grid;gap:10px;align-content:start;
+    padding:22px 18px;border-radius:16px;
+    background:rgba(249,250,251,.04);border:1px solid var(--line);
+    transition:transform .55s cubic-bezier(.22,1,.36,1),border-color .45s ease,background .45s ease;
+}
+.model-step:hover{transform:translate3d(0,-4px,0);border-color:rgba(125,178,187,.4);background:rgba(249,250,251,.07)}
+.model-step__n{font-family:var(--font-display);font-weight:700;font-size:12px;color:var(--gold);letter-spacing:.16em}
+.model-step__t{font-family:var(--font-display);font-weight:600;font-size:15px;margin:0;line-height:1.25}
+.model-step__d{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.model-split{
+    display:grid;gap:clamp(14px,1.6vw,20px);grid-template-columns:repeat(2,1fr);
+    margin-top:clamp(20px,3vh,32px);
+}
+.model-split .card__name{font-size:clamp(17px,1.6vw,21px)}
+
+.process{display:grid;gap:clamp(12px,1.4vw,18px);grid-template-columns:repeat(6,1fr);position:relative}
+.process::before{
+    content:"";position:absolute;left:0;right:0;top:21px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--line) 8%,var(--line) 92%,transparent);
+}
+.process__step{position:relative;display:grid;gap:10px;align-content:start;justify-items:start}
+.process__dot{
+    position:relative;z-index:2;width:42px;height:42px;border-radius:50%;
+    display:grid;place-items:center;
+    font-family:var(--font-display);font-weight:700;font-size:13px;color:var(--white);
+    background:var(--ink-soft);border:1px solid rgba(254,177,74,.42);
+    box-shadow:0 0 0 6px rgba(10,6,38,.9);
+    transition:transform .5s cubic-bezier(.22,1,.36,1),background .45s ease,color .45s ease;
+}
+.process__step:hover .process__dot{
+    transform:scale(1.12);color:var(--ink);
+    background:linear-gradient(140deg,var(--gold),var(--orange));
+}
+.process__t{font-family:var(--font-display);font-weight:600;font-size:16px;margin:0}
+.process__d{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+
+.reasons{display:grid;gap:clamp(14px,1.5vw,18px);grid-template-columns:repeat(3,1fr)}
+
+.sectors{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.sector{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:12px 20px;border-radius:100px;
+    font-family:var(--font-display);font-size:14px;font-weight:500;
+    background:var(--glass-bg);border:var(--glass-border);
+    backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+    transition:transform .5s cubic-bezier(.22,1,.36,1),border-color .4s ease,color .4s ease;
+}
+.sector:hover{transform:translate3d(0,-3px,0);border-color:rgba(254,177,74,.42)}
+.sector span{width:5px;height:5px;border-radius:50%;background:var(--teal)}
+.sectors-note{margin:clamp(22px,4vh,38px) auto 0;text-align:center;color:var(--muted);font-size:14px;max-width:70ch}
+
+.client-row{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+    gap:clamp(26px,5vw,72px);
+}
+.client-row img{
+    height:clamp(38px,4.4vw,58px);width:auto;
+    opacity:.58;filter:brightness(0) invert(1);
+    transition:opacity .5s ease,filter .5s ease,transform .5s cubic-bezier(.22,1,.36,1);
+}
+.client-row img:hover{opacity:1;filter:none;transform:translate3d(0,-4px,0)}
+
+/* =========================
+     CONTACT
+   ========================= */
+.contact-grid{
+    display:grid;gap:clamp(14px,1.6vw,20px);
+    grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.contact-card{
+    display:grid;gap:6px;align-content:start;
+    padding:22px 24px;border-radius:16px;
+    background:rgba(249,250,251,.04);border:1px solid var(--line);
+    transition:transform .5s cubic-bezier(.22,1,.36,1),border-color .45s ease;
+}
+.contact-card:hover{transform:translate3d(0,-3px,0);border-color:rgba(254,177,74,.34)}
+.contact-card__k{font-family:var(--font-display);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin:0}
+.contact-card__v{margin:0;font-size:16px;font-weight:500;word-break:break-word}
+.contact-card__v a:hover{color:var(--gold)}
+
+/* =========================
      SECONDARY REVEALS
    ========================= */
 [data-reveal]{
@@ -811,6 +1029,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
      RESPONSIVE
    ========================= */
 @media (max-width:1100px){
+    .svc-grid{grid-template-columns:repeat(2,1fr)}
+    .svc-grid .card:nth-child(n){grid-column:span 1}
+    .svc-grid .card:nth-child(5){grid-column:span 2}
+    .model-grid{grid-template-columns:repeat(2,1fr)}
+    .process{grid-template-columns:repeat(3,1fr);gap:28px 16px}
+    .process::before{display:none}
+    .reasons{grid-template-columns:repeat(2,1fr)}
+    .contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     .cap-grid{grid-template-columns:1fr}
     .philosophy__grid{grid-template-columns:1fr}
     .footer-grid{grid-template-columns:1fr 1fr;gap:34px}
@@ -847,6 +1073,13 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     }
     .footer-grid{grid-template-columns:1fr}
 }
+@media (max-width:700px){
+    .svc-grid,.model-grid,.reasons,.model-split{grid-template-columns:1fr}
+    .svc-grid .card:nth-child(n){grid-column:span 1}
+    .process{grid-template-columns:repeat(2,1fr)}
+    .contact-grid{grid-template-columns:1fr}
+    .sec-head__title{max-width:none}
+}
 @media (max-width:520px){
     /* A pill long enough to overflow a phone must be allowed to wrap —
        "the one who sees the whole picture" is wider than 390px. */
@@ -868,6 +1101,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     #ambient{display:none}
     .hero__scroll .track::after{animation:none;opacity:.6}
     .hero__frame{transform:none}
+    .card-in{opacity:1 !important;transform:none !important}
 }
 </style>
 </head>
@@ -875,6 +1109,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <noscript>
 <style>
     [data-reveal]{opacity:1 !important;transform:none !important}
+    .card-in{opacity:1 !important;transform:none !important}
     #chapterOne{display:none !important}
     .story-static{display:block !important}
     .bridge__line{opacity:1 !important}
@@ -897,11 +1132,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <nav class="nav" aria-label="Primary">
         <a href="#top" aria-current="true">Home</a>
         <a href="#story">Story</a>
-        <a href="#services">Capabilities</a>
-        <a href="#contact">Contact</a>
+        <a href="#services">Services</a>
+        <a href="#why">Why us</a>
+        <a href="#start">Contact</a>
     </nav>
 
-    <a class="btn-quote" href="#contact">
+    <a class="btn-quote" href="#start">
         <span class="btn-quote__sweep" aria-hidden="true"></span>
         <span class="btn-quote__dot" aria-hidden="true"></span>
         Get Quote <span aria-hidden="true">↗</span>
@@ -915,9 +1151,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 <div class="mobile-panel" id="mobilePanel">
     <a href="#top">Home</a>
     <a href="#story">Story</a>
-    <a href="#services">Capabilities</a>
-    <a href="#contact">Contact</a>
-    <a class="btn-quote" href="#contact">
+    <a href="#services">Services</a>
+    <a href="#why">Why us</a>
+    <a href="#start">Contact</a>
+    <a class="btn-quote" href="#start">
         <span class="btn-quote__sweep" aria-hidden="true"></span>
         <span class="btn-quote__dot" aria-hidden="true"></span>
         Get Quote <span aria-hidden="true">↗</span>
@@ -1243,47 +1480,300 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
                 Every brand has its own <em>jungle</em>.
             </h2>
         </div>
-        <p class="lede" data-reveal>
-            Good people, good ideas, good intentions — all pulling in slightly different
-            directions. Massbar is the Owl: we listen, build the one clear plan, and give
-            every part of your marketing a role in it.
+        <div style="display:grid;gap:18px">
+            <p class="lede" data-reveal>
+                Good people, good ideas, good intentions — all pulling in slightly different
+                directions. Massbar is the Owl: we listen, build the one clear plan, and give
+                every part of your marketing a role in it.
+            </p>
+            <p class="lede" data-reveal>
+                The owl in our mark is not decoration. It stands for the part of the job that happens
+                before anything is designed — watching closely, reading the market, seeing what others
+                miss in the dark. Its facets stand for the second half: many disciplines, cut
+                precisely, assembled into one recognisable whole.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     SERVICES — five practice areas from the company profile,
+     each mapped back to the animal that carries it in the story
+   ========================= -->
+<section class="sec" id="services">
+    <div class="sec__tex sec__tex--hex" aria-hidden="true"></div>
+    <div class="sec__glow" aria-hidden="true"></div>
+    <div class="sec__inner">
+        <div class="sec-head">
+            <p class="eyebrow" data-reveal>Capabilities</p>
+            <h2 class="sec-head__title" data-reveal>Five services. <b>One system.</b></h2>
+            <p class="sec-head__lede" data-reveal>
+                Taken individually they solve a problem. Taken together they build a brand that
+                behaves consistently everywhere a customer meets it.
+            </p>
+        </div>
+
+        <div class="svc-grid" data-cards>
+            <article class="card card-in">
+                <span class="card__idx">01</span>
+                <p class="card__tag">The Owl — sees the whole picture</p>
+                <h3 class="card__name">Brand Strategy &amp; Identity</h3>
+                <p class="card__desc">The foundation a brand stands on: what it means, who it speaks to, how it looks and how it sounds.</p>
+                <ul class="card__list">
+                    <li>Strategy, positioning and brand architecture</li>
+                    <li>Logo design and visual identity systems</li>
+                    <li>Guidelines, tone of voice and asset libraries</li>
+                    <li>Brand audits and repositioning</li>
+                </ul>
+            </article>
+
+            <article class="card card-in">
+                <span class="card__idx">02</span>
+                <p class="card__tag">Monkeys — the seeds</p>
+                <h3 class="card__name">Creative Design &amp; Content</h3>
+                <p class="card__desc">Ideas turned into work people stop for, designed for the format, the platform and the moment it is seen in.</p>
+                <ul class="card__list">
+                    <li>Print, packaging and corporate collateral</li>
+                    <li>Social content and content calendars</li>
+                    <li>Photography and video direction</li>
+                    <li>Motion graphics, copywriting and concepting</li>
+                </ul>
+            </article>
+
+            <article class="card card-in">
+                <span class="card__idx">03</span>
+                <p class="card__tag">Parrots — the word</p>
+                <h3 class="card__name">Digital Marketing &amp; Media</h3>
+                <p class="card__desc">Growing your presence where your audience already spends its attention — targeting, budgets and reporting handled properly.</p>
+                <ul class="card__list">
+                    <li>Social management and community handling</li>
+                    <li>Paid media: Meta, Google, TikTok, YouTube</li>
+                    <li>Influencer and creator partnerships</li>
+                    <li>Analytics, reporting and optimisation</li>
+                </ul>
+            </article>
+
+            <article class="card card-in">
+                <span class="card__idx">04</span>
+                <p class="card__tag">Deer — where it lands</p>
+                <h3 class="card__name">Web &amp; Digital Solutions</h3>
+                <p class="card__desc">Websites and platforms that load fast, work on a phone, and turn interest into enquiries.</p>
+                <ul class="card__list">
+                    <li>Website design and development</li>
+                    <li>Ecommerce and payment integration</li>
+                    <li>UI/UX and campaign landing pages</li>
+                    <li>Search visibility, hosting and maintenance</li>
+                </ul>
+            </article>
+
+            <article class="card card-in">
+                <span class="card__idx">05</span>
+                <p class="card__tag">Elephants — the water</p>
+                <h3 class="card__name">Advertising &amp; Campaign Execution</h3>
+                <p class="card__desc">From the first concept to the final performance report: campaigns planned, produced, placed and tracked.</p>
+                <ul class="card__list">
+                    <li>Campaign strategy, concepting and scripting</li>
+                    <li>Media planning, buying and placement</li>
+                    <li>Print, outdoor, radio and activation production</li>
+                    <li>Launch support and post-campaign reporting</li>
+                </ul>
+            </article>
+        </div>
+    </div>
+</section>
+
+<div class="facet-rule" aria-hidden="true"></div>
+
+<!-- =========================
+     THE INTEGRATED MODEL — the story's thesis, as a service model
+   ========================= -->
+<section class="sec" id="model">
+    <div class="sec__tex sec__tex--nodes" aria-hidden="true"></div>
+    <div class="sec__inner">
+        <div class="sec-head">
+            <p class="eyebrow" data-reveal>The integrated model</p>
+            <h2 class="sec-head__title" data-reveal>The output of one is the <b>input of the next.</b></h2>
+            <p class="sec-head__lede" data-reveal>
+                Each service can be bought on its own. The advantage comes when they run together —
+                which is the whole point of the garden.
+            </p>
+        </div>
+
+        <div class="model-grid" data-cards>
+            <div class="model-step card-in">
+                <span class="model-step__n">01</span>
+                <h3 class="model-step__t">Strategy sets the rules</h3>
+                <p class="model-step__d">Positioning, visual system and tone become the brief everything else is measured against.</p>
+            </div>
+            <div class="model-step card-in">
+                <span class="model-step__n">02</span>
+                <h3 class="model-step__t">Creative applies them</h3>
+                <p class="model-step__d">Every asset is already on brand, so nothing is approved twice or rebuilt from scratch.</p>
+            </div>
+            <div class="model-step card-in">
+                <span class="model-step__n">03</span>
+                <h3 class="model-step__t">Media distributes them</h3>
+                <p class="model-step__d">Content is scheduled, promoted and targeted rather than posted and hoped for.</p>
+            </div>
+            <div class="model-step card-in">
+                <span class="model-step__n">04</span>
+                <h3 class="model-step__t">Web captures the demand</h3>
+                <p class="model-step__d">Traffic generated by campaigns lands somewhere designed to convert it.</p>
+            </div>
+            <div class="model-step card-in">
+                <span class="model-step__n">05</span>
+                <h3 class="model-step__t">Campaigns scale what works</h3>
+                <p class="model-step__d">Proven messages are pushed wider — print, outdoor, radio, activations — on the same creative spine.</p>
+            </div>
+        </div>
+
+        <div class="model-split" data-cards>
+            <article class="card card-in">
+                <h3 class="card__name">Buy one service</h3>
+                <p class="card__desc">You get specialist work delivered to a professional standard, on brief and on time.</p>
+            </article>
+            <article class="card card-in">
+                <h3 class="card__name">Buy the system</h3>
+                <p class="card__desc">You get compounding recognition, lower production cost per asset, and one team answerable for the result.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     HOW WE WORK — the six stages
+   ========================= -->
+<section class="sec" id="process">
+    <div class="sec__inner">
+        <div class="sec-head sec-head--left">
+            <p class="eyebrow" data-reveal>How we work</p>
+            <h2 class="sec-head__title" data-reveal>Six stages, every engagement.</h2>
+            <p class="sec-head__lede" data-reveal>So you always know what stage we are at, and what happens next.</p>
+        </div>
+
+        <div class="process" data-cards>
+            <div class="process__step card-in">
+                <span class="process__dot">01</span>
+                <h3 class="process__t">Understand</h3>
+                <p class="process__d">Discovery, market and competitor review, audience definition, and what success is measured against.</p>
+            </div>
+            <div class="process__step card-in">
+                <span class="process__dot">02</span>
+                <h3 class="process__t">Strategise</h3>
+                <p class="process__d">Positioning, message, channel mix and budget — documented and agreed before production begins.</p>
+            </div>
+            <div class="process__step card-in">
+                <span class="process__dot">03</span>
+                <h3 class="process__t">Create</h3>
+                <p class="process__d">Concept, design, copy and production, presented in context so you see it as it will appear.</p>
+            </div>
+            <div class="process__step card-in">
+                <span class="process__dot">04</span>
+                <h3 class="process__t">Execute</h3>
+                <p class="process__d">Rollout across agreed channels — publishing, printing, placement and activation, on a shared timeline.</p>
+            </div>
+            <div class="process__step card-in">
+                <span class="process__dot">05</span>
+                <h3 class="process__t">Optimise</h3>
+                <p class="process__d">Live monitoring and adjustment of targeting, budget and creative while it still matters.</p>
+            </div>
+            <div class="process__step card-in">
+                <span class="process__dot">06</span>
+                <h3 class="process__t">Grow</h3>
+                <p class="process__d">Reporting, review and the next recommendations, so each campaign starts from what the last one taught us.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="facet-rule" aria-hidden="true"></div>
+
+<!-- =========================
+     WHY MASSBAR
+   ========================= -->
+<section class="sec" id="why">
+    <div class="sec__tex sec__tex--petals" aria-hidden="true"></div>
+    <div class="sec__glow" aria-hidden="true"></div>
+    <div class="sec__inner">
+        <div class="sec-head">
+            <p class="eyebrow" data-reveal>The difference</p>
+            <h2 class="sec-head__title" data-reveal>Our clients don't buy design.<br>They buy <b>attention, credibility and growth.</b></h2>
+            <p class="sec-head__lede" data-reveal>There is no shortage of people who will design something for you. Here is what makes working with us different.</p>
+        </div>
+
+        <div class="reasons" data-cards>
+            <article class="card card-in">
+                <h3 class="card__name">Strategy behind the visuals</h3>
+                <p class="card__desc">Every project has a documented objective, audience and message before anything is created — so the work can be judged on more than taste.</p>
+            </article>
+            <article class="card card-in">
+                <h3 class="card__name">Local market fluency</h3>
+                <p class="card__desc">We know Lusaka and the Zambian market: media consumption, pricing realities, distribution, and what genuinely resonates here.</p>
+            </article>
+            <article class="card card-in">
+                <h3 class="card__name">Everything under one roof</h3>
+                <p class="card__desc">Brand, content, digital, web and campaign delivery in one team. Fewer suppliers, fewer handovers, one point of accountability.</p>
+            </article>
+            <article class="card card-in">
+                <h3 class="card__name">Flexible, transparent pricing</h3>
+                <p class="card__desc">Project based or retainer, scoped clearly and quoted upfront. You know what you are paying for before work starts.</p>
+            </article>
+            <article class="card card-in">
+                <h3 class="card__name">Delivery you can plan around</h3>
+                <p class="card__desc">Agreed timelines, regular updates, and work that arrives when we said it would — including print and media deadlines that cannot move.</p>
+            </article>
+            <article class="card card-in">
+                <h3 class="card__name">Built to scale with you</h3>
+                <p class="card__desc">The same team handles a single launch or an annual calendar, so you are not briefing a new agency every time you grow.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     INDUSTRIES
+   ========================= -->
+<section class="sec" id="sectors">
+    <div class="sec__inner">
+        <div class="sec-head">
+            <p class="eyebrow" data-reveal>Who we work with</p>
+            <h2 class="sec-head__title" data-reveal>Every jungle is different.</h2>
+            <p class="sec-head__lede" data-reveal>The thinking stays the same; the language, channels and creative do not.</p>
+        </div>
+        <div class="sectors" data-reveal>
+            <span class="sector"><span aria-hidden="true"></span>Construction &amp; Property</span>
+            <span class="sector"><span aria-hidden="true"></span>Hospitality &amp; Leisure</span>
+            <span class="sector"><span aria-hidden="true"></span>FMCG &amp; Retail</span>
+            <span class="sector"><span aria-hidden="true"></span>Insurance &amp; Financial Services</span>
+            <span class="sector"><span aria-hidden="true"></span>Ecommerce &amp; Digital Business</span>
+            <span class="sector"><span aria-hidden="true"></span>SMEs, Startups &amp; Institutions</span>
+        </div>
+        <p class="sectors-note" data-reveal>
+            We also work with corporate organisations, NGOs and development institutions, education and
+            health providers, and personal brands, creators and public figures.
         </p>
     </div>
 </section>
 
 <!-- =========================
-     CAPABILITIES — four roles, one plan
+     CLIENTS
    ========================= -->
-<section class="philosophy" id="services" style="padding-top:0">
-    <div class="cap-head">
-        <p class="eyebrow" data-reveal>Capabilities</p>
-        <h2 class="cap-head__title" data-reveal>Four roles. <b>One plan.</b></h2>
-    </div>
-    <div class="cap-grid">
-        <article class="cap-card" data-reveal>
-            <span class="cap-card__idx">01</span>
-            <p class="cap-card__tag">Deer — the flowers</p>
-            <h3 class="cap-card__name">Brand Strategy</h3>
-            <p class="cap-card__desc">Positioning, identity, and a story worth telling — chosen with care, not guessed at.</p>
-        </article>
-        <article class="cap-card" data-reveal>
-            <span class="cap-card__idx">02</span>
-            <p class="cap-card__tag">Monkeys — the seeds</p>
-            <h3 class="cap-card__name">Campaign Creative</h3>
-            <p class="cap-card__desc">Ideas planted in one bed, not scattered — concepts that travel across every format.</p>
-        </article>
-        <article class="cap-card" data-reveal>
-            <span class="cap-card__idx">03</span>
-            <p class="cap-card__tag">Elephants — the water</p>
-            <h3 class="cap-card__name">Media Planning &amp; Buying</h3>
-            <p class="cap-card__desc">Resources, on schedule and in the right place — reach that's earned, not wasted.</p>
-        </article>
-        <article class="cap-card" data-reveal>
-            <span class="cap-card__idx">04</span>
-            <p class="cap-card__tag">Parrots — the word</p>
-            <h3 class="cap-card__name">Digital &amp; Social</h3>
-            <p class="cap-card__desc">One message, spread everywhere it needs to be heard — consistently, not chaotically.</p>
-        </article>
+<section class="sec" id="clients" style="padding-block:clamp(50px,8vh,90px)">
+    <div class="sec__inner">
+        <div class="sec-head" style="margin-bottom:clamp(26px,4vh,44px)">
+            <p class="eyebrow" data-reveal>Selected clients</p>
+            <h2 class="sec-head__title" style="font-size:clamp(20px,2.2vw,30px);max-width:36ch" data-reveal>
+                Brands that trust us to build, grow and move their businesses forward.
+            </h2>
+        </div>
+        <!-- ASSETS: assets/clients/*.png — client marks from the company profile -->
+        <div class="client-row" data-reveal>
+            <img src="assets/clients/core.png" alt="C-ORE" loading="lazy">
+            <img src="assets/clients/conecc.png" alt="Conecc Construction" loading="lazy">
+            <img src="assets/clients/clover.png" alt="Clover Construction" loading="lazy">
+            <img src="assets/clients/crystal-premix.png" alt="Crystal Premix" loading="lazy">
+            <img src="assets/clients/tigmoo.png" alt="Tigmoo" loading="lazy">
+        </div>
     </div>
 </section>
 
@@ -1310,11 +1800,38 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <!-- ASSET: assets/logo.png -->
     <img class="closing__owl" src="assets/logo.png" alt="" loading="lazy" data-reveal>
     <h2 class="closing__title" data-reveal>Let's build something that grows.</h2>
-    <a class="btn-quote btn-quote--lg" href="mailto:hello@massbaradvertising.com" data-reveal>
+    <a class="btn-quote btn-quote--lg" href="mailto:info@massbaradvertising.com" data-reveal>
         <span class="btn-quote__sweep" aria-hidden="true"></span>
         <span class="btn-quote__dot" aria-hidden="true"></span>
-        hello@massbaradvertising.com
+        info@massbaradvertising.com
     </a>
+
+    <div class="contact-grid" style="max-width:1000px;width:100%;margin-top:clamp(20px,4vh,40px);text-align:left">
+        <div class="contact-card" data-reveal>
+            <p class="contact-card__k">Studio</p>
+            <p class="contact-card__v">Lufubu Road 5638<br>Lusaka, Zambia</p>
+        </div>
+        <div class="contact-card" data-reveal>
+            <p class="contact-card__k">Phone</p>
+            <p class="contact-card__v"><a href="tel:+260779674849">+260 779 674 849</a></p>
+        </div>
+        <div class="contact-card" data-reveal>
+            <p class="contact-card__k">Email</p>
+            <p class="contact-card__v"><a href="mailto:info@massbaradvertising.com">info@massbaradvertising.com</a></p>
+        </div>
+        <div class="contact-card" data-reveal>
+            <p class="contact-card__k">Web</p>
+            <p class="contact-card__v"><a href="https://www.massbaradvertising.co" target="_blank" rel="noopener">massbaradvertising.co</a></p>
+        </div>
+        <div class="contact-card" data-reveal>
+            <p class="contact-card__k">Facebook</p>
+            <p class="contact-card__v">Massbar Advertising</p>
+        </div>
+        <div class="contact-card" data-reveal>
+            <p class="contact-card__k">Instagram</p>
+            <p class="contact-card__v">@massbar.advertising</p>
+        </div>
+    </div>
 </section>
 </main>
 
@@ -1325,16 +1842,17 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     <div class="site-footer__inner">
         <p class="footer-word">Massbar</p>
         <div class="footer-grid">
-            <p class="footer-claim">Different strengths.<br><span>One plan.</span><br>Let's build something that grows.</p>
+            <p class="footer-claim">Creative. Strategic.<br><span>Impactful.</span><br>Let's build something that grows.</p>
             <nav class="footer-nav" aria-label="Footer">
                 <a href="#story">Story</a>
                 <a href="#services">Capabilities</a>
-                <a href="#quote">The Owl's line</a>
-                <a href="#contact">Contact</a>
+                <a href="#process">How we work</a>
+                <a href="#why">Why Massbar</a>
+                <a href="#start">Contact</a>
             </nav>
             <div class="footer-cta">
-                <p>Tell us about your jungle. We'll bring the plan.</p>
-                <a class="btn-quote btn-quote--lg" href="mailto:hello@massbaradvertising.com">
+                <p>Lufubu Road 5638, Lusaka, Zambia<br>+260 779 674 849</p>
+                <a class="btn-quote btn-quote--lg" href="mailto:info@massbaradvertising.com">
                     <span class="btn-quote__sweep" aria-hidden="true"></span>
                     <span class="btn-quote__dot" aria-hidden="true"></span>
                     Get Quote <span aria-hidden="true">↗</span>
@@ -1342,8 +1860,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
             </div>
         </div>
         <div class="footer-base">
-            <span>Lusaka, Zambia — © <span id="year">2026</span> Massbar Advertising</span>
-            <span>The Jungle Garden</span>
+            <span>© <span id="year">2026</span> Massbar Advertising — Lusaka, Zambia</span>
+            <span>massbaradvertising.co</span>
         </div>
     </div>
 </footer>
@@ -1621,6 +2139,50 @@ function initReveals() {
 }
 
 /* ---------------------------------------------------------
+   CARDS
+   Each group rises in sequence as it comes into view, and the
+   hovered card carries a highlight that follows the cursor.
+   The highlight is two CSS variables written once per frame
+   from the shared pointer field — no per-event layout work.
+   --------------------------------------------------------- */
+function initCards() {
+    var groups = $$("[data-cards]");
+    if (!groups.length) { return; }
+
+    if (STATIC_MODE) {
+        /* no GSAP to reveal them, so they must not start hidden */
+        $$(".card-in").forEach(function (el) { el.classList.remove("card-in"); });
+    } else {
+        groups.forEach(function (group) {
+            var cards = $$(".card-in", group);
+            if (!cards.length) { return; }
+            gsap.to(cards, {
+                opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.08,
+                scrollTrigger: { trigger: group, start: "top 84%", once: true }
+            });
+        });
+    }
+
+    if (REDUCED) { return; }
+
+    var hovered = null;
+    $$(".card").forEach(function (card) {
+        card.addEventListener("pointerenter", function () { hovered = card; }, { passive: true });
+        card.addEventListener("pointerleave", function () {
+            if (hovered === card) { hovered = null; }
+        }, { passive: true });
+    });
+
+    addFrameTask(function () {
+        if (!hovered || !pointer.fine) { return; }
+        var r = hovered.getBoundingClientRect();
+        if (!r.width) { return; }
+        hovered.style.setProperty("--mx", (((pointer.x - r.left) / r.width)  * 100).toFixed(1) + "%");
+        hovered.style.setProperty("--my", (((pointer.y - r.top)  / r.height) * 100).toFixed(1) + "%");
+    });
+}
+
+/* ---------------------------------------------------------
    HERO
    --------------------------------------------------------- */
 function initHero() {
@@ -1849,6 +2411,7 @@ function boot() {
     initMobileMenu();
     initReveals();
     initPointerTracking();
+    initCards();
     initHero();
     initHeroVideo();
 

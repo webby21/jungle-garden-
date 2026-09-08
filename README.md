@@ -82,6 +82,15 @@ time.
   it is actually playing, so a missing file, a blocked autoplay, reduced motion
   or a metered connection all just leave the still. See
   [`assets/README.md`](assets/README.md) for the encoding recipe.
+- **The company profile, folded in**: five real service areas (each still tagged
+  with the animal that carries it in the story), the integrated model, the
+  six-stage process, why Massbar, industries served, the client wall, and real
+  contact details — all from the Massbar profile deck, along with its textures
+  and the faceted strip from the mark.
+- **One card component** across every profile section, with a staggered
+  scroll-in and a highlight that follows the cursor — written as two CSS
+  variables once per frame from the shared pointer field, so hovering never
+  costs a layout.
 - **Accessibility**: with `prefers-reduced-motion: reduce` (or if GSAP fails to
   load) the chapter becomes a stacked, readable photo story. No content depends
   on animation or on JavaScript.

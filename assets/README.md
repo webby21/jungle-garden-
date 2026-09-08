@@ -15,6 +15,9 @@ the markup, next to a comment naming them.
 | `logo.png` | Header mark, cropped to the owl |
 | `parrots-dim.jpg` | Chapter Two — the same frame, colour drained out (generated) |
 | `*-bg.jpg` | 64px blurred backdrop for each scene (generated, <1 KB each) |
+| `texture-nodes/hex/petals.jpg` | Background textures lifted from the company profile deck |
+| `facets.jpg` | The mark's facet strip, used as a hairline rule between sections |
+| `clients/*.png` | Client marks from the profile, trimmed and normalised to 150px tall |
 | `hero.mp4` | Hero background video — silent, 12s, seamless loop |
 | `hero.webm` | Smaller VP9 version of it, tried first |
 | `hero-poster.jpg` | The video's first frame — the still shown until it plays |
@@ -43,6 +46,23 @@ entirely yours — but keep the subject off the extreme edges so the scrim has
 somewhere to sit.
 
 If a `.jpg` is missing the page retries `.png` automatically, and vice versa.
+
+## Where the profile content came from
+
+The services, process, differentiators, industries, client list and contact
+details all come from the Massbar company profile deck. The textures and client
+marks were extracted from that same file:
+
+- **Textures** — the dark node, hex and petal patterns, resized to 1200px and
+  saved at quality 78 (~18 KB each). They sit behind the profile sections at
+  14% opacity, tiled, in `screen` blend.
+- **Facet strip** — the multicolour facet banner, used as a 3px rule between
+  sections. The profile explains the motif: the mark's facets stand for "many
+  disciplines, cut precisely, assembled into one recognisable whole."
+- **Client marks** — trimmed to their alpha bounding box and normalised to
+  150px tall. They are dark artwork on transparent, so on the ink page they are
+  rendered as white silhouettes (`filter: brightness(0) invert(1)`) at 58%
+  opacity, returning to full colour on hover.
 
 ## Optimisation
 

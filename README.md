@@ -94,10 +94,12 @@ time.
 - **An open jungle**: leaves lean into every section from its edges, clipped by
   the section and drifting on scroll, so the quiet parts of the page read as
   foliage rather than empty margin.
-- **Type**: Space Grotesk and DM Sans throughout, with **Amsterdam Four** on the
-  story's accent lines. That font is licensed and not committed — see
-  [`assets/fonts/README.md`](assets/fonts/README.md); it falls through to
-  Sacramento until you add it.
+- **Jungle backdrops**: the open sections sit on photographic foliage
+  (`assets/jungle/bg-1…4.jpg`), darkened under a scrim so the type stays the
+  brightest thing on screen. Those four files are placeholders — swap them for
+  your own foliage shots, same filenames.
+- **Type**: Space Grotesk and DM Sans throughout — the Massbar system — with the
+  Owl's quotation in italic serif.
 - **Accessibility**: with `prefers-reduced-motion: reduce` (or if GSAP fails to
   load) the chapter becomes a stacked, readable photo story. No content depends
   on animation or on JavaScript.

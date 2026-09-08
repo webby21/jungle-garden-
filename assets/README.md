@@ -18,6 +18,7 @@ the markup, next to a comment naming them.
 | `texture-nodes/hex/petals.jpg` | Background textures lifted from the company profile deck |
 | `facets.jpg` | The mark's facet strip, used as a hairline rule between sections |
 | `clients/*.png` | Client marks from the profile, trimmed and normalised to 150px tall |
+| `jungle/bg-1…4.jpg` | Foliage backdrops behind the open sections — **replace these** |
 | `hero.mp4` | Hero background video — silent, 12s, seamless loop |
 | `hero.webm` | Smaller VP9 version of it, tried first |
 | `hero-poster.jpg` | The video's first frame — the still shown until it plays |
@@ -46,6 +47,26 @@ entirely yours — but keep the subject off the extreme edges so the scrim has
 somewhere to sit.
 
 If a `.jpg` is missing the page retries `.png` automatically, and vice versa.
+
+## The jungle backdrops
+
+`assets/jungle/bg-1.jpg` … `bg-4.jpg` sit behind the open sections — the Owl's
+line, Services, How we work, Why Massbar, Our Work and Contact — and give the
+whole page the jungle feel the story has.
+
+**The four files currently in that folder are placeholders**, cut from canopy
+regions of the story photography. They work, but they are upscaled from small
+crops and are soft. Drop your own foliage photographs in over them, same
+filenames, and the page picks them up with no code change.
+
+**What to supply:** dense, dark tropical foliage, landscape, 1500px wide or
+more. Darker and greener is better — the page brightens them to 78% and lays a
+scrim over the top, so a bright or busy image will fight the type. Which
+section uses which file is set by the `sec__photo` markup in `index.html`.
+
+The scrim is tuned so white copy measures about 12:1 against the backdrop. If
+you swap in something much lighter, check the section headings still read and
+raise the scrim opacity in `.sec__photo::after` if not.
 
 ## Where the profile content came from
 

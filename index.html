@@ -9,6 +9,24 @@
 <!-- =========================================================
      CHANGE LOG — what changed in this revision
      ---------------------------------------------------------
+     v11 FASTER CHAPTER, A SCENE THAT ANSWERS BACK
+     • Chapter One moves quicker: the pin runs 520% rather than
+       680%, so the story reads at pace instead of dragging.
+     • The pillarbox beside the contained plates is planted.
+       Big fronds frame both sides of the pinned stage, so you
+       watch the scene through jungle rather than through two
+       empty bars.
+     • The story answers the cursor. Three depths move against
+       one pointer: the plate leans toward it, the copy drifts
+       the other way, and the side foliage moves most. Written
+       through `translate` so the scroll timeline keeps
+       `transform` to itself.
+     • Every leaf on the page now enters and leaves. Ordinary
+       sections scrub theirs in from their own edge and out
+       again; the pinned stage toggles instead, because a
+       pinned range has no useful scrub mapping — it stops
+       moving the moment it pins.
+
      v10 JUNGLE BACKDROPS, AND BACK TO MASSBAR TYPE
      • The open sections now sit on photographic foliage:
        assets/jungle/bg-1..4.jpg behind each one, darkened and
@@ -879,6 +897,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
      are decoration only: pointer-inert, and never over content.
    ========================= */
 .leaves{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+/* inside the story stage the plates are z-index 1, so the framing foliage
+   goes above them — but below the copy at z-index 6 */
+#stage .leaves{z-index:4}
 .leaf{
     position:absolute;display:block;
     opacity:.7;will-change:transform;
@@ -1386,7 +1407,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
      plates of the supplied artwork, then the garden reveal.
    ========================= -->
 <section id="chapterOne">
-  <div class="stage" id="stage">
+  <div class="stage" id="stage" data-leaves="stage" data-leaves-trigger="#chapterOne" data-leaves-toggle="1">
 
     <div class="plates" id="plates">
         <!-- ---- SCENE 01 · ELEPHANTS — subject sits left, so the copy sits right ---- -->
@@ -2291,16 +2312,24 @@ function initReveals() {
    --------------------------------------------------------- */
 var LEAF_LAYOUTS = {
     edges: [
-        { k: "frond", pos: "left:-7%;bottom:-16%",  w: "clamp(190px,26vw,430px)", r: -26, d:  70, z: "near" },
-        { k: "blade", pos: "right:-5%;top:-12%",    w: "clamp(150px,19vw,310px)", r: 156, d: -55, z: "far"  }
+        { k: "frond", pos: "left:-7%;bottom:-16%",  w: "clamp(190px,26vw,430px)", r: -26, ox: -70, oy:  60, z: "near" },
+        { k: "blade", pos: "right:-5%;top:-12%",    w: "clamp(150px,19vw,310px)", r: 156, ox:  70, oy: -55, z: "far"  }
     ],
     corners: [
-        { k: "blade", pos: "left:-6%;top:-10%",     w: "clamp(145px,18vw,300px)", r: -158, d:  58, z: "far"  },
-        { k: "frond", pos: "right:-8%;bottom:-18%", w: "clamp(195px,27vw,440px)", r:   28, d: -68, z: "near" },
-        { k: "blade", pos: "right:1%;top:46%",      w: "clamp(108px,13vw,210px)", r:  118, d:  40, z: "far"  }
+        { k: "blade", pos: "left:-6%;top:-10%",     w: "clamp(145px,18vw,300px)", r: -158, ox: -66, oy: -50, z: "far"  },
+        { k: "frond", pos: "right:-8%;bottom:-18%", w: "clamp(195px,27vw,440px)", r:   28, ox:  74, oy:  62, z: "near" },
+        { k: "blade", pos: "right:1%;top:46%",      w: "clamp(108px,13vw,210px)", r:  118, ox:  62, oy:  18, z: "far"  }
     ],
     sparse: [
-        { k: "frond", pos: "right:-9%;bottom:-20%", w: "clamp(200px,28vw,450px)", r: 20, d: -58, z: "" }
+        { k: "frond", pos: "right:-9%;bottom:-20%", w: "clamp(200px,28vw,450px)", r: 20, ox: 78, oy: 60, z: "" }
+    ],
+    /* the pinned story stage: big fronds down both sides, which is what
+       fills the pillarbox the contained plates leave behind */
+    stage: [
+        { k: "frond", pos: "left:-9%;top:-14%",     w: "clamp(200px,24vw,420px)", r: 168, ox: -60, oy: -40, z: "near" },
+        { k: "frond", pos: "left:-8%;bottom:-16%",  w: "clamp(210px,25vw,440px)", r: -22, ox: -64, oy:  46, z: "" },
+        { k: "blade", pos: "right:-7%;top:6%",      w: "clamp(160px,19vw,330px)", r: 150, ox:  62, oy: -34, z: "far" },
+        { k: "frond", pos: "right:-9%;bottom:-18%", w: "clamp(215px,26vw,450px)", r:  24, ox:  66, oy:  48, z: "near" }
     ]
 };
 var LEAF_BOX  = { frond: "0 0 320 520", blade: "0 0 240 430" };
@@ -2316,6 +2345,13 @@ function initLeaves() {
     hosts.forEach(function (host) {
         var spec = LEAF_LAYOUTS[host.dataset.leaves];
         if (!spec) { return; }
+        /* A pinned element is a useless scroll trigger — it stops moving the
+           moment it pins — so the stage keys off its scrolling section, and
+           holds its framing through the whole chapter instead of fading out
+           halfway. */
+        var trigger = host.dataset.leavesTrigger ? $(host.dataset.leavesTrigger) : host;
+        var hold    = parseFloat(host.dataset.leavesHold) || 0.5;
+        if (!trigger) { trigger = host; }
         var layer = document.createElement("div");
         layer.className = "leaves";
         layer.setAttribute("aria-hidden", "true");
@@ -2326,22 +2362,95 @@ function initLeaves() {
             svg.setAttribute("viewBox", LEAF_BOX[leaf.k]);
             svg.setAttribute("fill", LEAF_FILL[tint++ % LEAF_FILL.length]);
             svg.setAttribute("class", "leaf" + (leaf.z ? " leaf--" + leaf.z : ""));
-            /* rotation via the standalone `rotate` property, so the scroll
-               drift can own `transform` without fighting it */
-            svg.style.cssText = leaf.pos + ";width:" + leaf.w + ";rotate:" + leaf.r + "deg";
+            svg.style.cssText = leaf.pos + ";width:" + leaf.w;
             var use = document.createElementNS(SVGNS, "use");
             use.setAttribute("href", "#lf-" + leaf.k);
             svg.appendChild(use);
             layer.appendChild(svg);
 
-            if (!STATIC_MODE) {
-                gsap.to(svg, {
-                    y: leaf.d, ease: "none",
-                    scrollTrigger: { trigger: host, start: "top bottom", end: "bottom top", scrub: true }
-                });
+            if (STATIC_MODE) {
+                /* no timeline to place them, so rotate in CSS and leave them */
+                svg.style.rotate = leaf.r + "deg";
+                return;
             }
+
+            /* Each leaf grows in from its own edge as the section arrives and
+               withdraws as it leaves, so the foliage is never just parked
+               there. GSAP owns rotation here — the CSS `rotate` property
+               would compound with it. */
+            if (host.dataset.leavesToggle) {
+                /* Across a pinned section a scrubbed range has no useful
+                   mapping, so this framing foliage simply plays in when the
+                   chapter arrives and plays out when it is done. */
+                var into = { xPercent: 0, yPercent: 0, rotate: leaf.r, scale: 1, opacity: 1,
+                             duration: 1.1, ease: "power3.out" };
+                var awayFwd = { xPercent: leaf.ox * 0.7, yPercent: leaf.oy * -0.4, rotate: leaf.r + 12,
+                                scale: 0.9, opacity: 0, duration: 0.8, ease: "power2.in" };
+                var awayBack = { xPercent: leaf.ox, yPercent: leaf.oy, rotate: leaf.r - 16,
+                                 scale: 0.84, opacity: 0, duration: 0.8, ease: "power2.in" };
+                gsap.set(svg, { xPercent: leaf.ox, yPercent: leaf.oy, rotate: leaf.r - 16,
+                                scale: 0.84, opacity: 0 });
+                ScrollTrigger.create({
+                    trigger: trigger, start: "top 72%", end: "bottom 28%",
+                    onEnter:     function () { gsap.to(svg, into); },
+                    onEnterBack: function () { gsap.to(svg, into); },
+                    onLeave:     function () { gsap.to(svg, awayFwd); },
+                    onLeaveBack: function () { gsap.to(svg, awayBack); }
+                });
+                return;
+            }
+
+            gsap.timeline({
+                defaults: { ease: "none" },
+                scrollTrigger: { trigger: trigger, start: "top bottom", end: "bottom top", scrub: 1 }
+            })
+            .fromTo(svg,
+                { xPercent: leaf.ox, yPercent: leaf.oy, rotate: leaf.r - 16, scale: 0.84, opacity: 0 },
+                { xPercent: 0, yPercent: 0, rotate: leaf.r, scale: 1, opacity: 1,
+                  duration: 1, ease: "power2.out" })
+            .to(svg,
+                { xPercent: leaf.ox * 0.72, yPercent: leaf.oy * -0.5, rotate: leaf.r + 13,
+                  scale: 0.9, opacity: 0, duration: 0.85, ease: "power2.in" }, ">" + hold);
         });
         host.insertBefore(layer, host.firstChild);
+    });
+}
+
+/* ---------------------------------------------------------
+   THE STORY REACTS
+   While the chapter is on screen the scene answers the cursor:
+   the plate leans toward it, the copy drifts the other way and
+   the foliage framing the sides moves most. Three depths, one
+   pointer — which is what makes the animals feel present
+   rather than printed. Written through the `translate`
+   property so the scroll timeline keeps `transform` to itself.
+   --------------------------------------------------------- */
+function initStagePointer() {
+    if (REDUCED) { return; }
+    var stage = $("#stage");
+    if (!stage) { return; }
+
+    var layers = [
+        { els: $$(".plate__media img", stage), amp:  16, cur: [0, 0] },
+        { els: $$(".scene-copy, .reveal-copy", stage), amp: -9, cur: [0, 0] },
+        { els: $$(".leaves .leaf", stage), amp: 30, cur: [0, 0] }
+    ].filter(function (l) { return l.els.length; });
+    if (!layers.length) { return; }
+
+    var onScreen = false;
+    if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (e) { onScreen = e[0].isIntersecting; }).observe(stage);
+    } else { onScreen = true; }
+
+    addFrameTask(function () {
+        if (!onScreen || !pointer.fine) { return; }
+        for (var i = 0; i < layers.length; i++) {
+            var l = layers[i];
+            l.cur[0] += (pointer.nx * l.amp - l.cur[0]) * 0.06;
+            l.cur[1] += (pointer.ny * l.amp * 0.7 - l.cur[1]) * 0.06;
+            var t = l.cur[0].toFixed(2) + "px " + l.cur[1].toFixed(2) + "px";
+            for (var j = 0; j < l.els.length; j++) { l.els[j].style.translate = t; }
+        }
     });
 }
 
@@ -2525,7 +2634,7 @@ function initChapterScroll() {
         scrollTrigger: {
             trigger: "#chapterOne",
             start: "top top",
-            end: "+=680%",
+            end: "+=520%",
             pin: "#stage",
             scrub: 1,
             anticipatePin: 1,
@@ -2619,6 +2728,7 @@ function boot() {
     initReveals();
     initPointerTracking();
     initLeaves();
+    initStagePointer();
     initCards();
     initHero();
     initHeroVideo();

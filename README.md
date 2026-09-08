@@ -91,9 +91,14 @@ time.
   scroll-in and a highlight that follows the cursor — written as two CSS
   variables once per frame from the shared pointer field, so hovering never
   costs a layout.
-- **An open jungle**: leaves lean into every section from its edges, clipped by
-  the section and drifting on scroll, so the quiet parts of the page read as
-  foliage rather than empty margin.
+- **An open jungle**: leaves grow in from the edge of every section as it
+  arrives and withdraw as it leaves, so the quiet parts of the page read as
+  foliage rather than empty margin. Inside the pinned story they frame both
+  sides of the plate, filling the pillarbox that showing each scene whole
+  leaves behind.
+- **The story answers the cursor**: while the chapter is on screen, three
+  depths move against one pointer — the plate leans toward it, the copy drifts
+  the other way, the side foliage moves most.
 - **Jungle backdrops**: the open sections sit on photographic foliage
   (`assets/jungle/bg-1…4.jpg`), darkened under a scrim so the type stays the
   brightest thing on screen. Those four files are placeholders — swap them for

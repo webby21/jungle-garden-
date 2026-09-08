@@ -91,6 +91,13 @@ time.
   scroll-in and a highlight that follows the cursor — written as two CSS
   variables once per frame from the shared pointer field, so hovering never
   costs a layout.
+- **An open jungle**: leaves lean into every section from its edges, clipped by
+  the section and drifting on scroll, so the quiet parts of the page read as
+  foliage rather than empty margin.
+- **Type**: Space Grotesk and DM Sans throughout, with **Amsterdam Four** on the
+  story's accent lines. That font is licensed and not committed — see
+  [`assets/fonts/README.md`](assets/fonts/README.md); it falls through to
+  Sacramento until you add it.
 - **Accessibility**: with `prefers-reduced-motion: reduce` (or if GSAP fails to
   load) the chapter becomes a stacked, readable photo story. No content depends
   on animation or on JavaScript.
